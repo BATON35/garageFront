@@ -7,28 +7,40 @@ import { FormlyModule } from "@ngx-formly/core";
 import { FormlyMaterialModule } from "@ngx-formly/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatButtonModule, MatTabsModule } from "@angular/material";
+import {
+    MatButtonModule,
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule
+} from "@angular/material";
+import { UsersComponent } from "./users/users.component";
+import { NgxsModule } from "@ngxs/store";
+import { UsersState } from "./users.state";
 
 const routs: Routes = [
-  {
-    path: "panel",
-    component: ControlPanelComponent,
-    canActivate: [AuthGuard]
-  }
+    {
+        path: "panel",
+        component: ControlPanelComponent,
+        canActivate: [AuthGuard]
+    }
 ];
 @NgModule({
-  declarations: [ControlPanelComponent],
-  imports: [
-    BrowserModule,
-    RouterModule.forChild(routs),
-    FormlyModule.forRoot(),
-    FormlyMaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatButtonModule
-  ],
-  entryComponents: [ControlPanelComponent],
-  providers: [AuthGuard]
+    declarations: [ControlPanelComponent, UsersComponent],
+    imports: [
+        BrowserModule,
+        RouterModule.forChild(routs),
+        FormlyModule.forRoot(),
+        FormlyMaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatTabsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        NgxsModule.forFeature([UsersState])
+    ],
+    entryComponents: [ControlPanelComponent],
+    providers: [AuthGuard]
 })
-export class LoggedModule {}
+export class LoggedModule { }

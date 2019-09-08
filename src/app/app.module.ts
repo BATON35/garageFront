@@ -1,3 +1,4 @@
+import { NgxsModule } from '@ngxs/store';
 import { MenuComponent } from "./components/menu/menu.component";
 import { LoggedModule } from "./components/logged/logged.module";
 import { AuthInterceptor } from "./interceptor/auth.interceptor";
@@ -15,7 +16,7 @@ import {
   MatIconModule,
   MatToolbarModule
 } from "@angular/material";
-
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin"
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
@@ -27,11 +28,13 @@ import {
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgxsModule.forRoot([]),
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
