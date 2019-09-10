@@ -1,0 +1,9 @@
+<form [formGroup]="userForm" (ngSubmit)="submit()">
+    <formly-form [fields]="userFields" [form]="userForm" [model]="userDto">
+        <div class="group">
+            <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!userForm.valid">
+                Dodaj
+            </button>
+        </div>
+    </formly-form>
+</form>

@@ -1,6 +1,6 @@
 import { UserDto } from './../../../api/models/user-dto';
 import { UserControllerRestService } from "src/api/services";
-import { State, Action, StateContext } from "@ngxs/store";
+import { State, Action, StateContext, UpdateState } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { PageUserDto } from "src/api/models";
 import { UserStateModel } from '../state/user.state';
@@ -62,11 +62,14 @@ export class UsersState {
         ctx.dispatch(new UsersPageAction(page, size))
       }));
   }
-  @Action(UserUpdateAction)
-  update(ctx: StateContext<UserStateModel>, { userDto }: UserUpdateAction) {
-    return this.userService
-      .updateUsingPUT1(userDto);
-  }
 
+  @Action(UserUpdateAction)
+  update(ctx: StateContext<UsersStateModel>, { userDto }: UserUpdateAction) {
+    return this.userService.updateUsingPUT1(userDto).pipe(tap(value => {
+      const page = ctx.getState().page
+      const size = ctx.getState().size
+      ctx.dispatch(new UsersPageAction(page, size))
+    }));
+  }
 
 }
