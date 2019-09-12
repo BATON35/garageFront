@@ -6,7 +6,7 @@ import { PageClientDto } from 'src/api/models';
 
 const name = "[Clients]"
 export class ClietnPageAction {
-  static readonly type = '${name} clietnPage';
+  static readonly type = '${name} clietPage';
   constructor(public page: number, public size: number) { }
 }
 

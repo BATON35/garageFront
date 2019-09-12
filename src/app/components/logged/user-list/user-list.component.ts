@@ -8,11 +8,11 @@ import { PageUserDto } from 'src/api/models';
 import { PageEvent, MatDialog } from '@angular/material';
 
 @Component({
-  selector: "app-users",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.scss"]
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UserListComponent implements OnInit {
   displayedColumns: string[] = ["id", "userName", "email", "action", "action2"]
 
   @Select(state => state.users.userPage)
