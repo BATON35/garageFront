@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { LogoutAction } from "./../state/auth.state";
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngxs/store";
@@ -16,11 +17,13 @@ export class MenuComponent implements OnInit {
     .pipe(map(result => result.matches));
   constructor(
     public store: Store,
-    public breakpointObserver: BreakpointObserver
-  ) {}
+    public breakpointObserver: BreakpointObserver,
+    public router: Router
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   logout() {
     this.store.dispatch(new LogoutAction());
+    this.router.navigate(["/"])
   }
 }

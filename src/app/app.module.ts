@@ -16,7 +16,7 @@ import {
   MatIconModule,
   MatToolbarModule
 } from "@angular/material";
-import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin"
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [

@@ -1,9 +1,9 @@
 import { UserDto } from './../../../api/models/user-dto';
 import { UserControllerRestService } from "src/api/services";
 import { State, Action, StateContext, UpdateState } from "@ngxs/store";
-import { tap } from "rxjs/operators";
+import { tap, catchError } from "rxjs/operators";
 import { PageUserDto } from "src/api/models";
-import { UserStateModel } from '../state/user.state';
+import { empty } from 'rxjs';
 
 const name = "[Users]";
 export class UsersPageAction {
@@ -51,6 +51,7 @@ export class UsersState {
             size
           });
         })
+
       );
   }
   @Action(UsersDeleteAction)
@@ -69,6 +70,9 @@ export class UsersState {
       const page = ctx.getState().page
       const size = ctx.getState().size
       ctx.dispatch(new UsersPageAction(page, size))
+    }), catchError(error => {
+      console.log(error)
+      return empty();
     }));
   }
 

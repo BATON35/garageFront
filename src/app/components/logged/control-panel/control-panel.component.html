@@ -1,8 +1,11 @@
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="onTabChange($event)">
   <mat-tab label="Obsluga urzytkownika">
     <app-users></app-users>
   </mat-tab>
-  <mat-tab label="Obsluga clienta"> </mat-tab>
+  <mat-tab label="Obsluga clienta">
+    <app-client-list></app-client-list>
+  </mat-tab>
+
   <mat-tab label="Obsluga clienta"> </mat-tab>
   <mat-tab label="Obsluga clienta"> </mat-tab>
 </mat-tab-group>

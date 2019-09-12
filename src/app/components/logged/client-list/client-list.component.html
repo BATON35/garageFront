@@ -1,11 +1,11 @@
-<div *ngIf="users$ | async as users">
+<div *ngIf="clients$ | async as clients">
     <div class="flex-p">
-        <table mat-table [dataSource]="users.content" class="mat-elevation-z8">
+        <table mat-table [dataSource]="clients.content" class="mat-elevation-z8">
             <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="userName">
+            <ng-container matColumnDef="clientName">
                 <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{ element.name}} </mat-cell>
             </ng-container>
@@ -40,11 +40,11 @@
         <div>
             <div style="display:inline">
                 <button (click)="openModal()" type="submit" class="button" mat-raised-button color="primary">
-                    Dodaj urzytkownika
+                    Dodaj klienta
                 </button>
             </div>
             <div style="display:inline">
-                <mat-paginator (page)="changePage($event)" [length]="users.totalElements" [pageSize]="users.size"
+                <mat-paginator (page)="changePage($event)" [length]="clients.totalElements" [pageSize]="clients.size"
                     [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
             </div>
         </div>

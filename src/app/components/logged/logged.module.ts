@@ -19,7 +19,10 @@ import { UsersComponent } from "./users/users.component";
 import { NgxsModule } from "@ngxs/store";
 import { UsersState } from "./users.state";
 import { UserCreateComponent } from './user-create/user-create.component';
-import { MatGridListModule } from "@angular/material/grid-list"
+import { MatGridListModule } from "@angular/material/grid-list";
+import { ClientCreateComponent } from './client-create/client-create.component'
+import { ClientListComponent } from './client-list/client-list.component';
+import { ClientState } from './client.state';
 
 const routs: Routes = [
     {
@@ -29,7 +32,7 @@ const routs: Routes = [
     }
 ];
 @NgModule({
-    declarations: [ControlPanelComponent, UsersComponent, UserCreateComponent],
+    declarations: [ControlPanelComponent, UsersComponent, UserCreateComponent, ClientCreateComponent, ClientListComponent],
     imports: [
         BrowserModule,
         RouterModule.forChild(routs),
@@ -42,12 +45,12 @@ const routs: Routes = [
         MatTabsModule,
         MatTableModule,
         MatPaginatorModule,
-        NgxsModule.forFeature([UsersState]),
+        NgxsModule.forFeature([UsersState, ClientState]),
         MatIconModule,
         MatGridListModule,
         MatDialogModule
     ],
-    entryComponents: [ControlPanelComponent, UserCreateComponent],
+    entryComponents: [ControlPanelComponent, UserCreateComponent, ClientCreateComponent],
     providers: [AuthGuard]
 })
 export class LoggedModule { }

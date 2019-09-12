@@ -40,6 +40,6 @@ export class UsersComponent implements OnInit {
       width: "500px",
       data: user
     })
-
+    console.log(user)
   }
 }

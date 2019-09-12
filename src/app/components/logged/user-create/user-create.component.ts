@@ -1,10 +1,10 @@
+import { map } from 'rxjs/operators';
 import { UserDto } from './../../../../api/models/user-dto';
 import { UserUpdateAction } from './../users.state';
 import { Store } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
-import { LoginAction } from '../../state/auth.state';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -13,7 +13,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./user-create.component.scss']
 })
 export class UserCreateComponent implements OnInit {
-
+  model: {
+    name, password, email, roles
+  } = { name: null, password: null, email: null, roles: null }
   userForm = new FormGroup({});
   userFields: FormlyFieldConfig[] = [
     {
@@ -52,16 +54,22 @@ export class UserCreateComponent implements OnInit {
         Placeholder: "rola urzytkownika",
         description: "urzytkownik powinien posiadac role",
         require: false,
+        multiple: true,
         options: [
-          { value: "1", label: "Admin" },
-          { value: "2", label: "User" },
-          { value: "3", label: "Employee" }
+          { value: 'ROLE_ADMIN', label: "Admin" },
+          { value: 'ROLE_USER', label: "User" },
+          { value: 'ROLE_EMPLOYEE', label: "Employee" }
         ]
       }
     }
   ]
   constructor(public store: Store, public matDialogRef: MatDialogRef<UserCreateComponent>, @Inject(MAT_DIALOG_DATA) public userDto: UserDto) { }
+
   ngOnInit() {
+    console.log(this.userDto)
+    if (this.userDto) {
+      this.model = { name: this.userDto.name, email: this.userDto.email, password: this.userDto.password, roles: this.userDto.roles.map(role => role.name) }
+    }
   }
 
   submit() {
@@ -72,7 +80,9 @@ export class UserCreateComponent implements OnInit {
           name: this.userForm.value.name,
           password: this.userForm.value.password,
           email: this.userForm.value.email,
-          roles: [this.userForm.value.roles]
+          roles: this.userForm.value.roles.map(role => {
+            return { name: role }
+          })
         }
       )
     )

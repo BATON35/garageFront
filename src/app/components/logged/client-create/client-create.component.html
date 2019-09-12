@@ -1,0 +1,9 @@
+<form [formGroup]="clientForm" (ngSubmit)="submit()">
+    <formly-form [fields]="clientFields" [form]="clientForm" [model]="model">
+        <div class="group">
+            <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!clientForm.valid">
+                Dodaj
+            </button>
+        </div>
+    </formly-form>
+</form>
