@@ -28,7 +28,7 @@
       <ng-container matColumnDef="addVehicle">
         <mat-header-cell *matHeaderCellDef> Dodaj pojazd </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button (click)="addVehicle(vehicle)" mat-icon-button color="primary">
+          <button (click)="addVehicle(null, element.id)" mat-icon-button color="primary">
             <mat-icon>directions_car</mat-icon>
           </button>
         </mat-cell>
@@ -43,7 +43,34 @@
       </ng-container>
       <ng-container matColumnDef="expandedDetail">
         <mat-cell *matCellDef="let detail">
-          {{detail.name}}
+          <table mat-table [dataSource]="detail.vehicles" class="mat-elevation-z8" multiTemplateDataRows>
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="brand">
+              <mat-header-cell *matHeaderCellDef> Marka </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{ element.brand }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="numberPlate">
+              <mat-header-cell *matHeaderCellDef> model </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{ element.numberPlate }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="update">
+              <mat-header-cell *matHeaderCellDef> Zmien Dane </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <button (click)="updateVehicle(element)" mat-icon-button color="primary">
+                  <mat-icon>update</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedVehiclesColumns">
+
+            </mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedVehiclesColumns;">
+
+            </mat-row>
+          </table>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

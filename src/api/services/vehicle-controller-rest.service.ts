@@ -18,8 +18,8 @@ import { VehicleDto } from '../models/vehicle-dto';
 })
 class VehicleControllerRestService extends __BaseService {
   static readonly getListUsingGET3Path = '/api/vehicles';
-  static readonly saveUsingPOST2Path = '/api/vehicles';
   static readonly updateUsingPUT2Path = '/api/vehicles';
+  static readonly saveUsingPOST2Path = '/api/vehicles/{clientId}';
   static readonly getByIdUsingGET3Path = '/api/vehicles/{id}';
   static readonly deleteUsingDELETE2Path = '/api/vehicles/{id}';
 
@@ -106,42 +106,6 @@ class VehicleControllerRestService extends __BaseService {
    * @param vehicleDto vehicleDto
    * @return OK
    */
-  saveUsingPOST2Response(vehicleDto: VehicleDto): __Observable<__StrictHttpResponse<VehicleDto>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = vehicleDto;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/vehicles`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<VehicleDto>;
-      })
-    );
-  }
-  /**
-   * @param vehicleDto vehicleDto
-   * @return OK
-   */
-  saveUsingPOST2(vehicleDto: VehicleDto): __Observable<VehicleDto> {
-    return this.saveUsingPOST2Response(vehicleDto).pipe(
-      __map(_r => _r.body as VehicleDto)
-    );
-  }
-
-  /**
-   * @param vehicleDto vehicleDto
-   * @return OK
-   */
   updateUsingPUT2Response(vehicleDto: VehicleDto): __Observable<__StrictHttpResponse<VehicleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -170,6 +134,53 @@ class VehicleControllerRestService extends __BaseService {
    */
   updateUsingPUT2(vehicleDto: VehicleDto): __Observable<VehicleDto> {
     return this.updateUsingPUT2Response(vehicleDto).pipe(
+      __map(_r => _r.body as VehicleDto)
+    );
+  }
+
+  /**
+   * @param params The `VehicleControllerRestService.SaveUsingPOST2Params` containing the following parameters:
+   *
+   * - `vehicleDto`: vehicleDto
+   *
+   * - `clientId`: clientId
+   *
+   * @return OK
+   */
+  saveUsingPOST2Response(params: VehicleControllerRestService.SaveUsingPOST2Params): __Observable<__StrictHttpResponse<VehicleDto>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = params.vehicleDto;
+
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/vehicles/${params.clientId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<VehicleDto>;
+      })
+    );
+  }
+  /**
+   * @param params The `VehicleControllerRestService.SaveUsingPOST2Params` containing the following parameters:
+   *
+   * - `vehicleDto`: vehicleDto
+   *
+   * - `clientId`: clientId
+   *
+   * @return OK
+   */
+  saveUsingPOST2(params: VehicleControllerRestService.SaveUsingPOST2Params): __Observable<VehicleDto> {
+    return this.saveUsingPOST2Response(params).pipe(
       __map(_r => _r.body as VehicleDto)
     );
   }
@@ -258,6 +269,22 @@ module VehicleControllerRestService {
     pageSize?: number;
     pageNumber?: number;
     offset?: number;
+  }
+
+  /**
+   * Parameters for saveUsingPOST2
+   */
+  export interface SaveUsingPOST2Params {
+
+    /**
+     * vehicleDto
+     */
+    vehicleDto: VehicleDto;
+
+    /**
+     * clientId
+     */
+    clientId: number;
   }
 }
 

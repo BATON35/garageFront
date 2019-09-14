@@ -1,6 +1,6 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
-import { VehicleUpdateAction } from './../vehicle.state';
+import { VehicleUpdateAction, VehicleCreateAction } from './../vehicle.state';
 import { Store } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -45,20 +45,34 @@ export class VehicleCreateComponent implements OnInit {
   ]
   constructor(public store: Store,
     public matDialogRef: MatDialogRef<UserCreateComponent>,
-    @Inject(MAT_DIALOG_DATA) public vehicleDto: VehicleDto) { }
+    @Inject(MAT_DIALOG_DATA) public vehicle: any) { }
 
   ngOnInit() {
   }
   submit() {
-    this.store.dispatch(
-      new VehicleUpdateAction(
-        {
-          id: this.vehicleDto !== null ? this.vehicleDto.id : null,
-          brand: this.vehicleForm.value.brand,
-          model: this.vehicleForm.value.model,
-          numberPlate: this.vehicleForm.value.numberPlate
-        }
+    console.log(this.vehicle)
+    if (this.vehicle.vehicleDto) {
+      this.store.dispatch(
+        new VehicleUpdateAction(
+          {
+            id: this.vehicle.vehicleDto.id,
+            brand: this.vehicleForm.value.brand,
+            model: this.vehicleForm.value.model,
+            numberPlate: this.vehicleForm.value.numberPlate
+          }
+        )
       )
-    )
+    } else {
+      this.store.dispatch(
+        new VehicleCreateAction(
+          {
+            brand: this.vehicleForm.value.brand,
+            model: this.vehicleForm.value.model,
+            numberPlate: this.vehicleForm.value.numberPlate
+          }, this.vehicle.client
+        )
+      )
+    }
+    this.matDialogRef.close()
   }
 }

@@ -11,13 +11,14 @@ export class UsersPageAction {
   constructor(public page: number, public size: number) { }
 }
 
+
 export class UsersDeleteAction {
-  static readonly type = '${name} add item';
+  static readonly type = '${name} delete user';
   constructor(public id: number) { }
 }
 
 export class UserUpdateAction {
-  static readonly type = '${name} update item';
+  static readonly type = '${name} update user';
   constructor(public userDto: UserDto) { }
 }
 

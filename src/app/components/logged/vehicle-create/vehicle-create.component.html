@@ -1,5 +1,5 @@
 <form [formGroup]="vehicleForm" (ngSubmit)="submit()">
-    <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="model">
+    <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="vehicle.vehicleDto">
         <div class="group">
             <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid">
                 Dodaj

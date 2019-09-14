@@ -12,7 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./user-create.component.scss']
 })
 export class UserCreateComponent implements OnInit {
-
+  model: any;
   userForm = new FormGroup({});
   userFields: FormlyFieldConfig[] = [
     {
@@ -64,7 +64,10 @@ export class UserCreateComponent implements OnInit {
 
   ngOnInit() {
     if (this.userDto) {
-      this.model = { name: this.userDto.name, email: this.userDto.email, password: this.userDto.password, roles: this.userDto.roles.map(role => role.name) }
+      this.model = {
+        name: this.userDto.name, email: this.userDto.email, password: this.userDto.password,
+        roles: this.userDto.roles.map(role => role.name)
+      }
     }
   }
 

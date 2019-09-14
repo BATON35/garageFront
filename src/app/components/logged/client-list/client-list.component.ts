@@ -1,3 +1,4 @@
+import { VehicleCreateComponent } from './../vehicle-create/vehicle-create.component';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
 import { MatDialog } from '@angular/material';
@@ -7,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageClientDto, ClientDto } from 'src/api/models';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { VehicleCreateComponent } from '../vehicle-create/vehicle-create.component';
 
 @Component({
   selector: 'app-client-list',
@@ -23,6 +23,7 @@ import { VehicleCreateComponent } from '../vehicle-create/vehicle-create.compone
 })
 export class ClientListComponent implements OnInit {
   displayedColumns: string[] = ["id", "name", "email", "vehicles", "update", "addVehicle", "delete"]
+  displayedVehiclesColumns: string[] = ["id", "brand", "numberPlate", "update"]
   // expandedElement: any
   // isExpansionDetailRow = (i: number, row: Object) => {
   //   return row.hasOwnProperty('name');
@@ -55,11 +56,22 @@ export class ClientListComponent implements OnInit {
       data: client
     })
   }
-  addVehicle(vehicle: VehicleDto) {
+  addVehicle(vehicle: VehicleDto, clientId: number) {
     console.log("client list component !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     this.matDialog.open(VehicleCreateComponent, {
       width: "500px",
-      data: vehicle
+      data: {
+        vehicleDto: vehicle,
+        client: clientId
+      }
+    })
+  }
+  updateVehicle(vehicle: VehicleDto) {
+    this.matDialog.open(VehicleCreateComponent, {
+      width: "500px",
+      data: {
+        vehicleDto: vehicle
+      }
     })
   }
 

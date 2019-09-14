@@ -1,3 +1,4 @@
+import { VehicleState } from './vehicle.state';
 import { VehicleCreateComponent } from './vehicle-create/vehicle-create.component';
 import { AuthGuard } from "./../../guart/auth.guard";
 import { ControlPanelComponent } from "./control-panel/control-panel.component";
@@ -54,7 +55,7 @@ const routs: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxsModule.forFeature([UsersState, ClientState]),
+    NgxsModule.forFeature([UsersState, ClientState, VehicleState]),
     MatIconModule,
     MatGridListModule,
     MatDialogModule
