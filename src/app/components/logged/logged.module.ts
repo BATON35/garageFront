@@ -1,3 +1,4 @@
+import { VehicleCreateComponent } from './vehicle-create/vehicle-create.component';
 import { AuthGuard } from "./../../guart/auth.guard";
 import { ControlPanelComponent } from "./control-panel/control-panel.component";
 import { BrowserModule } from "@angular/platform-browser";
@@ -37,7 +38,9 @@ const routs: Routes = [
     UserListComponent,
     UserCreateComponent,
     ClientCreateComponent,
-    ClientListComponent
+    ClientListComponent,
+    VehicleCreateComponent
+
   ],
   imports: [
     BrowserModule,
@@ -59,8 +62,10 @@ const routs: Routes = [
   entryComponents: [
     ControlPanelComponent,
     UserCreateComponent,
-    ClientCreateComponent
+    ClientCreateComponent,
+    ClientListComponent,
+    VehicleCreateComponent
   ],
   providers: [AuthGuard]
 })
-export class LoggedModule {}
+export class LoggedModule { }

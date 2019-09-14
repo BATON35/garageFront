@@ -5,7 +5,7 @@ import { Store, Select } from "@ngxs/store";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from 'rxjs';
 import { PageUserDto } from 'src/api/models';
-import { PageEvent, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +13,7 @@ import { PageEvent, MatDialog } from '@angular/material';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = ["id", "userName", "email", "action", "action2"]
+  displayedColumns: string[] = ["id", "userName", "email", "update", "delete"]
 
   @Select(state => state.users.userPage)
   users$: Observable<PageUserDto>
@@ -24,7 +24,6 @@ export class UserListComponent implements OnInit {
     this.store.dispatch(new UsersPageAction(0, 5));
   }
   changePage(event) {
-    console.log(event)
     this.store.dispatch(new UsersPageAction(event.pageIndex, event.pageSize))
   }
   delete(id) {
@@ -40,6 +39,5 @@ export class UserListComponent implements OnInit {
       width: "500px",
       data: user
     })
-    console.log(user)
   }
 }

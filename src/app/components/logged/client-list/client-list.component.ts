@@ -1,18 +1,33 @@
+import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
 import { MatDialog } from '@angular/material';
-import { ClietnPageAction } from './../client.state';
+import { ClietnPageAction, ClientDeleteAction, ClientUpdateAction } from './../client.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageClientDto } from 'src/api/models';
+import { PageClientDto, ClientDto } from 'src/api/models';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { VehicleCreateComponent } from '../vehicle-create/vehicle-create.component';
 
 @Component({
   selector: 'app-client-list',
   templateUrl: './client-list.component.html',
-  styleUrls: ['./client-list.component.scss']
+  styleUrls: ['./client-list.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class ClientListComponent implements OnInit {
-  displayedColumns: string[] = ["id", "clientName", "email", "action", "action2"]
+  displayedColumns: string[] = ["id", "name", "email", "vehicles", "update", "addVehicle", "delete"]
+  // expandedElement: any
+  // isExpansionDetailRow = (i: number, row: Object) => {
+  //   return row.hasOwnProperty('name');
+
+  // }
   @Select(state => state.client.pageClientDto)
   clients$: Observable<PageClientDto>
 
@@ -22,8 +37,30 @@ export class ClientListComponent implements OnInit {
     this.store.dispatch(new ClietnPageAction(0, 5))
   }
 
+  changePage(event) {
+    this.store.dispatch(new ClietnPageAction(event.pageIndex, event.pageSize))
+  }
+
   openModal() {
     this.matDialog.open(ClientCreateComponent, { width: "500px" })
+  }
+
+  delete(id) {
+    this.store.dispatch(new ClientDeleteAction(id))
+  }
+
+  update(client: ClientDto) {
+    this.matDialog.open(ClientCreateComponent, {
+      width: "500px",
+      data: client
+    })
+  }
+  addVehicle(vehicle: VehicleDto) {
+    console.log("client list component !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    this.matDialog.open(VehicleCreateComponent, {
+      width: "500px",
+      data: vehicle
+    })
   }
 
 }

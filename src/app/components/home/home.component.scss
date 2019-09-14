@@ -20,12 +20,19 @@ body {
   max-width: 525px;
   min-height: 670px;
   position: relative;
+  color: blue;
 }
 .login-html {
-  border: 20px solid rgb(147, 243, 26);
+  border: 20px solid rgb(17, 13, 235);
   width: 100%;
   height: 100%;
   position: absolute;
   padding: 90px 70px 50px 70px;
-  background: rgba(232, 235, 211, 0.9);
+  background: rgba(203, 212, 223, 0.9);
+}
+.group {
+  margin-top: 35px;
+}
+.test {
+  color: red;
 }

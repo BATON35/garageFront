@@ -13,22 +13,19 @@
         <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef> Akcja </mat-header-cell>
+      <ng-container matColumnDef="update">
+        <mat-header-cell *matHeaderCellDef> Zmien dane </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button (click)="delete(element.id)" mat-icon-button color="warn">
-            <mat-icon>delete_forever</mat-icon>
-          </button>
           <button (click)="update(element)" mat-icon-button color="primary">
             <mat-icon>update</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="action2">
-        <mat-header-cell *matHeaderCellDef> Akcja2 </mat-header-cell>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-icon-button color="warn">
+          <button (click)="delete(element.id)" mat-icon-button color="warn">
             <mat-icon>delete_forever</mat-icon>
           </button>
         </mat-cell>
@@ -39,23 +36,13 @@
     </table>
     <div>
       <div style="display:inline">
-        <button
-          (click)="openModal()"
-          type="submit"
-          class="button"
-          mat-raised-button
-          color="primary"
-        >
+        <button (click)="openModal()" type="submit" class="button" mat-raised-button color="primary">
           Dodaj urzytkownika
         </button>
       </div>
       <div style="display:inline">
-        <mat-paginator
-          (page)="changePage($event)"
-          [length]="users.totalElements"
-          [pageSize]="users.size"
-          [pageSizeOptions]="[5, 10, 20]"
-        ></mat-paginator>
+        <mat-paginator (page)="changePage($event)" [length]="users.totalElements" [pageSize]="users.size"
+          [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
       </div>
     </div>
   </div>

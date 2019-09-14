@@ -75,5 +75,4 @@ export class UsersState {
       return empty();
     }));
   }
-
 }

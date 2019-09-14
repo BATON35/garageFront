@@ -11,7 +11,6 @@ import { NgxsModule } from "@ngxs/store";
 import { AuthState } from "./state/auth.state";
 import { HttpClientModule } from "@angular/common/http";
 import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
-import { MenuComponent } from "./menu/menu.component";
 const routs: Routes = [
   {
     path: "login",
@@ -38,4 +37,4 @@ const routs: Routes = [
   ],
   entryComponents: [HomeComponent]
 })
-export class PublicModule {}
+export class PublicModule { }

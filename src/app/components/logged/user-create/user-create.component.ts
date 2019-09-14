@@ -1,4 +1,3 @@
-import { map } from 'rxjs/operators';
 import { UserDto } from './../../../../api/models/user-dto';
 import { UserUpdateAction } from './../users.state';
 import { Store } from '@ngxs/store';
@@ -13,9 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./user-create.component.scss']
 })
 export class UserCreateComponent implements OnInit {
-  model: {
-    name, password, email, roles
-  } = { name: null, password: null, email: null, roles: null }
+
   userForm = new FormGroup({});
   userFields: FormlyFieldConfig[] = [
     {
@@ -66,7 +63,6 @@ export class UserCreateComponent implements OnInit {
   constructor(public store: Store, public matDialogRef: MatDialogRef<UserCreateComponent>, @Inject(MAT_DIALOG_DATA) public userDto: UserDto) { }
 
   ngOnInit() {
-    console.log(this.userDto)
     if (this.userDto) {
       this.model = { name: this.userDto.name, email: this.userDto.email, password: this.userDto.password, roles: this.userDto.roles.map(role => role.name) }
     }
