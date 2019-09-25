@@ -25,6 +25,7 @@ import { ClientCreateComponent } from "./client-create/client-create.component";
 import { ClientListComponent } from "./client-list/client-list.component";
 import { ClientState } from "./client.state";
 import { UserListComponent } from "./user-list/user-list.component";
+import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.component';
 
 const routs: Routes = [
   {
@@ -40,7 +41,8 @@ const routs: Routes = [
     UserCreateComponent,
     ClientCreateComponent,
     ClientListComponent,
-    VehicleCreateComponent
+    VehicleCreateComponent,
+    VehicleDetailsComponent
 
   ],
   imports: [
@@ -65,7 +67,8 @@ const routs: Routes = [
     UserCreateComponent,
     ClientCreateComponent,
     ClientListComponent,
-    VehicleCreateComponent
+    VehicleCreateComponent,
+    VehicleDetailsComponent
   ],
   providers: [AuthGuard]
 })

@@ -1,6 +1,6 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
-import { VehicleUpdateAction, VehicleCreateAction } from './../vehicle.state';
+import { VehicleUpdateAction, VehicleCreateAction, VehicleDeleteAction } from './../vehicle.state';
 import { Store } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -50,7 +50,6 @@ export class VehicleCreateComponent implements OnInit {
   ngOnInit() {
   }
   submit() {
-    console.log(this.vehicle)
     if (this.vehicle.vehicleDto) {
       this.store.dispatch(
         new VehicleUpdateAction(
@@ -74,5 +73,8 @@ export class VehicleCreateComponent implements OnInit {
       )
     }
     this.matDialogRef.close()
+  }
+  deleteVehicle(id) {
+    this.store.dispatch(new VehicleDeleteAction(id))
   }
 }

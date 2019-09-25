@@ -47,7 +47,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       templateOptions: {
         label: "nazwa urzytkownika",
         placeholder: "nazwa urzytkownika",
-        required: true
+        required: true,
+        minLength: 3
       }
     },
     {
@@ -57,7 +58,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         type: "password",
         label: "haslo",
         placeholder: "haslo",
-        required: true
+        required: true,
+        minLength: 6,
+        maxLength: 34
       }
     },
     {
@@ -73,7 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         fieldMatch: {
           expression: control =>
             control.value === this.rejestrationForm.value.password,
-          message: "haslo nie poprawne"
+          message: "hasla nie są identyczne"
         }
       },
       expressionProperties: {
@@ -98,10 +101,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       key: "email",
       type: "input",
       templateOptions: {
+        validate: true,
+        pattern: "[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*",
         type: "emial",
         label: "email urzytkownika",
         placeholder: "email urzytkownika",
-        required: false
+        required: true
+      },
+      validation: {
+        messages: {
+          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym adresem email`
+        }
       }
     },
     {
@@ -114,9 +124,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }
   ];
-  constructor(public store: Store, public router: Router) {}
+  constructor(public store: Store, public router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnDestroy(): void {
     this.onDestroy$.next();

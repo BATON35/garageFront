@@ -40,6 +40,11 @@ export class ClientState {
 
   @Action(ClietnPageAction)
   page(ctx: StateContext<ClientStateModel>, { page, size }: ClietnPageAction) {
+    if (!page && !size) {
+      page = ctx.getState().page
+      size = ctx.getState().size
+
+    }
     return this.clientService
       .getListUsingGET({ size, page }).pipe(tap(
         value => {

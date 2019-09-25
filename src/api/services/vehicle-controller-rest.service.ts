@@ -17,11 +17,11 @@ import { VehicleDto } from '../models/vehicle-dto';
   providedIn: 'root',
 })
 class VehicleControllerRestService extends __BaseService {
-  static readonly getListUsingGET3Path = '/api/vehicles';
+  static readonly getListUsingGET4Path = '/api/vehicles';
   static readonly updateUsingPUT2Path = '/api/vehicles';
   static readonly saveUsingPOST2Path = '/api/vehicles/{clientId}';
   static readonly getByIdUsingGET3Path = '/api/vehicles/{id}';
-  static readonly deleteUsingDELETE2Path = '/api/vehicles/{id}';
+  static readonly deleteUsingDELETE3Path = '/api/vehicles/{id}';
 
   constructor(
     config: __Configuration,
@@ -31,7 +31,7 @@ class VehicleControllerRestService extends __BaseService {
   }
 
   /**
-   * @param params The `VehicleControllerRestService.GetListUsingGET3Params` containing the following parameters:
+   * @param params The `VehicleControllerRestService.GetListUsingGET4Params` containing the following parameters:
    *
    * - `unpaged`:
    *
@@ -49,7 +49,7 @@ class VehicleControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET3Response(params: VehicleControllerRestService.GetListUsingGET3Params): __Observable<__StrictHttpResponse<PageVehicleDto>> {
+  getListUsingGET4Response(params: VehicleControllerRestService.GetListUsingGET4Params): __Observable<__StrictHttpResponse<PageVehicleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -78,7 +78,7 @@ class VehicleControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param params The `VehicleControllerRestService.GetListUsingGET3Params` containing the following parameters:
+   * @param params The `VehicleControllerRestService.GetListUsingGET4Params` containing the following parameters:
    *
    * - `unpaged`:
    *
@@ -96,8 +96,8 @@ class VehicleControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET3(params: VehicleControllerRestService.GetListUsingGET3Params): __Observable<PageVehicleDto> {
-    return this.getListUsingGET3Response(params).pipe(
+  getListUsingGET4(params: VehicleControllerRestService.GetListUsingGET4Params): __Observable<PageVehicleDto> {
+    return this.getListUsingGET4Response(params).pipe(
       __map(_r => _r.body as PageVehicleDto)
     );
   }
@@ -224,7 +224,7 @@ class VehicleControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE2Response(id?: number): __Observable<__StrictHttpResponse<null>> {
+  deleteUsingDELETE3Response(id?: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -249,8 +249,8 @@ class VehicleControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE2(id?: number): __Observable<null> {
-    return this.deleteUsingDELETE2Response(id).pipe(
+  deleteUsingDELETE3(id?: number): __Observable<null> {
+    return this.deleteUsingDELETE3Response(id).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -259,9 +259,9 @@ class VehicleControllerRestService extends __BaseService {
 module VehicleControllerRestService {
 
   /**
-   * Parameters for getListUsingGET3
+   * Parameters for getListUsingGET4
    */
-  export interface GetListUsingGET3Params {
+  export interface GetListUsingGET4Params {
     unpaged?: boolean;
     sortUnsorted?: boolean;
     sortSorted?: boolean;

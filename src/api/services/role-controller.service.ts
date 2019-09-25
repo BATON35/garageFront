@@ -16,7 +16,7 @@ import { RoleDto } from '../models/role-dto';
   providedIn: 'root',
 })
 class RoleControllerService extends __BaseService {
-  static readonly getListUsingGET1Path = '/api/roles';
+  static readonly getListUsingGET2Path = '/api/roles';
   static readonly getByIdUsingGET1Path = '/api/roles/{id}';
 
   constructor(
@@ -29,7 +29,7 @@ class RoleControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getListUsingGET1Response(): __Observable<__StrictHttpResponse<Array<RoleDto>>> {
+  getListUsingGET2Response(): __Observable<__StrictHttpResponse<Array<RoleDto>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -53,8 +53,8 @@ class RoleControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getListUsingGET1(): __Observable<Array<RoleDto>> {
-    return this.getListUsingGET1Response().pipe(
+  getListUsingGET2(): __Observable<Array<RoleDto>> {
+    return this.getListUsingGET2Response().pipe(
       __map(_r => _r.body as Array<RoleDto>)
     );
   }

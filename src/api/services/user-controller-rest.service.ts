@@ -19,9 +19,10 @@ import { PageUserDto } from '../models/page-user-dto';
 class UserControllerRestService extends __BaseService {
   static readonly saveUsingPOST1Path = '/api/users';
   static readonly updateUsingPUT1Path = '/api/users';
+  static readonly userInfoUsingGETPath = '/api/users/info';
   static readonly getByIdUsingGET2Path = '/api/users/{id}';
-  static readonly deleteUsingDELETE1Path = '/api/users/{id}';
-  static readonly getListUsingGET2Path = '/api/users/{page}/{size}';
+  static readonly deleteUsingDELETE2Path = '/api/users/{id}';
+  static readonly getListUsingGET3Path = '/api/users/{page}/{size}';
 
   constructor(
     config: __Configuration,
@@ -103,6 +104,39 @@ class UserControllerRestService extends __BaseService {
   }
 
   /**
+   * @return OK
+   */
+  userInfoUsingGETResponse(): __Observable<__StrictHttpResponse<UserDto>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/users/info`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<UserDto>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  userInfoUsingGET(): __Observable<UserDto> {
+    return this.userInfoUsingGETResponse().pipe(
+      __map(_r => _r.body as UserDto)
+    );
+  }
+
+  /**
    * @param id id
    * @return OK
    */
@@ -141,7 +175,7 @@ class UserControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE1Response(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteUsingDELETE2Response(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -166,14 +200,14 @@ class UserControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE1(id: number): __Observable<null> {
-    return this.deleteUsingDELETE1Response(id).pipe(
+  deleteUsingDELETE2(id: number): __Observable<null> {
+    return this.deleteUsingDELETE2Response(id).pipe(
       __map(_r => _r.body as null)
     );
   }
 
   /**
-   * @param params The `UserControllerRestService.GetListUsingGET2Params` containing the following parameters:
+   * @param params The `UserControllerRestService.GetListUsingGET3Params` containing the following parameters:
    *
    * - `size`: size
    *
@@ -181,7 +215,7 @@ class UserControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET2Response(params: UserControllerRestService.GetListUsingGET2Params): __Observable<__StrictHttpResponse<PageUserDto>> {
+  getListUsingGET3Response(params: UserControllerRestService.GetListUsingGET3Params): __Observable<__StrictHttpResponse<PageUserDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -205,7 +239,7 @@ class UserControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param params The `UserControllerRestService.GetListUsingGET2Params` containing the following parameters:
+   * @param params The `UserControllerRestService.GetListUsingGET3Params` containing the following parameters:
    *
    * - `size`: size
    *
@@ -213,8 +247,8 @@ class UserControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET2(params: UserControllerRestService.GetListUsingGET2Params): __Observable<PageUserDto> {
-    return this.getListUsingGET2Response(params).pipe(
+  getListUsingGET3(params: UserControllerRestService.GetListUsingGET3Params): __Observable<PageUserDto> {
+    return this.getListUsingGET3Response(params).pipe(
       __map(_r => _r.body as PageUserDto)
     );
   }
@@ -223,9 +257,9 @@ class UserControllerRestService extends __BaseService {
 module UserControllerRestService {
 
   /**
-   * Parameters for getListUsingGET2
+   * Parameters for getListUsingGET3
    */
-  export interface GetListUsingGET2Params {
+  export interface GetListUsingGET3Params {
 
     /**
      * size

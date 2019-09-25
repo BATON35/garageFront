@@ -42,7 +42,7 @@ export class UsersState {
   @Action(UsersPageAction)
   add(ctx: StateContext<UsersStateModel>, { page, size }: UsersPageAction) {
     return this.userService
-      .getListUsingGET2({ size: size, page: page })
+      .getListUsingGET3({ size: size, page: page })
       .pipe(
         tap(value => {
           console.log(value)
@@ -58,7 +58,7 @@ export class UsersState {
   @Action(UsersDeleteAction)
   delete(ctx: StateContext<UsersStateModel>, { id }: UsersDeleteAction) {
     return this.userService
-      .deleteUsingDELETE1(id).pipe(tap(value => {
+      .deleteUsingDELETE2(id).pipe(tap(value => {
         const page = ctx.getState().page
         const size = ctx.getState().size
         ctx.dispatch(new UsersPageAction(page, size))

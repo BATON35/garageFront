@@ -11,27 +11,33 @@ const fullName = "[" + name + "]";
 
 export class LoginAction {
   static readonly type = "${fullName} Login";
-  constructor(public userName: string, public password: string) {}
+  constructor(public userName: string, public password: string) { }
 }
 
 export class RegistrationAction {
   static readonly type = "${fullName} Registration";
-  constructor(public userDto: UserDto) {}
+  constructor(public userDto: UserDto) { }
 }
 
 export class LogoutAction {
   static readonly type = "${fullName} Logout";
-  constructor() {}
+  constructor() { }
+}
+export class CurrentUserAction {
+  static readonly type = "${fullName} UserInfo";
+  constructor() { }
 }
 
 export class AuthStateModel {
   public jwtToken: string;
+  public currentUser: UserDto
 }
 
 @State<AuthStateModel>({
   name: "auth",
   defaults: {
-    jwtToken: ""
+    jwtToken: "",
+    currentUser: {}
   }
 })
 export class AuthState {
@@ -39,7 +45,7 @@ export class AuthState {
     public httpClient: HttpClient,
     public userControllerRestService: UserControllerRestService,
     public router: Router
-  ) {}
+  ) { }
   @Action(LoginAction)
   login(
     ctx: StateContext<AuthStateModel>,
@@ -55,10 +61,23 @@ export class AuthState {
           ctx.patchState({
             jwtToken: token
           });
+          ctx.dispatch(new CurrentUserAction())
           this.router.navigate(["/panel"]);
         })
       );
   }
+  @Action(CurrentUserAction)
+  getUserInfo(
+    ctx: StateContext<AuthStateModel>, CurrentUserAction) {
+    return this.userControllerRestService.userInfoUsingGET().pipe(tap(value => {
+      console.log("!!!!!!!!!!!!!     !!!!!!!!!!!!!!!!!")
+      ctx.patchState({
+        currentUser: value
+      })
+    }))
+  }
+
+
   @Selector()
   static getToken(auth: AuthStateModel) {
     return auth.jwtToken;

@@ -1,29 +1,24 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport="true"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="!(isHandset$ | async)"
-  >
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
     <mat-nav-list>
       <a mat-list-item routerLink="/login">Login</a>
       <a mat-list-item routerLink="/panel">Panel</a>
-      <a mat-list-item (click)="logout()">Wyloguj</a>
+      <a mat-list-item (click)="logout()" *ngIf="currentUser">
+        Wyloguj
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="!drawer.toggle()"
-      >
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="!drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span class="margin"> Menu</span>
+      <span *ngIf="user$ | async as user" style="text-align: right">
+        {{user.name}} {{user.name}}
+      </span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

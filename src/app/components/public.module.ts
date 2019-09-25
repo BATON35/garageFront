@@ -17,12 +17,36 @@ const routs: Routes = [
     component: HomeComponent
   }
 ];
+
+export function minlengthValidationMessage(err, field) {
+  return `Pole powinno zawierać przynajmniej  ${field.templateOptions.minLength} znakow`;
+}
+
+export function maxlengthValidationMessage(err, field) {
+  return `Pole może zawierac ${field.templateOptions.maxLength} znaków`;
+}
+
+export function minValidationMessage(err, field) {
+  return `Ta wartosc powinna byc wieksza niż ${field.templateOptions.min}`;
+}
+
+export function maxValidationMessage(err, field) {
+  return `Ta wartosc powinna byc mniejsza niż ${field.templateOptions.max}`;
+}
 @NgModule({
   declarations: [HomeComponent],
   imports: [
     BrowserModule,
     RouterModule.forChild(routs),
-    FormlyModule.forRoot(),
+    FormlyModule.forRoot({
+      validationMessages: [
+        { name: 'required', message: 'To pole nie może pozostac puste' },
+        { name: 'minlength', message: minlengthValidationMessage },
+        { name: 'maxlength', message: maxlengthValidationMessage },
+        { name: 'min', message: minValidationMessage },
+        { name: 'max', message: maxValidationMessage },
+      ],
+    }),
     FormlyMaterialModule,
     FormsModule,
     ReactiveFormsModule,

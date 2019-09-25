@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
   }
   openModal() {
     this.matDialog.open(UserCreateComponent, {
-      width: "500px"
+      width: "800px"
     })
   }
   update(user: UserDto) {

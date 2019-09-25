@@ -4,9 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
 import { ClientControllerRestService } from './services/client-controller-rest.service';
+import { FileConrollerService } from './services/file-conroller.service';
 import { RoleControllerService } from './services/role-controller.service';
 import { UserControllerRestService } from './services/user-controller-rest.service';
 import { VehicleControllerRestService } from './services/vehicle-controller-rest.service';
+import { MailTemplateControlerRestService } from './services/mail-template-controler-rest.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -22,9 +24,11 @@ import { VehicleControllerRestService } from './services/vehicle-controller-rest
   providers: [
     ApiConfiguration,
     ClientControllerRestService,
+    FileConrollerService,
     RoleControllerService,
     UserControllerRestService,
-    VehicleControllerRestService
+    VehicleControllerRestService,
+    MailTemplateControlerRestService
   ],
 })
 export class ApiModule {

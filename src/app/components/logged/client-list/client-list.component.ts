@@ -1,3 +1,4 @@
+import { VehicleDetailsComponent } from './../vehicle-details/vehicle-details.component';
 import { VehicleCreateComponent } from './../vehicle-create/vehicle-create.component';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageClientDto, ClientDto } from 'src/api/models';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { VehicleDeleteAction } from '../vehicle.state';
 
 @Component({
   selector: 'app-client-list',
@@ -22,13 +24,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class ClientListComponent implements OnInit {
-  displayedColumns: string[] = ["id", "name", "email", "vehicles", "update", "addVehicle", "delete"]
-  displayedVehiclesColumns: string[] = ["id", "brand", "numberPlate", "update"]
-  // expandedElement: any
-  // isExpansionDetailRow = (i: number, row: Object) => {
-  //   return row.hasOwnProperty('name');
+  displayedColumns: string[] = ["id", "name", "email", "update", "addVehicle", "delete"]
+  displayedVehiclesColumns: string[] = ["id", "brand", "model", "numberPlate", "update", "delete", "details"]
 
-  // }
   @Select(state => state.client.pageClientDto)
   clients$: Observable<PageClientDto>
 
@@ -57,7 +55,6 @@ export class ClientListComponent implements OnInit {
     })
   }
   addVehicle(vehicle: VehicleDto, clientId: number) {
-    console.log("client list component !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     this.matDialog.open(VehicleCreateComponent, {
       width: "500px",
       data: {
@@ -74,5 +71,13 @@ export class ClientListComponent implements OnInit {
       }
     })
   }
-
+  deleteVehicle(id) {
+    this.store.dispatch(new VehicleDeleteAction(id))
+  }
+  updateVehicleDetails(vehicle: VehicleDto) {
+    this.matDialog.open(VehicleDetailsComponent, {
+      width: "500px",
+      data: vehicle
+    })
+  }
 }
