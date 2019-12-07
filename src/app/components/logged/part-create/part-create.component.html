@@ -1,0 +1,10 @@
+<form [formGroup]="partForm" (ngSubmit)="submit()">
+    <formly-form [fields]="partFields" [form]="partForm" [model]="partDto">
+        <div class="group">
+            <button id="savePart" type="submit" class="button" mat-raised-button color="primary"
+                [disabled]="!partForm.valid">
+                Dodaj
+            </button>
+        </div>
+    </formly-form>
+</form>

@@ -17,12 +17,13 @@ import { PageUserDto } from '../models/page-user-dto';
   providedIn: 'root',
 })
 class UserControllerRestService extends __BaseService {
-  static readonly saveUsingPOST1Path = '/api/users';
-  static readonly updateUsingPUT1Path = '/api/users';
+  static readonly saveUserUsingPOSTPath = '/api/users';
+  static readonly updateUserUsingPUTPath = '/api/users';
   static readonly userInfoUsingGETPath = '/api/users/info';
-  static readonly getByIdUsingGET2Path = '/api/users/{id}';
-  static readonly deleteUsingDELETE2Path = '/api/users/{id}';
-  static readonly getListUsingGET3Path = '/api/users/{page}/{size}';
+  static readonly searchUsersUsingGETPath = '/api/users/search';
+  static readonly getUserByIdUsingGETPath = '/api/users/{id}';
+  static readonly deleteUserUsingDELETEPath = '/api/users/{id}';
+  static readonly getUserListUsingGETPath = '/api/users/{page}/{size}/{hasRole}';
 
   constructor(
     config: __Configuration,
@@ -35,7 +36,7 @@ class UserControllerRestService extends __BaseService {
    * @param userDto userDto
    * @return OK
    */
-  saveUsingPOST1Response(userDto: UserDto): __Observable<__StrictHttpResponse<UserDto>> {
+  saveUserUsingPOSTResponse(userDto: UserDto): __Observable<__StrictHttpResponse<UserDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -61,8 +62,8 @@ class UserControllerRestService extends __BaseService {
    * @param userDto userDto
    * @return OK
    */
-  saveUsingPOST1(userDto: UserDto): __Observable<UserDto> {
-    return this.saveUsingPOST1Response(userDto).pipe(
+  saveUserUsingPOST(userDto: UserDto): __Observable<UserDto> {
+    return this.saveUserUsingPOSTResponse(userDto).pipe(
       __map(_r => _r.body as UserDto)
     );
   }
@@ -71,7 +72,7 @@ class UserControllerRestService extends __BaseService {
    * @param userDto userDto
    * @return OK
    */
-  updateUsingPUT1Response(userDto: UserDto): __Observable<__StrictHttpResponse<UserDto>> {
+  updateUserUsingPUTResponse(userDto: UserDto): __Observable<__StrictHttpResponse<UserDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -97,8 +98,8 @@ class UserControllerRestService extends __BaseService {
    * @param userDto userDto
    * @return OK
    */
-  updateUsingPUT1(userDto: UserDto): __Observable<UserDto> {
-    return this.updateUsingPUT1Response(userDto).pipe(
+  updateUserUsingPUT(userDto: UserDto): __Observable<UserDto> {
+    return this.updateUserUsingPUTResponse(userDto).pipe(
       __map(_r => _r.body as UserDto)
     );
   }
@@ -137,10 +138,62 @@ class UserControllerRestService extends __BaseService {
   }
 
   /**
+   * @param params The `UserControllerRestService.SearchUsersUsingGETParams` containing the following parameters:
+   *
+   * - `size`: size
+   *
+   * - `searchText`: searchText
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  searchUsersUsingGETResponse(params: UserControllerRestService.SearchUsersUsingGETParams): __Observable<__StrictHttpResponse<PageUserDto>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/users/search`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<PageUserDto>;
+      })
+    );
+  }
+  /**
+   * @param params The `UserControllerRestService.SearchUsersUsingGETParams` containing the following parameters:
+   *
+   * - `size`: size
+   *
+   * - `searchText`: searchText
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  searchUsersUsingGET(params: UserControllerRestService.SearchUsersUsingGETParams): __Observable<PageUserDto> {
+    return this.searchUsersUsingGETResponse(params).pipe(
+      __map(_r => _r.body as PageUserDto)
+    );
+  }
+
+  /**
    * @param id id
    * @return OK
    */
-  getByIdUsingGET2Response(id: number): __Observable<__StrictHttpResponse<UserDto>> {
+  getUserByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<UserDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -166,8 +219,8 @@ class UserControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGET2(id: number): __Observable<UserDto> {
-    return this.getByIdUsingGET2Response(id).pipe(
+  getUserByIdUsingGET(id: number): __Observable<UserDto> {
+    return this.getUserByIdUsingGETResponse(id).pipe(
       __map(_r => _r.body as UserDto)
     );
   }
@@ -175,7 +228,7 @@ class UserControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE2Response(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteUserUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -200,30 +253,33 @@ class UserControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE2(id: number): __Observable<null> {
-    return this.deleteUsingDELETE2Response(id).pipe(
+  deleteUserUsingDELETE(id: number): __Observable<null> {
+    return this.deleteUserUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
 
   /**
-   * @param params The `UserControllerRestService.GetListUsingGET3Params` containing the following parameters:
+   * @param params The `UserControllerRestService.GetUserListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
    * - `page`: page
    *
+   * - `hasRole`: hasRole
+   *
    * @return OK
    */
-  getListUsingGET3Response(params: UserControllerRestService.GetListUsingGET3Params): __Observable<__StrictHttpResponse<PageUserDto>> {
+  getUserListUsingGETResponse(params: UserControllerRestService.GetUserListUsingGETParams): __Observable<__StrictHttpResponse<PageUserDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
 
+
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/users/${params.page}/${params.size}`,
+      this.rootUrl + `/api/users/${params.page}/${params.size}/${params.hasRole}`,
       __body,
       {
         headers: __headers,
@@ -239,16 +295,18 @@ class UserControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param params The `UserControllerRestService.GetListUsingGET3Params` containing the following parameters:
+   * @param params The `UserControllerRestService.GetUserListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
    * - `page`: page
    *
+   * - `hasRole`: hasRole
+   *
    * @return OK
    */
-  getListUsingGET3(params: UserControllerRestService.GetListUsingGET3Params): __Observable<PageUserDto> {
-    return this.getListUsingGET3Response(params).pipe(
+  getUserListUsingGET(params: UserControllerRestService.GetUserListUsingGETParams): __Observable<PageUserDto> {
+    return this.getUserListUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageUserDto)
     );
   }
@@ -257,9 +315,30 @@ class UserControllerRestService extends __BaseService {
 module UserControllerRestService {
 
   /**
-   * Parameters for getListUsingGET3
+   * Parameters for searchUsersUsingGET
    */
-  export interface GetListUsingGET3Params {
+  export interface SearchUsersUsingGETParams {
+
+    /**
+     * size
+     */
+    size: number;
+
+    /**
+     * searchText
+     */
+    searchText: string;
+
+    /**
+     * page
+     */
+    page: number;
+  }
+
+  /**
+   * Parameters for getUserListUsingGET
+   */
+  export interface GetUserListUsingGETParams {
 
     /**
      * size
@@ -270,6 +349,11 @@ module UserControllerRestService {
      * page
      */
     page: number;
+
+    /**
+     * hasRole
+     */
+    hasRole: boolean;
   }
 }
 

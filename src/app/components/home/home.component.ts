@@ -1,13 +1,11 @@
-import { LogoutAction } from "./../state/auth.state";
-import { UserDto } from "./../../../api/models/user-dto";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
-import { Store } from "@ngxs/store";
-import { LoginAction, RegistrationAction } from "../state/auth.state";
+import { Store, Select } from "@ngxs/store";
+import { LoginAction, RegistrationAction, ErrorRegistrationToFalseAction, ErrorLoginToFalseAction, LoginFromCookieAction } from "../state/auth.state";
 import { Router } from "@angular/router";
 import { takeUntil, tap } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { Subject, Observable } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -15,12 +13,17 @@ import { Subject } from "rxjs";
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  @Select(state => state.auth.errorLogin)
+  errorLogin$: Observable<boolean>
+  @Select(state => state.auth.errorRegister)
+  errorRegister$: Observable<boolean>
   onDestroy$ = new Subject<void>();
   loginForm = new FormGroup({});
   rejestrationForm = new FormGroup({});
+  selectedIndex = 0;
   loginFields: FormlyFieldConfig[] = [
     {
-      key: "userName",
+      key: "userNameLogin",
       type: "input",
       templateOptions: {
         label: "nazwa urzytkownika",
@@ -29,7 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     {
-      key: "password",
+      key: "passwordLogin",
       type: "input",
       templateOptions: {
         type: "password",
@@ -118,15 +121,25 @@ export class HomeComponent implements OnInit, OnDestroy {
       key: "telNumer",
       type: "input",
       templateOptions: {
-        label: "numer telefonu urzytkownika",
+        validate: true,
+        pattern: "^(\\d{3}-{0,1}\\d{3}-{0,1}\\d{3})+$",
+        typt: "tel",
+        label: "numer telefonu",
         placeholder: "numer telefonu urzytkownika",
-        required: false
+        required: true
+      },
+      validation: {
+        messages: {
+          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym numerem telefonu`
+        }
       }
     }
   ];
   constructor(public store: Store, public router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store.dispatch(new LoginFromCookieAction())
+  }
 
   ngOnDestroy(): void {
     this.onDestroy$.next();
@@ -135,13 +148,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   submit() {
     this.store.dispatch(
       new LoginAction(
-        this.loginForm.value.userName,
-        this.loginForm.value.password
+        this.loginForm.value.userNameLogin,
+        this.loginForm.value.passwordLogin
       )
     );
-  }
-  redirectToRejestratration() {
-    this.router.navigate(["/registration"]);
   }
   register() {
     let userDto = {
@@ -149,8 +159,22 @@ export class HomeComponent implements OnInit, OnDestroy {
       password: this.rejestrationForm.value.password,
       email: this.rejestrationForm.value.email
     };
-    console.log(userDto);
-    console.log(this.rejestrationForm);
     this.store.dispatch(new RegistrationAction(userDto));
+    this.selectedIndex = 0;
+  }
+  clearForm(event) {
+    if (event === 0) {
+      this.store.dispatch(new ErrorRegistrationToFalseAction())
+      this.rejestrationForm.reset()
+      Object.keys(this.rejestrationForm.controls).forEach(key => {
+        this.rejestrationForm.get(key).setErrors(null);
+      });
+    } else {
+      this.store.dispatch(new ErrorLoginToFalseAction())
+      this.loginForm.reset()
+      Object.keys(this.loginForm.controls).forEach(key => {
+        this.loginForm.get(key).setErrors(null);
+      });
+    }
   }
 }

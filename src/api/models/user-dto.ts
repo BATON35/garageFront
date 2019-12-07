@@ -7,4 +7,5 @@ export interface UserDto {
   name?: string;
   password?: string;
   roles?: Array<Role>;
+  surname?: string;
 }

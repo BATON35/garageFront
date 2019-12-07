@@ -38,9 +38,17 @@ export class UserCreateComponent implements OnInit {
       key: "email",
       type: "input",
       templateOptions: {
-        label: "emial urzytkownika",
-        Placeholder: "email urzytkownika",
-        require: true
+        validate: true,
+        pattern: "[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*",
+        type: "emial",
+        label: "email urzytkownika",
+        placeholder: "email urzytkownika",
+        required: true
+      },
+      validation: {
+        messages: {
+          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym adresem email`
+        }
       }
     },
     {

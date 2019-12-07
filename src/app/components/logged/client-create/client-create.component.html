@@ -1,7 +1,8 @@
 <form [formGroup]="clientForm" (ngSubmit)="submit()">
     <formly-form [fields]="clientFields" [form]="clientForm" [model]="clientDto">
         <div class="group">
-            <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!clientForm.valid">
+            <button id="saveClient" type="submit" class="button" mat-raised-button color="primary"
+                [disabled]="!clientForm.valid">
                 Dodaj
             </button>
         </div>

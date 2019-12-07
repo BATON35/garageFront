@@ -17,11 +17,13 @@ import { PageClientDto } from '../models/page-client-dto';
   providedIn: 'root',
 })
 class ClientControllerRestService extends __BaseService {
-  static readonly saveUsingPOSTPath = '/api/clients';
-  static readonly updateUsingPUTPath = '/api/clients';
-  static readonly getByIdUsingGETPath = '/api/clients/{id}';
-  static readonly deleteUsingDELETEPath = '/api/clients/{id}';
-  static readonly getListUsingGETPath = '/api/clients/{page}/{size}';
+  static readonly saveClientUsingPOSTPath = '/api/clients';
+  static readonly updateClientUsingPUTPath = '/api/clients';
+  static readonly autocompleteUsingGETPath = '/api/clients/autoComplete';
+  static readonly searchClientsUsingGETPath = '/api/clients/search';
+  static readonly getClientByIdUsingGETPath = '/api/clients/{id}';
+  static readonly deleteClientUsingDELETEPath = '/api/clients/{id}';
+  static readonly getClientListUsingGETPath = '/api/clients/{page}/{size}';
 
   constructor(
     config: __Configuration,
@@ -34,7 +36,7 @@ class ClientControllerRestService extends __BaseService {
    * @param clientDto clientDto
    * @return OK
    */
-  saveUsingPOSTResponse(clientDto: ClientDto): __Observable<__StrictHttpResponse<ClientDto>> {
+  saveClientUsingPOSTResponse(clientDto: ClientDto): __Observable<__StrictHttpResponse<ClientDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -60,8 +62,8 @@ class ClientControllerRestService extends __BaseService {
    * @param clientDto clientDto
    * @return OK
    */
-  saveUsingPOST(clientDto: ClientDto): __Observable<ClientDto> {
-    return this.saveUsingPOSTResponse(clientDto).pipe(
+  saveClientUsingPOST(clientDto: ClientDto): __Observable<ClientDto> {
+    return this.saveClientUsingPOSTResponse(clientDto).pipe(
       __map(_r => _r.body as ClientDto)
     );
   }
@@ -70,7 +72,7 @@ class ClientControllerRestService extends __BaseService {
    * @param clientDto clientDto
    * @return OK
    */
-  updateUsingPUTResponse(clientDto: ClientDto): __Observable<__StrictHttpResponse<ClientDto>> {
+  updateClientUsingPUTResponse(clientDto: ClientDto): __Observable<__StrictHttpResponse<ClientDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -96,9 +98,97 @@ class ClientControllerRestService extends __BaseService {
    * @param clientDto clientDto
    * @return OK
    */
-  updateUsingPUT(clientDto: ClientDto): __Observable<ClientDto> {
-    return this.updateUsingPUTResponse(clientDto).pipe(
+  updateClientUsingPUT(clientDto: ClientDto): __Observable<ClientDto> {
+    return this.updateClientUsingPUTResponse(clientDto).pipe(
       __map(_r => _r.body as ClientDto)
+    );
+  }
+
+  /**
+   * @param text text
+   * @return OK
+   */
+  autocompleteUsingGETResponse(text: string): __Observable<__StrictHttpResponse<Array<string>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (text != null) __params = __params.set('text', text.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/clients/autoComplete`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<string>>;
+      })
+    );
+  }
+  /**
+   * @param text text
+   * @return OK
+   */
+  autocompleteUsingGET(text: string): __Observable<Array<string>> {
+    return this.autocompleteUsingGETResponse(text).pipe(
+      __map(_r => _r.body as Array<string>)
+    );
+  }
+
+  /**
+   * @param params The `ClientControllerRestService.SearchClientsUsingGETParams` containing the following parameters:
+   *
+   * - `size`: size
+   *
+   * - `searchText`: searchText
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  searchClientsUsingGETResponse(params: ClientControllerRestService.SearchClientsUsingGETParams): __Observable<__StrictHttpResponse<PageClientDto>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/clients/search`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<PageClientDto>;
+      })
+    );
+  }
+  /**
+   * @param params The `ClientControllerRestService.SearchClientsUsingGETParams` containing the following parameters:
+   *
+   * - `size`: size
+   *
+   * - `searchText`: searchText
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  searchClientsUsingGET(params: ClientControllerRestService.SearchClientsUsingGETParams): __Observable<PageClientDto> {
+    return this.searchClientsUsingGETResponse(params).pipe(
+      __map(_r => _r.body as PageClientDto)
     );
   }
 
@@ -106,7 +196,7 @@ class ClientControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<ClientDto>> {
+  getClientByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<ClientDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -132,8 +222,8 @@ class ClientControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGET(id: number): __Observable<ClientDto> {
-    return this.getByIdUsingGETResponse(id).pipe(
+  getClientByIdUsingGET(id: number): __Observable<ClientDto> {
+    return this.getClientByIdUsingGETResponse(id).pipe(
       __map(_r => _r.body as ClientDto)
     );
   }
@@ -141,7 +231,7 @@ class ClientControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteClientUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -166,14 +256,14 @@ class ClientControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE(id: number): __Observable<null> {
-    return this.deleteUsingDELETEResponse(id).pipe(
+  deleteClientUsingDELETE(id: number): __Observable<null> {
+    return this.deleteClientUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
 
   /**
-   * @param params The `ClientControllerRestService.GetListUsingGETParams` containing the following parameters:
+   * @param params The `ClientControllerRestService.GetClientListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
@@ -181,7 +271,7 @@ class ClientControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGETResponse(params: ClientControllerRestService.GetListUsingGETParams): __Observable<__StrictHttpResponse<PageClientDto>> {
+  getClientListUsingGETResponse(params: ClientControllerRestService.GetClientListUsingGETParams): __Observable<__StrictHttpResponse<PageClientDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -205,7 +295,7 @@ class ClientControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param params The `ClientControllerRestService.GetListUsingGETParams` containing the following parameters:
+   * @param params The `ClientControllerRestService.GetClientListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
@@ -213,8 +303,8 @@ class ClientControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET(params: ClientControllerRestService.GetListUsingGETParams): __Observable<PageClientDto> {
-    return this.getListUsingGETResponse(params).pipe(
+  getClientListUsingGET(params: ClientControllerRestService.GetClientListUsingGETParams): __Observable<PageClientDto> {
+    return this.getClientListUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageClientDto)
     );
   }
@@ -223,9 +313,30 @@ class ClientControllerRestService extends __BaseService {
 module ClientControllerRestService {
 
   /**
-   * Parameters for getListUsingGET
+   * Parameters for searchClientsUsingGET
    */
-  export interface GetListUsingGETParams {
+  export interface SearchClientsUsingGETParams {
+
+    /**
+     * size
+     */
+    size: number;
+
+    /**
+     * searchText
+     */
+    searchText: string;
+
+    /**
+     * page
+     */
+    page: number;
+  }
+
+  /**
+   * Parameters for getClientListUsingGET
+   */
+  export interface GetClientListUsingGETParams {
 
     /**
      * size

@@ -17,11 +17,13 @@ import { VehicleDto } from '../models/vehicle-dto';
   providedIn: 'root',
 })
 class VehicleControllerRestService extends __BaseService {
-  static readonly getListUsingGET4Path = '/api/vehicles';
-  static readonly updateUsingPUT2Path = '/api/vehicles';
-  static readonly saveUsingPOST2Path = '/api/vehicles/{clientId}';
-  static readonly getByIdUsingGET3Path = '/api/vehicles/{id}';
-  static readonly deleteUsingDELETE3Path = '/api/vehicles/{id}';
+  static readonly getVehicleListUsingGETPath = '/api/vehicles';
+  static readonly updateVehicleUsingPUTPath = '/api/vehicles';
+  static readonly autocompleteVehicleUsingGETPath = '/api/vehicles/autoComplete';
+  static readonly saveVehicleUsingPOSTPath = '/api/vehicles/{clientId}';
+  static readonly getVehicleByIdUsingGETPath = '/api/vehicles/{id}';
+  static readonly deleteVehicleUsingDELETEPath = '/api/vehicles/{id}';
+  static readonly toggleNotificationUsingPATCHPath = '/api/vehicles/{id}';
 
   constructor(
     config: __Configuration,
@@ -31,7 +33,7 @@ class VehicleControllerRestService extends __BaseService {
   }
 
   /**
-   * @param params The `VehicleControllerRestService.GetListUsingGET4Params` containing the following parameters:
+   * @param params The `VehicleControllerRestService.GetVehicleListUsingGETParams` containing the following parameters:
    *
    * - `unpaged`:
    *
@@ -49,7 +51,7 @@ class VehicleControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET4Response(params: VehicleControllerRestService.GetListUsingGET4Params): __Observable<__StrictHttpResponse<PageVehicleDto>> {
+  getVehicleListUsingGETResponse(params: VehicleControllerRestService.GetVehicleListUsingGETParams): __Observable<__StrictHttpResponse<PageVehicleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -78,7 +80,7 @@ class VehicleControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param params The `VehicleControllerRestService.GetListUsingGET4Params` containing the following parameters:
+   * @param params The `VehicleControllerRestService.GetVehicleListUsingGETParams` containing the following parameters:
    *
    * - `unpaged`:
    *
@@ -96,8 +98,8 @@ class VehicleControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getListUsingGET4(params: VehicleControllerRestService.GetListUsingGET4Params): __Observable<PageVehicleDto> {
-    return this.getListUsingGET4Response(params).pipe(
+  getVehicleListUsingGET(params: VehicleControllerRestService.GetVehicleListUsingGETParams): __Observable<PageVehicleDto> {
+    return this.getVehicleListUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageVehicleDto)
     );
   }
@@ -106,7 +108,7 @@ class VehicleControllerRestService extends __BaseService {
    * @param vehicleDto vehicleDto
    * @return OK
    */
-  updateUsingPUT2Response(vehicleDto: VehicleDto): __Observable<__StrictHttpResponse<VehicleDto>> {
+  updateVehicleUsingPUTResponse(vehicleDto: VehicleDto): __Observable<__StrictHttpResponse<VehicleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -132,14 +134,50 @@ class VehicleControllerRestService extends __BaseService {
    * @param vehicleDto vehicleDto
    * @return OK
    */
-  updateUsingPUT2(vehicleDto: VehicleDto): __Observable<VehicleDto> {
-    return this.updateUsingPUT2Response(vehicleDto).pipe(
+  updateVehicleUsingPUT(vehicleDto: VehicleDto): __Observable<VehicleDto> {
+    return this.updateVehicleUsingPUTResponse(vehicleDto).pipe(
       __map(_r => _r.body as VehicleDto)
     );
   }
 
   /**
-   * @param params The `VehicleControllerRestService.SaveUsingPOST2Params` containing the following parameters:
+   * @param text text
+   * @return OK
+   */
+  autocompleteVehicleUsingGETResponse(text: string): __Observable<__StrictHttpResponse<Array<VehicleDto>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (text != null) __params = __params.set('text', text.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/vehicles/autoComplete`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<VehicleDto>>;
+      })
+    );
+  }
+  /**
+   * @param text text
+   * @return OK
+   */
+  autocompleteVehicleUsingGET(text: string): __Observable<Array<VehicleDto>> {
+    return this.autocompleteVehicleUsingGETResponse(text).pipe(
+      __map(_r => _r.body as Array<VehicleDto>)
+    );
+  }
+
+  /**
+   * @param params The `VehicleControllerRestService.SaveVehicleUsingPOSTParams` containing the following parameters:
    *
    * - `vehicleDto`: vehicleDto
    *
@@ -147,7 +185,7 @@ class VehicleControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  saveUsingPOST2Response(params: VehicleControllerRestService.SaveUsingPOST2Params): __Observable<__StrictHttpResponse<VehicleDto>> {
+  saveVehicleUsingPOSTResponse(params: VehicleControllerRestService.SaveVehicleUsingPOSTParams): __Observable<__StrictHttpResponse<VehicleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -171,7 +209,7 @@ class VehicleControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param params The `VehicleControllerRestService.SaveUsingPOST2Params` containing the following parameters:
+   * @param params The `VehicleControllerRestService.SaveVehicleUsingPOSTParams` containing the following parameters:
    *
    * - `vehicleDto`: vehicleDto
    *
@@ -179,8 +217,8 @@ class VehicleControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  saveUsingPOST2(params: VehicleControllerRestService.SaveUsingPOST2Params): __Observable<VehicleDto> {
-    return this.saveUsingPOST2Response(params).pipe(
+  saveVehicleUsingPOST(params: VehicleControllerRestService.SaveVehicleUsingPOSTParams): __Observable<VehicleDto> {
+    return this.saveVehicleUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as VehicleDto)
     );
   }
@@ -189,7 +227,7 @@ class VehicleControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGET3Response(id: number): __Observable<__StrictHttpResponse<VehicleDto>> {
+  getVehicleByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<VehicleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -215,8 +253,8 @@ class VehicleControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGET3(id: number): __Observable<VehicleDto> {
-    return this.getByIdUsingGET3Response(id).pipe(
+  getVehicleByIdUsingGET(id: number): __Observable<VehicleDto> {
+    return this.getVehicleByIdUsingGETResponse(id).pipe(
       __map(_r => _r.body as VehicleDto)
     );
   }
@@ -224,11 +262,11 @@ class VehicleControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE3Response(id?: number): __Observable<__StrictHttpResponse<null>> {
+  deleteVehicleUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (id != null) __params = __params.set('id', id.toString());
+
     let req = new HttpRequest<any>(
       'DELETE',
       this.rootUrl + `/api/vehicles/${id}`,
@@ -249,8 +287,42 @@ class VehicleControllerRestService extends __BaseService {
   /**
    * @param id id
    */
-  deleteUsingDELETE3(id?: number): __Observable<null> {
-    return this.deleteUsingDELETE3Response(id).pipe(
+  deleteVehicleUsingDELETE(id: number): __Observable<null> {
+    return this.deleteVehicleUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param id id
+   */
+  toggleNotificationUsingPATCHResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'PATCH',
+      this.rootUrl + `/api/vehicles/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  toggleNotificationUsingPATCH(id: number): __Observable<null> {
+    return this.toggleNotificationUsingPATCHResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -259,9 +331,9 @@ class VehicleControllerRestService extends __BaseService {
 module VehicleControllerRestService {
 
   /**
-   * Parameters for getListUsingGET4
+   * Parameters for getVehicleListUsingGET
    */
-  export interface GetListUsingGET4Params {
+  export interface GetVehicleListUsingGETParams {
     unpaged?: boolean;
     sortUnsorted?: boolean;
     sortSorted?: boolean;
@@ -272,9 +344,9 @@ module VehicleControllerRestService {
   }
 
   /**
-   * Parameters for saveUsingPOST2
+   * Parameters for saveVehicleUsingPOST
    */
-  export interface SaveUsingPOST2Params {
+  export interface SaveVehicleUsingPOSTParams {
 
     /**
      * vehicleDto

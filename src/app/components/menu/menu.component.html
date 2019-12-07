@@ -3,10 +3,17 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
     <mat-nav-list>
-      <a mat-list-item routerLink="/login">Login</a>
-      <a mat-list-item routerLink="/panel">Panel</a>
-      <a mat-list-item (click)="logout()" *ngIf="currentUser">
-        Wyloguj
+      <a *ngIf="!(token$ | async)" mat-list-item routerLink="/login">{{'menu.login'|translate}}</a>
+      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+        routerLink="/panel">{{'menu.dashboard'|translate}}</a>
+      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+        routerLink="/parts">{{'menu.parts'|translate}}</a>
+      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+        routerLink="/service-part">{{"menu.addService" | translate}}</a>
+      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+        routerLink="/service-car">{{"menu.service" | translate}}</a>
+      <a *ngIf="(token$ | async)" mat-list-item (click)="logout()">
+        {{"menu.logout" | translate}}
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -17,8 +24,26 @@
       </button>
       <span class="margin"> Menu</span>
       <span *ngIf="user$ | async as user" style="text-align: right">
-        {{user.name}} {{user.name}}
+        {{user.name}}
       </span>
+      <span class="space">
+      </span>
+      <div>
+        <mat-form-field>
+          <mat-select [(value)]="selectedLanguage">
+            <mat-option value="pl" (click)="useLanguage('pl')">
+              <span>
+                Polski
+              </span>
+            </mat-option>
+            <mat-option value="en" (click)="useLanguage('en')">
+              <span>
+                English
+              </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

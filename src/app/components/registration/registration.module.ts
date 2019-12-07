@@ -9,7 +9,7 @@ import { MatButtonModule } from "@angular/material";
 import { NgxsModule } from "@ngxs/store";
 import { HttpClientModule } from "@angular/common/http";
 import { RegistrationComponent } from "./registration.component";
-import { UserState } from "../state/user.state";
+import { UsersState } from '../logged/users.state';
 const routs: Routes = [
   {
     path: "registration",
@@ -27,9 +27,9 @@ const routs: Routes = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    NgxsModule.forRoot([UserState]),
+    NgxsModule.forRoot([UsersState]),
     HttpClientModule
   ],
   entryComponents: [RegistrationComponent]
 })
-export class RegistrationModule {}
+export class RegistrationModule { }

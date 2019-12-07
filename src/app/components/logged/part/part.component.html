@@ -1,0 +1,42 @@
+<div *ngIf="part$ | async as parts">
+
+    <table mat-table [dataSource]="parts.content" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="update">
+            <mat-header-cell *matHeaderCellDef> Zmien dane </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button (click)="update(element)" mat-icon-button color="primary">
+                    <mat-icon>update</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button (click)="delete(element.id)" mat-icon-button color="warn">
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </table>
+    <div style="display:inline">
+        <button (click)="openModal()" type="submit" class="button" mat-raised-button color="primary">
+            Dodaj cześć
+        </button>
+    </div>
+</div>

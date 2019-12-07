@@ -3,12 +3,16 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
+import { CarServiceControllerRestService } from './services/car-service-controller-rest.service';
 import { ClientControllerRestService } from './services/client-controller-rest.service';
-import { FileConrollerService } from './services/file-conroller.service';
+import { MailTemplateControllerRestService } from './services/mail-template-controller-rest.service';
+import { FileControllerService } from './services/file-controller.service';
 import { RoleControllerService } from './services/role-controller.service';
+import { ServicePartControllerRestService } from './services/service-part-controller-rest.service';
 import { UserControllerRestService } from './services/user-controller-rest.service';
 import { VehicleControllerRestService } from './services/vehicle-controller-rest.service';
-import { MailTemplateControlerRestService } from './services/mail-template-controler-rest.service';
+import { WorkerControllerRestService } from './services/worker-controller-rest.service';
+import { PartControllerRestService } from './services/part-controller-rest.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -23,12 +27,16 @@ import { MailTemplateControlerRestService } from './services/mail-template-contr
   declarations: [],
   providers: [
     ApiConfiguration,
+    CarServiceControllerRestService,
     ClientControllerRestService,
-    FileConrollerService,
+    MailTemplateControllerRestService,
+    FileControllerService,
     RoleControllerService,
+    ServicePartControllerRestService,
     UserControllerRestService,
     VehicleControllerRestService,
-    MailTemplateControlerRestService
+    WorkerControllerRestService,
+    PartControllerRestService
   ],
 })
 export class ApiModule {

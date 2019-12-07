@@ -1,6 +1,6 @@
 import { UserDto } from './../../../../api/models/user-dto';
 import { UserCreateComponent } from './../user-create/user-create.component';
-import { UsersPageAction, UsersDeleteAction } from "./../users.state";
+import { UsersPageAction, UsersDeleteAction, UserSearchAction, LoadUserByChangRoleAction } from "./../users.state";
 import { Store, Select } from "@ngxs/store";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from 'rxjs';
@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  checked: boolean = false;
   displayedColumns: string[] = ["id", "userName", "email", "update", "delete"]
 
   @Select(state => state.users.userPage)
@@ -21,10 +22,10 @@ export class UserListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.store.dispatch(new UsersPageAction(0, 5));
+    this.store.dispatch(new UsersPageAction(0, 5, this.checked));
   }
   changePage(event) {
-    this.store.dispatch(new UsersPageAction(event.pageIndex, event.pageSize))
+    this.store.dispatch(new UsersPageAction(event.pageIndex, event.pageSize, this.checked))
   }
   delete(id) {
     this.store.dispatch(new UsersDeleteAction(id))
@@ -39,5 +40,13 @@ export class UserListComponent implements OnInit {
       width: "500px",
       data: user
     })
+  }
+  search(searchText) {
+    this.store.dispatch(new UserSearchAction(searchText));
+    // console.log(searchText);
+  }
+  role(event) {
+    console.log(this.checked)
+    this.store.dispatch(new LoadUserByChangRoleAction(this.checked))
   }
 }

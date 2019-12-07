@@ -1,5 +1,11 @@
 <div *ngIf="users$ | async as users">
   <div class="flex-p">
+    <mat-form-field style="width: 100%">
+      <input matInput (keyup)="search($event.target.value)" placeholder="search">
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="checked" (change)="role($event)">
+      rola
+    </mat-checkbox>
     <table mat-table [dataSource]="users.content" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>

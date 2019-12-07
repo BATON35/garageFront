@@ -16,8 +16,8 @@ import { RoleDto } from '../models/role-dto';
   providedIn: 'root',
 })
 class RoleControllerService extends __BaseService {
-  static readonly getListUsingGET2Path = '/api/roles';
-  static readonly getByIdUsingGET1Path = '/api/roles/{id}';
+  static readonly getListUsingGET1Path = '/api/roles';
+  static readonly getByIdUsingGETPath = '/api/roles/{id}';
 
   constructor(
     config: __Configuration,
@@ -29,7 +29,7 @@ class RoleControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getListUsingGET2Response(): __Observable<__StrictHttpResponse<Array<RoleDto>>> {
+  getListUsingGET1Response(): __Observable<__StrictHttpResponse<Array<RoleDto>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -53,8 +53,8 @@ class RoleControllerService extends __BaseService {
   /**
    * @return OK
    */
-  getListUsingGET2(): __Observable<Array<RoleDto>> {
-    return this.getListUsingGET2Response().pipe(
+  getListUsingGET1(): __Observable<Array<RoleDto>> {
+    return this.getListUsingGET1Response().pipe(
       __map(_r => _r.body as Array<RoleDto>)
     );
   }
@@ -63,7 +63,7 @@ class RoleControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGET1Response(id: number): __Observable<__StrictHttpResponse<RoleDto>> {
+  getByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<RoleDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -89,8 +89,8 @@ class RoleControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getByIdUsingGET1(id: number): __Observable<RoleDto> {
-    return this.getByIdUsingGET1Response(id).pipe(
+  getByIdUsingGET(id: number): __Observable<RoleDto> {
+    return this.getByIdUsingGETResponse(id).pipe(
       __map(_r => _r.body as RoleDto)
     );
   }

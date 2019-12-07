@@ -1,0 +1,15 @@
+{
+  "menu.login": "Zaloguj",
+  "menu.logout": "Wyloguj",
+  "menu.dashboard": "Panel",
+  "menu.parts": "Utwórz cześci",
+  "menu.addService": "Dodaj usluge do pojazdu",
+  "menu.service": "Utworz usługe",
+  "panel.client.list.no": "No.",
+  "panel.client.list.name": "Imie",
+  "panel.client.list.email": "Email.",
+  "panel.client.list.update": "Zmien Dane",
+  "panel.client.list.vehicle.add": "Dodaj pojazd",
+  "panel.client.list.delete": "Usuń",
+  "panel.client.list.search": "Znajdz klienta"
+}

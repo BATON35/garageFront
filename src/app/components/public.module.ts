@@ -54,7 +54,7 @@ export function maxValidationMessage(err, field) {
     MatButtonModule,
     NgxsModule.forFeature([AuthState]),
     NgxsStoragePluginModule.forRoot({
-      key: "auth.jwtToken"
+      // key: "auth.jwtToken"
     }),
     HttpClientModule,
     MatTabsModule

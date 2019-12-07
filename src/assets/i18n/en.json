@@ -1,0 +1,15 @@
+{
+  "menu.login": "Login",
+  "menu.dashboard": "Dashboard",
+  "menu.parts": "Create part",
+  "menu.logout": "Logout",
+  "menu.addService": "Add service to vehicle",
+  "menu.service": "Create Service",
+  "panel.client.list.no": "No.",
+  "panel.client.list.name": "Name",
+  "panel.client.list.email": "Email.",
+  "panel.client.list.update": "Update",
+  "panel.client.list.vehicle.add": "Add vehicle",
+  "panel.client.list.delete": "Delete",
+  "panel.client.list.search": "Search client"
+}

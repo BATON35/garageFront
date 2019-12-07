@@ -9,14 +9,17 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { PublicModule } from "./components/public.module";
 import { RegistrationModule } from "./components/registration/registration.module";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
 import {
   MatSidenavModule,
   MatListModule,
   MatIconModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSelectModule
 } from "@angular/material";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
@@ -30,7 +33,15 @@ import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
     MatIconModule,
     MatToolbarModule,
     NgxsModule.forRoot([]),
-    NgxsReduxDevtoolsPluginModule.forRoot()
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    MatSelectModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
@@ -38,3 +49,6 @@ import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

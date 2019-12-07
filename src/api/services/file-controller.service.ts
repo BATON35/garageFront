@@ -9,12 +9,12 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 
 /**
- * File Conroller
+ * File Controller
  */
 @Injectable({
   providedIn: 'root',
 })
-class FileConrollerService extends __BaseService {
+class FileControllerService extends __BaseService {
   static readonly getPDFUsingGETPath = '/api/pdf';
 
   constructor(
@@ -58,7 +58,7 @@ class FileConrollerService extends __BaseService {
   }
 }
 
-module FileConrollerService {
+module FileControllerService {
 }
 
-export { FileConrollerService }
+export { FileControllerService }

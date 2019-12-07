@@ -1,21 +1,38 @@
 <div *ngIf="clients$ | async as clients">
   <div class="flex-p">
+    <mat-form-field style="width: 100%">
+      <input matInput [matAutocomplete]="auto" (keyup)="search($event.target.value)"
+        placeholder="{{ 'panel.client.list.search' | translate }}" />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let text of autocomplete$ | async" [value]="text">
+          <span>{{ text }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
     <table mat-table [dataSource]="clients.content" class="mat-elevation-z8" multiTemplateDataRows>
       <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          {{ "panel.client.list.no" | translate }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          {{ "panel.client.list.name" | translate }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          {{ "panel.client.list.email" | translate }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="update">
-        <mat-header-cell *matHeaderCellDef> Zmien Dane </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          {{ "panel.client.list.update" | translate }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button (click)="update(element)" mat-icon-button color="primary">
             <mat-icon>update</mat-icon>
@@ -23,7 +40,9 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="addVehicle">
-        <mat-header-cell *matHeaderCellDef> Dodaj pojazd </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          {{ "panel.client.list.vehicle.add" | translate }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button (click)="addVehicle(null, element.id)" mat-icon-button color="primary">
             <mat-icon>directions_car</mat-icon>
@@ -31,7 +50,9 @@
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          {{ "panel.client.list.delete" | translate }}
+        </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button (click)="delete(element.id)" mat-icon-button color="warn">
             <mat-icon>delete_forever</mat-icon>
@@ -44,34 +65,69 @@
             multiTemplateDataRows>
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+              <mat-cell *matCellDef="let element">
+                {{ element.id }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="brand">
               <mat-header-cell *matHeaderCellDef> Marka </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{ element.brand }} </mat-cell>
+              <mat-cell *matCellDef="let element">
+                {{ element.brand }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="model">
               <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{ element.model}} </mat-cell>
+              <mat-cell *matCellDef="let element">
+                {{ element.model }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="numberPlate">
-              <mat-header-cell *matHeaderCellDef> Numer rejestracyjny </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{ element.numberPlate }} </mat-cell>
+              <mat-header-cell *matHeaderCellDef>
+                Numer rejestracyjny
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{ element.numberPlate }}
+              </mat-cell>
             </ng-container>
             <ng-container matColumnDef="update">
-              <mat-header-cell *matHeaderCellDef> Zmien Dane </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>
+                Zmien Dane
+              </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="updateVehicle(element)" mat-icon-button color="primary">
                   <mat-icon>update</mat-icon>
                 </button>
               </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="service">
+              <mat-header-cell *matHeaderCellDef>
+                Pokaż szczegóły
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <button (click)="addService(element)" mat-icon-button color="primary">
+                  <mat-icon>update</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="details">
-              <mat-header-cell *matHeaderCellDef> Zmien Dane </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>
+                Dodaj usługe
+              </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="updateVehicleDetails(element)" mat-icon-button color="primary">
                   <mat-icon>update</mat-icon>
                 </button>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="notification">
+              <mat-header-cell *matHeaderCellDef>
+                Przypomnij o przeglądzie
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-slide-toggle [checked]="element.notification" (toggleChange)="changeNotification(element.id)">
+                  {{ element.notification }}
+                </mat-slide-toggle>
               </mat-cell>
             </ng-container>
 
@@ -85,18 +141,24 @@
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedVehiclesColumns">
             </mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedVehiclesColumns;">
+            <mat-row *matRowDef="let row; columns: displayedVehiclesColumns">
             </mat-row>
           </table>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"
-        [class.expanded]="expandedElement == row"
-        (click)="expandedElement === row? expandedElement = null : expandedElement = row"></mat-row>
-      <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
-        [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden">
+      <mat-row *matRowDef="let row; columns: displayedColumns" matRipple class="element-row"
+        [class.expanded]="expandedElement == row" (click)="
+          expandedElement === row
+            ? (expandedElement = null)
+            : (expandedElement = row)
+        "></mat-row>
+      <mat-row *matRowDef="
+          let row;
+          columns: ['expandedDetail'];
+          when: isExpansionDetailRow
+        " [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden">
       </mat-row>
     </table>
     <div>
