@@ -1,33 +1,33 @@
 import { state } from '@angular/animations';
-import { Router } from "@angular/router";
-import { UserDto } from "./../../../api/models/user-dto";
-import { State, Action, StateContext, Selector } from "@ngxs/store";
-import { HttpClient } from "@angular/common/http";
-import { tap, catchError } from "rxjs/operators";
-import { JwtResponse } from "src/app/model/jwt-response";
-import { UserControllerRestService } from "src/api/services";
+import { Router } from '@angular/router';
+import { UserDto } from './../../../api/models/user-dto';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { HttpClient } from '@angular/common/http';
+import { tap, catchError } from 'rxjs/operators';
+import { JwtResponse } from 'src/app/model/jwt-response';
+import { UserControllerRestService } from 'src/api/services';
 import { of } from 'rxjs';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
-const name = "auth";
-const fullName = "[" + name + "]";
+const name = 'auth';
+const fullName = '[' + name + ']';
 
 export class UpdateTokenAction {
-  static readonly type = "${token} UpdateTokenAction";
+  static readonly type = '${token} UpdateTokenAction';
   constructor(public token: string) { }
 }
 export class LoginAction {
-  static readonly type = "${fullName} Login";
+  static readonly type = '${fullName} Login';
   constructor(public userName: string, public password: string) { }
 }
 
 export class RegistrationAction {
-  static readonly type = "${fullName} Registration";
+  static readonly type = '${fullName} Registration';
   constructor(public userDto: UserDto) { }
 }
 
 export class LogoutAction {
-  static readonly type = "${fullName} Logout";
+  static readonly type = '${fullName} Logout';
   constructor() { }
 }
 export class CurrentUserAction {
@@ -60,7 +60,7 @@ export class AuthStateModel {
 }
 
 @State<AuthStateModel>({
-  name: "auth",
+  name: 'auth',
   defaults: {
     errorLogin: false,
     errorRegister: false,
@@ -77,7 +77,13 @@ export class AuthState {
 
   @Selector()
   static currentUser(state: AuthStateModel) {
-    return state.currentUser
+    return state.currentUser;
+  }
+
+
+  @Selector()
+  static getToken(auth: AuthStateModel) {
+    return auth.jwtToken;
   }
   @Action(LoginAction)
   login(
@@ -85,37 +91,37 @@ export class AuthState {
     { userName, password }: LoginAction
   ) {
     const form = new FormData();
-    form.append("userName", userName);
-    form.append("password", password);
-    if (!Cookies.get("jwtToken")) {
+    form.append('userName', userName);
+    form.append('password', password);
+    if (!Cookies.get('jwtToken')) {
       return this.httpClient
-        .post<JwtResponse>("http://localhost:8080/login", form)
+        .post<JwtResponse>('http://localhost:8080/login', form)
         .pipe(
           tap(({ token, expirationDate }) => {
             ctx.patchState({
               jwtToken: token,
               errorLogin: false
             });
-            console.log("login action ");
+            console.log('login action ');
             console.log(token);
-            Cookies.set("jwtToken", token)
-            ctx.dispatch(new CurrentUserAction())
-            this.router.navigate(["/panel"]);
+            Cookies.set('jwtToken', token);
+            ctx.dispatch(new CurrentUserAction());
+            this.router.navigate(['/panel']);
           }),
           catchError((a, b) => {
             ctx.patchState({
               errorLogin: true
-            })
+            });
             return of();
 
           })
         );
     } else {
       ctx.patchState({
-        jwtToken: Cookies.get("jwtToken")
-      })
-      ctx.dispatch(new CurrentUserAction())
-      this.router.navigate(["/panel"]);
+        jwtToken: Cookies.get('jwtToken')
+      });
+      ctx.dispatch(new CurrentUserAction());
+      this.router.navigate(['/panel']);
     }
   }
   @Action(CurrentUserAction)
@@ -124,14 +130,8 @@ export class AuthState {
     return this.userControllerRestService.userInfoUsingGET().pipe(tap(value => {
       ctx.patchState({
         currentUser: value
-      })
-    }))
-  }
-
-
-  @Selector()
-  static getToken(auth: AuthStateModel) {
-    return auth.jwtToken;
+      });
+    }));
   }
 
   @Action(RegistrationAction)
@@ -140,13 +140,13 @@ export class AuthState {
       .saveUserUsingPOST(userDto.userDto)
       .pipe(
         tap(value => {
-          console.log(value)
-          ctx.patchState({ errorRegister: false })
+          console.log(value);
+          ctx.patchState({ errorRegister: false });
         }),
         catchError((a, b) => {
           ctx.patchState({
             errorRegister: true
-          })
+          });
           return of();
         }));
   }
@@ -157,7 +157,7 @@ export class AuthState {
       jwtToken: null,
       currentUser: null
     });
-    Cookies.remove("jwtToken");
+    Cookies.remove('jwtToken');
   }
 
   @Action(ErrorLoginToFalseAction)
@@ -170,10 +170,10 @@ export class AuthState {
   }
   @Action(LoginFromCookieAction)
   loginFromCookie(ctx: StateContext<AuthStateModel>, LoginFromCookieAction) {
-    if (Cookies.get("jwtToken")) {
-      ctx.patchState({ jwtToken: Cookies.get("jwtToken") });
-      ctx.dispatch(new CurrentUserAction())
-      this.router.navigate(["/panel"]);
+    if (Cookies.get('jwtToken')) {
+      ctx.patchState({ jwtToken: Cookies.get('jwtToken') });
+      ctx.dispatch(new CurrentUserAction());
+      this.router.navigate(['/panel']);
     }
   }
   @Action(BackToDefoultAuthAction)
@@ -183,13 +183,13 @@ export class AuthState {
       errorRegister: false,
       jwtToken: null,
       currentUser: {}
-    })
+    });
   }
   @Action(UpdateTokenAction)
   updateToken(ctx: StateContext<AuthStateModel>, { token }: UpdateTokenAction) {
     ctx.patchState({
       jwtToken: token
     }
-    )
+    );
   }
 }

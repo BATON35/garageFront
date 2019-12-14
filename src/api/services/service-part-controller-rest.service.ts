@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { PageServicePartDto } from '../models/page-service-part-dto';
 import { ServicePartDto } from '../models/service-part-dto';
+import { ServicePartResponseDto } from '../models/service-part-response-dto';
 
 /**
  * Service Part Controller Rest
@@ -20,6 +21,7 @@ class ServicePartControllerRestService extends __BaseService {
   static readonly getServicePartListUsingGETPath = '/api/service-part';
   static readonly saveServicePartUsingPOSTPath = '/api/service-part';
   static readonly updateServicePartUsingPUTPath = '/api/service-part';
+  static readonly getServicePartHistoryUsingGETPath = '/api/service-part/history';
   static readonly getServicePartByIdUsingGETPath = '/api/service-part/{id}';
   static readonly deleteServicePartUsingDELETEPath = '/api/service-part/{id}';
 
@@ -146,6 +148,42 @@ class ServicePartControllerRestService extends __BaseService {
   updateServicePartUsingPUT(servicePartDto: ServicePartDto): __Observable<ServicePartDto> {
     return this.updateServicePartUsingPUTResponse(servicePartDto).pipe(
       __map(_r => _r.body as ServicePartDto)
+    );
+  }
+
+  /**
+   * @param vehicleId vehicleId
+   * @return OK
+   */
+  getServicePartHistoryUsingGETResponse(vehicleId?: number): __Observable<__StrictHttpResponse<Array<ServicePartResponseDto>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (vehicleId != null) __params = __params.set('vehicleId', vehicleId.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/service-part/history`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<ServicePartResponseDto>>;
+      })
+    );
+  }
+  /**
+   * @param vehicleId vehicleId
+   * @return OK
+   */
+  getServicePartHistoryUsingGET(vehicleId?: number): __Observable<Array<ServicePartResponseDto>> {
+    return this.getServicePartHistoryUsingGETResponse(vehicleId).pipe(
+      __map(_r => _r.body as Array<ServicePartResponseDto>)
     );
   }
 

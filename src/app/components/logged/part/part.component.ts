@@ -21,6 +21,9 @@ export class PartComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new LoadPartPageAction(0, 5));
   }
+  changePage(event) {
+    this.store.dispatch(new LoadPartPageAction(event.pageIndex, event.pageSize));
+  }
   openModal() {
     this.matDialog.open(PartCreateComponent, { width: '500px' });
   }

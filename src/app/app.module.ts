@@ -1,23 +1,23 @@
 import { NgxsModule } from '@ngxs/store';
-import { MenuComponent } from "./components/menu/menu.component";
-import { LoggedModule } from "./components/logged/logged.module";
-import { AuthInterceptor } from "./interceptor/auth.interceptor";
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { MenuComponent } from './components/menu/menu.component';
+import { LoggedModule } from './components/logged/logged.module';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { PublicModule } from "./components/public.module";
-import { RegistrationModule } from "./components/registration/registration.module";
-import { HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { PublicModule } from './components/public.module';
+import { RegistrationModule } from './components/registration/registration.module';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import {
   MatSidenavModule,
   MatListModule,
   MatIconModule,
   MatToolbarModule,
   MatSelectModule
-} from "@angular/material";
-import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+} from '@angular/material';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 @NgModule({

@@ -47,6 +47,9 @@ import { PartCreateComponent } from './part-create/part-create.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from 'selenium-webdriver/http';
+import { VehicleHistoryComponent } from './vehicle-history/vehicle-history.component';
+import { FileState } from './state/file.state';
+import { ServiceCreateComponent } from './service-create/service-create.component';
 
 const routs: Routes = [
   {
@@ -94,7 +97,9 @@ const routs: Routes = [
     ServicePartComponent,
     PartComponent,
     ServiceCarComponent,
-    PartCreateComponent
+    PartCreateComponent,
+    VehicleHistoryComponent,
+    ServiceCreateComponent
 
 
   ],
@@ -110,7 +115,7 @@ const routs: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, ServicePartState, ServiceCarState, WorkerState]),
+    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, ServicePartState, ServiceCarState, WorkerState, FileState]),
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
@@ -135,7 +140,9 @@ const routs: Routes = [
     VehicleCreateComponent,
     VehicleDetailsComponent,
     ServicePartComponent,
-    PartCreateComponent
+    PartCreateComponent,
+    VehicleHistoryComponent,
+    ServiceCreateComponent
   ],
   providers: [AuthGuard]
 })

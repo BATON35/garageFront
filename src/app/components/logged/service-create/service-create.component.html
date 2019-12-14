@@ -1,0 +1,10 @@
+<form [formGroup]="serviceForm">
+    <formly-form [fields]="serviceFields" [form]="serviceForm">
+        <div class="group">
+            <button (click)="save()" type="submit" class="button" mat-raised-button color="primary"
+                [disabled]="!serviceForm.valid">
+                Dodaj
+            </button>
+        </div>
+    </formly-form>
+</form>

@@ -1,0 +1,21 @@
+<div *ngIf=" serviceHistory$ | async as  serviceHistory">
+    <table mat-table [dataSource]="serviceHistory" class="mat-elevation-z8">
+        <ng-container matColumnDef="Part">
+            <mat-header-cell *matHeaderCellDef> Part </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <div *ngFor="let item of element.partDto"> {{ item.name }} {{item.price}}</div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="CarService">
+            <mat-header-cell *matHeaderCellDef> CarService </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.carServiceDto.name }} {{ element.carServiceDto.price }}
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Date">
+            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.createdDate }} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </table>
+</div>

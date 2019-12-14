@@ -1,19 +1,19 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { HomeComponent } from "./home/home.component";
-import { Routes, RouterModule } from "@angular/router";
-import { FormlyModule } from "@ngx-formly/core";
-import { FormlyMaterialModule } from "@ngx-formly/material";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatButtonModule, MatTabsModule } from "@angular/material";
-import { NgxsModule } from "@ngxs/store";
-import { AuthState } from "./state/auth.state";
-import { HttpClientModule } from "@angular/common/http";
-import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HomeComponent } from './home/home.component';
+import { Routes, RouterModule } from '@angular/router';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatTabsModule } from '@angular/material';
+import { NgxsModule } from '@ngxs/store';
+import { AuthState } from './state/auth.state';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 const routs: Routes = [
   {
-    path: "login",
+    path: 'login',
     component: HomeComponent
   }
 ];

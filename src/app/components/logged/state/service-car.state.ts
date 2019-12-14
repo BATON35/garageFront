@@ -4,6 +4,11 @@ import { CarServiceControllerRestService } from 'src/api/services';
 import { tap } from 'rxjs/operators';
 import { PageCarServiceDto } from 'src/api/models';
 
+
+export class SaveServiceCarAction {
+  static readonly type = '[ServiceCar] SaveServiceCarAction';
+  constructor(public carServiceDto: CarServiceDto) { }
+}
 export class AutocompleteNameServiceCarAction {
   static readonly type = '[ServiceCar] AutocompleteNameServiceCarAction';
   constructor(public text: string) { }
@@ -19,24 +24,35 @@ export class ServiceCarAction {
 }
 
 export class ServiceCarStateModel {
-  public pageCarServiceDto: PageCarServiceDto
+  public pageCarServiceDto: PageCarServiceDto;
   public serviceCarAutocomplete: CarServiceDto[];
+  public page: number;
+  public size: number;
 }
 
 @State<ServiceCarStateModel>({
   name: 'serviceCar',
   defaults: {
     pageCarServiceDto: {},
-    serviceCarAutocomplete: []
+    serviceCarAutocomplete: [],
+    page: 0,
+    size: 10
   }
 })
 export class ServiceCarState {
   constructor(public carServiceControllerRestService: CarServiceControllerRestService) { }
   @Action(LoadServiceCarPageAction)
   loadServiceCarPage(ctx: StateContext<ServiceCarStateModel>, { page, size }: LoadServiceCarPageAction) {
-    return this.carServiceControllerRestService.getCarServiceListUsingGET({ size, page }).pipe(tap(serviceCar => ctx.patchState({
-      pageCarServiceDto: serviceCar
-    })))
+    return this.carServiceControllerRestService.getCarServiceListUsingGET({
+      size,
+      page
+    }).pipe(tap(
+      serviceCar => ctx.patchState({
+        pageCarServiceDto: serviceCar,
+        page: page,
+        size: size
+      })))
+
   }
   @Action(AutocompleteNameServiceCarAction)
   autocompleteNameServiceCar(ctx: StateContext<ServiceCarStateModel>, { text }: AutocompleteNameServiceCarAction) {
@@ -45,5 +61,11 @@ export class ServiceCarState {
         serviceCarAutocomplete: carService
       }))
     )
+  }
+  @Action(SaveServiceCarAction)
+  saveServiceCar(ctx: StateContext<ServiceCarStateModel>, { carServiceDto }: SaveServiceCarAction) {
+    console.log("service-car !!!!!!!!!")
+    return this.carServiceControllerRestService.saveCarServiceUsingPOST(carServiceDto)
+      .pipe(tap(serviceCar => ctx.dispatch(new LoadServiceCarPageAction(ctx.getState().page, ctx.getState().size))));
   }
 }

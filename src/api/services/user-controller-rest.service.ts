@@ -23,7 +23,6 @@ class UserControllerRestService extends __BaseService {
   static readonly searchUsersUsingGETPath = '/api/users/search';
   static readonly getUserByIdUsingGETPath = '/api/users/{id}';
   static readonly deleteUserUsingDELETEPath = '/api/users/{id}';
-  static readonly getUserListUsingGETPath = '/api/users/{page}/{size}/{hasRole}';
 
   constructor(
     config: __Configuration,
@@ -146,6 +145,8 @@ class UserControllerRestService extends __BaseService {
    *
    * - `page`: page
    *
+   * - `hasRole`: hasRole
+   *
    * @return OK
    */
   searchUsersUsingGETResponse(params: UserControllerRestService.SearchUsersUsingGETParams): __Observable<__StrictHttpResponse<PageUserDto>> {
@@ -155,6 +156,7 @@ class UserControllerRestService extends __BaseService {
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.hasRole != null) __params = __params.set('hasRole', params.hasRole.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/users/search`,
@@ -180,6 +182,8 @@ class UserControllerRestService extends __BaseService {
    * - `searchText`: searchText
    *
    * - `page`: page
+   *
+   * - `hasRole`: hasRole
    *
    * @return OK
    */
@@ -258,58 +262,6 @@ class UserControllerRestService extends __BaseService {
       __map(_r => _r.body as null)
     );
   }
-
-  /**
-   * @param params The `UserControllerRestService.GetUserListUsingGETParams` containing the following parameters:
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * - `hasRole`: hasRole
-   *
-   * @return OK
-   */
-  getUserListUsingGETResponse(params: UserControllerRestService.GetUserListUsingGETParams): __Observable<__StrictHttpResponse<PageUserDto>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/users/${params.page}/${params.size}/${params.hasRole}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<PageUserDto>;
-      })
-    );
-  }
-  /**
-   * @param params The `UserControllerRestService.GetUserListUsingGETParams` containing the following parameters:
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * - `hasRole`: hasRole
-   *
-   * @return OK
-   */
-  getUserListUsingGET(params: UserControllerRestService.GetUserListUsingGETParams): __Observable<PageUserDto> {
-    return this.getUserListUsingGETResponse(params).pipe(
-      __map(_r => _r.body as PageUserDto)
-    );
-  }
 }
 
 module UserControllerRestService {
@@ -328,22 +280,6 @@ module UserControllerRestService {
      * searchText
      */
     searchText: string;
-
-    /**
-     * page
-     */
-    page: number;
-  }
-
-  /**
-   * Parameters for getUserListUsingGET
-   */
-  export interface GetUserListUsingGETParams {
-
-    /**
-     * size
-     */
-    size: number;
 
     /**
      * page

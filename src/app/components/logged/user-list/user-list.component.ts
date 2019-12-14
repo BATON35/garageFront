@@ -22,10 +22,10 @@ export class UserListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.store.dispatch(new UsersPageAction(0, 5, this.checked));
+    this.store.dispatch(new UsersPageAction(0, '', 5, this.checked));
   }
   changePage(event) {
-    this.store.dispatch(new UsersPageAction(event.pageIndex, event.pageSize, this.checked))
+    this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, this.checked))
   }
   delete(id) {
     this.store.dispatch(new UsersDeleteAction(id))
@@ -42,7 +42,7 @@ export class UserListComponent implements OnInit {
     })
   }
   search(searchText) {
-    this.store.dispatch(new UserSearchAction(searchText));
+    this.store.dispatch(new UserSearchAction(searchText, this.checked));
     // console.log(searchText);
   }
   role(event) {

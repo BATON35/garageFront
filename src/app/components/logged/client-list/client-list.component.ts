@@ -14,6 +14,8 @@ import { ServicePartComponent } from '../service-part/service-part.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
+import { VehicleHistoryComponent } from '../vehicle-history/vehicle-history.component';
+import { DownloadVehicleHistoryAction } from '../state/file.state';
 
 
 @Component({
@@ -31,7 +33,7 @@ import { map } from 'rxjs/operators';
 export class ClientListComponent implements OnInit {
   selectedLanguage = null;
   displayedColumns: string[] = ['id', 'name', 'email', 'update', 'addVehicle', 'delete'];
-  displayedVehiclesColumns: string[] = ['id', 'brand', 'model', 'numberPlate', 'update', 'delete', 'details', 'notification', 'service'];
+  displayedVehiclesColumns: string[] = ['id', 'brand', 'model', 'numberPlate', 'update', 'delete', 'details', 'notification', 'service', 'history'];
 
   @Select(state => state.client.pageClientDto)
   clients$: Observable<PageClientDto>;
@@ -105,10 +107,13 @@ export class ClientListComponent implements OnInit {
     this.store.dispatch(new ClientSearchAction(searchText));
     this.store.dispatch(new AutocompleteAction(searchText));
   }
-  addService(vehicle) {
-    this.matDialog.open(ServicePartComponent, {
-      width: '500px',
+  showHistory(vehicle) {
+    this.matDialog.open(VehicleHistoryComponent, {
+      width: '100%',
       data: vehicle
     });
+  }
+  downloadVehicleHistory(id) {
+    this.store.dispatch(new DownloadVehicleHistoryAction(id))
   }
 }

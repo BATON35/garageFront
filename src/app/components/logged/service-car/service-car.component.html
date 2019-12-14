@@ -38,4 +38,13 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </table>
+    <div style="display:inline">
+        <mat-paginator (page)="changePage($event)" [length]="services.totalElements" [pageSize]="services.size"
+            [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    <div style="display:inline">
+        <button (click)="openModal()" type="submit" class="button" mat-raised-button color="primary">
+            Dodaj servis
+        </button>
+    </div>
 </div>

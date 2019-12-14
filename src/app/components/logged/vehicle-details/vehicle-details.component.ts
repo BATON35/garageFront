@@ -15,41 +15,41 @@ export class VehicleDetailsComponent implements OnInit {
   vehicleDetailForm = new FormGroup({});
   vehicleDetailFields: FormlyFieldConfig[] = [
     {
-      key: "brand",
-      type: "input",
+      key: 'brand',
+      type: 'input',
       templateOptions: {
-        label: "marka pojazdu",
-        Placeholder: "marka pojazdu",
+        label: 'marka pojazdu',
+        Placeholder: 'marka pojazdu',
         require: true,
         disabled: true
       }
     },
     {
-      key: "model",
-      type: "input",
+      key: 'model',
+      type: 'input',
       templateOptions: {
-        label: "model",
-        Placeholder: "model",
+        label: 'model',
+        Placeholder: 'model',
         require: true,
         disabled: true
       }
     },
     {
-      key: "numberPlate",
-      type: "input",
+      key: 'numberPlate',
+      type: 'input',
       templateOptions: {
-        label: "numer rejestracyjny",
-        Placeholder: "numer rejestracyjny",
+        label: 'numer rejestracyjny',
+        Placeholder: 'numer rejestracyjny',
         require: true,
         disabled: true
       }
     },
     {
-      key: "overviewDate",
-      type: "datepicker",
+      key: 'overviewDate',
+      type: 'datepicker',
       templateOptions: {
-        label: "data przegladu",
-        Placeholder: "podaj date",
+        label: 'data przegladu',
+        Placeholder: 'podaj date',
         require: true,
         disabled: true
       }

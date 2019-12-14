@@ -1,15 +1,15 @@
 import { BackToDefoultAuthAction } from './../state/auth.state';
 import { UserDto } from './../../../api/models/user-dto';
-import { UserControllerRestService } from "src/api/services";
-import { State, Action, StateContext, UpdateState } from "@ngxs/store";
-import { tap, catchError } from "rxjs/operators";
-import { PageUserDto } from "src/api/models";
+import { UserControllerRestService } from 'src/api/services';
+import { State, Action, StateContext, UpdateState } from '@ngxs/store';
+import { tap, catchError } from 'rxjs/operators';
+import { PageUserDto } from 'src/api/models';
 import { empty } from 'rxjs';
 
-const name = "[Users]";
+const name = '[Users]';
 export class UsersPageAction {
   static readonly type = '${name} usersPage';
-  constructor(public page: number, public size: number, public hasRole: boolean) { }
+  constructor(public page: number, public searchText: string, public size: number, public hasRole: boolean) { }
 }
 
 
@@ -24,7 +24,7 @@ export class UserUpdateAction {
 }
 export class UserSearchAction {
   static readonly type = '${name} search user';
-  constructor(public searchText: string) { }
+  constructor(public searchText: string, public hasRole: boolean) { }
 }
 
 export class BackToDefoultUserAction {
@@ -38,15 +38,17 @@ export class LoadUserByChangRoleAction {
 export class UsersStateModel {
   userPage: PageUserDto;
   page: number;
+  searchText: string;
   size: number;
   hasRole: boolean;
 }
 
 @State<UsersStateModel>({
-  name: "users",
+  name: 'users',
   defaults: {
     userPage: {},
     page: 0,
+    searchText: '',
     size: 5,
     hasRole: false
   }
@@ -55,15 +57,16 @@ export class UsersState {
   constructor(public userService: UserControllerRestService) { }
 
   @Action(UsersPageAction)
-  add(ctx: StateContext<UsersStateModel>, { page, size, hasRole }: UsersPageAction) {
+  add(ctx: StateContext<UsersStateModel>, { page, searchText, size, hasRole }: UsersPageAction) {
     return this.userService
-      .getUserListUsingGET({ size: size, page: page, hasRole })
+      .searchUsersUsingGET({ size, searchText, page, hasRole })
       .pipe(
         tap(value => {
-          console.log(value)
+          console.log(value);
           ctx.patchState({
             userPage: value,
             page,
+            searchText,
             size,
             hasRole
           });
@@ -75,36 +78,38 @@ export class UsersState {
   delete(ctx: StateContext<UsersStateModel>, { id }: UsersDeleteAction) {
     return this.userService
       .deleteUserUsingDELETE(id).pipe(tap(value => {
-        const page = ctx.getState().page
-        const size = ctx.getState().size
-        const hasRole = ctx.getState().hasRole
-        ctx.dispatch(new UsersPageAction(page, size, hasRole))
+        const page = ctx.getState().page;
+        const searchText = ctx.getState().searchText;
+        const size = ctx.getState().size;
+        const hasRole = ctx.getState().hasRole;
+        ctx.dispatch(new UsersPageAction(page, searchText, size, hasRole));
       }));
   }
 
   @Action(UserUpdateAction)
   update(ctx: StateContext<UsersStateModel>, { userDto }: UserUpdateAction) {
     return this.userService.updateUserUsingPUT(userDto).pipe(tap(value => {
-      const page = ctx.getState().page
-      const size = ctx.getState().size
-      const hasRole = ctx.getState().hasRole
-      ctx.dispatch(new UsersPageAction(page, size, hasRole))
+      const page = ctx.getState().page;
+      const searchText = ctx.getState().searchText;
+      const size = ctx.getState().size;
+      const hasRole = ctx.getState().hasRole;
+      ctx.dispatch(new UsersPageAction(page, searchText, size, hasRole));
     }), catchError(error => {
-      console.log(error)
+      console.log(error);
       return empty();
     }));
   }
   @Action(UserSearchAction)
-  search(ctx: StateContext<UsersStateModel>, { searchText }: UserSearchAction) {
-    return this.userService.searchUsersUsingGET({ searchText, page: 0, size: ctx.getState().size }).pipe(
+  search(ctx: StateContext<UsersStateModel>, { searchText, hasRole }: UserSearchAction) {
+    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 0, hasRole }).pipe(
       tap(
         user => {
           ctx.patchState({
             userPage: user
-          })
+          });
         }
       )
-    )
+    );
   }
   @Action(BackToDefoultUserAction)
   backToDefoultUser(ctx: StateContext<UsersStateModel>, BackToDefoultUserAction) {
@@ -112,13 +117,13 @@ export class UsersState {
       userPage: {},
       page: 0,
       size: 5
-    })
+    });
   }
   @Action(LoadUserByChangRoleAction)
   loadUserByChangeRole(ctx: StateContext<UsersStateModel>, { hasRole }: LoadUserByChangRoleAction) {
-    ctx.dispatch(new UsersPageAction(ctx.getState().page, ctx.getState().size, hasRole))
+    ctx.dispatch(new UsersPageAction(ctx.getState().page, '', ctx.getState().size, hasRole));
     ctx.patchState({
-      hasRole: hasRole
-    })
+      hasRole
+    });
   }
 }

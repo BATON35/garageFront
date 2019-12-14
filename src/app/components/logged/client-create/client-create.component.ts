@@ -12,27 +12,27 @@ import { Component, OnInit, Inject } from '@angular/core';
 })
 export class ClientCreateComponent implements OnInit {
 
-  clientForm = new FormGroup({})
+  clientForm = new FormGroup({});
   clientFields: FormlyFieldConfig[] = [
     {
-      key: "name",
-      type: "input",
+      key: 'name',
+      type: 'input',
       templateOptions: {
-        label: "nazwa Klienta",
-        Placeholder: "nazwa Klienta",
+        label: 'nazwa Klienta',
+        Placeholder: 'nazwa Klienta',
         require: true
       }
     },
     {
-      key: "email",
-      type: "input",
+      key: 'email',
+      type: 'input',
       templateOptions: {
-        label: "emial klienta",
-        Placeholder: "email urzytkownika",
+        label: 'emial klienta',
+        Placeholder: 'email urzytkownika',
         require: true
       }
     }
-  ]
+  ];
 
   constructor(public store: Store, public matDialogRef: MatDialogRef<ClientCreateComponent>, @Inject(MAT_DIALOG_DATA) public clientDto) { }
 
@@ -48,7 +48,7 @@ export class ClientCreateComponent implements OnInit {
           email: this.clientForm.value.email,
         }
       )
-    )
+    );
     this.matDialogRef.close();
   }
 

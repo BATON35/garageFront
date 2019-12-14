@@ -13,6 +13,7 @@ export { PartDto } from './models/part-dto';
 export { Role } from './models/role';
 export { RoleDto } from './models/role-dto';
 export { ServicePartDto } from './models/service-part-dto';
+export { ServicePartResponseDto } from './models/service-part-response-dto';
 export { Sort } from './models/sort';
 export { Template } from './models/template';
 export { UserDto } from './models/user-dto';

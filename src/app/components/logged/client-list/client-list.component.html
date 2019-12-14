@@ -99,19 +99,17 @@
                 </button>
               </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="service">
-              <mat-header-cell *matHeaderCellDef>
-                Pokaż szczegóły
-              </mat-header-cell>
+            <ng-container matColumnDef="delete">
+              <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <button (click)="addService(element)" mat-icon-button color="primary">
-                  <mat-icon>update</mat-icon>
+                <button (click)="deleteVehicle(element.id)" mat-icon-button color="primary">
+                  <mat-icon>delete</mat-icon>
                 </button>
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="details">
               <mat-header-cell *matHeaderCellDef>
-                Dodaj usługe
+                Pokaz szczegoły
               </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="updateVehicleDetails(element)" mat-icon-button color="primary">
@@ -119,7 +117,6 @@
                 </button>
               </mat-cell>
             </ng-container>
-
             <ng-container matColumnDef="notification">
               <mat-header-cell *matHeaderCellDef>
                 Przypomnij o przeglądzie
@@ -130,12 +127,23 @@
                 </mat-slide-toggle>
               </mat-cell>
             </ng-container>
-
-            <ng-container matColumnDef="delete">
-              <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
+            <ng-container matColumnDef="service">
+              <mat-header-cell *matHeaderCellDef>
+                Pokaż historie
+              </mat-header-cell>
+              <mat-cell fxFlex="100" *matCellDef="let element">
+                <button (click)="showHistory(element)" mat-icon-button color="primary">
+                  <mat-icon>update</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="history">
+              <mat-header-cell *matHeaderCellDef>
+                Pobierz historie
+              </mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <button (click)="deleteVehicle(element.id)" mat-icon-button color="primary">
-                  <mat-icon>delete</mat-icon>
+                <button (click)="downloadVehicleHistory(element.id)" mat-icon-button color="primary">
+                  <mat-icon>Pobierz</mat-icon>
                 </button>
               </mat-cell>
             </ng-container>
