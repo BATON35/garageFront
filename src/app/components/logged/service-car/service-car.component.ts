@@ -22,7 +22,7 @@ export class ServiceCarComponent implements OnInit {
   }
   changePage(event) {
     this.store.dispatch(new LoadServiceCarPageAction(event.pageIndex, event.pageSize));
-    console.log(event) //zawartos eventu jak zdefiniowac
+    console.log(event)
   }
   openModal() {
     this.matDialog.open(ServiceCreateComponent);

@@ -9,7 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { PageJobDto } from '../models/page-job-dto';
 import { JobDto } from '../models/job-dto';
-import { ServicePartResponseDto } from '../models/service-part-response-dto';
+import { JobResponseDto } from '../models/job-response-dto';
 
 /**
  * Job Controller
@@ -18,12 +18,12 @@ import { ServicePartResponseDto } from '../models/service-part-response-dto';
   providedIn: 'root',
 })
 class JobControllerService extends __BaseService {
-  static readonly getServicePartListUsingGETPath = '/api/service-part';
-  static readonly saveServicePartUsingPOSTPath = '/api/service-part';
-  static readonly updateServicePartUsingPUTPath = '/api/service-part';
-  static readonly getServicePartHistoryUsingGETPath = '/api/service-part/history';
-  static readonly getServicePartByIdUsingGETPath = '/api/service-part/{id}';
-  static readonly deleteServicePartUsingDELETEPath = '/api/service-part/{id}';
+  static readonly getJobListUsingGETPath = '/api/service-part';
+  static readonly saveJobUsingPOSTPath = '/api/service-part';
+  static readonly updateJobUsingPUTPath = '/api/service-part';
+  static readonly getJobHistoryUsingGETPath = '/api/service-part/history';
+  static readonly getJobByIdUsingGETPath = '/api/service-part/{id}';
+  static readonly deleteJobUsingDELETEPath = '/api/service-part/{id}';
 
   constructor(
     config: __Configuration,
@@ -33,7 +33,7 @@ class JobControllerService extends __BaseService {
   }
 
   /**
-   * @param params The `JobControllerService.GetServicePartListUsingGETParams` containing the following parameters:
+   * @param params The `JobControllerService.GetJobListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
@@ -41,7 +41,7 @@ class JobControllerService extends __BaseService {
    *
    * @return OK
    */
-  getServicePartListUsingGETResponse(params: JobControllerService.GetServicePartListUsingGETParams): __Observable<__StrictHttpResponse<PageJobDto>> {
+  getJobListUsingGETResponse(params: JobControllerService.GetJobListUsingGETParams): __Observable<__StrictHttpResponse<PageJobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -65,7 +65,7 @@ class JobControllerService extends __BaseService {
     );
   }
   /**
-   * @param params The `JobControllerService.GetServicePartListUsingGETParams` containing the following parameters:
+   * @param params The `JobControllerService.GetJobListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
@@ -73,8 +73,8 @@ class JobControllerService extends __BaseService {
    *
    * @return OK
    */
-  getServicePartListUsingGET(params: JobControllerService.GetServicePartListUsingGETParams): __Observable<PageJobDto> {
-    return this.getServicePartListUsingGETResponse(params).pipe(
+  getJobListUsingGET(params: JobControllerService.GetJobListUsingGETParams): __Observable<PageJobDto> {
+    return this.getJobListUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageJobDto)
     );
   }
@@ -83,7 +83,7 @@ class JobControllerService extends __BaseService {
    * @param jobDto jobDto
    * @return OK
    */
-  saveServicePartUsingPOSTResponse(jobDto: JobDto): __Observable<__StrictHttpResponse<JobDto>> {
+  saveJobUsingPOSTResponse(jobDto: JobDto): __Observable<__StrictHttpResponse<JobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -109,8 +109,8 @@ class JobControllerService extends __BaseService {
    * @param jobDto jobDto
    * @return OK
    */
-  saveServicePartUsingPOST(jobDto: JobDto): __Observable<JobDto> {
-    return this.saveServicePartUsingPOSTResponse(jobDto).pipe(
+  saveJobUsingPOST(jobDto: JobDto): __Observable<JobDto> {
+    return this.saveJobUsingPOSTResponse(jobDto).pipe(
       __map(_r => _r.body as JobDto)
     );
   }
@@ -119,7 +119,7 @@ class JobControllerService extends __BaseService {
    * @param jobDto jobDto
    * @return OK
    */
-  updateServicePartUsingPUTResponse(jobDto: JobDto): __Observable<__StrictHttpResponse<JobDto>> {
+  updateJobUsingPUTResponse(jobDto: JobDto): __Observable<__StrictHttpResponse<JobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -145,8 +145,8 @@ class JobControllerService extends __BaseService {
    * @param jobDto jobDto
    * @return OK
    */
-  updateServicePartUsingPUT(jobDto: JobDto): __Observable<JobDto> {
-    return this.updateServicePartUsingPUTResponse(jobDto).pipe(
+  updateJobUsingPUT(jobDto: JobDto): __Observable<JobDto> {
+    return this.updateJobUsingPUTResponse(jobDto).pipe(
       __map(_r => _r.body as JobDto)
     );
   }
@@ -155,7 +155,7 @@ class JobControllerService extends __BaseService {
    * @param vehicleId vehicleId
    * @return OK
    */
-  getServicePartHistoryUsingGETResponse(vehicleId?: number): __Observable<__StrictHttpResponse<Array<ServicePartResponseDto>>> {
+  getJobHistoryUsingGETResponse(vehicleId?: number): __Observable<__StrictHttpResponse<Array<JobResponseDto>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -173,7 +173,7 @@ class JobControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<ServicePartResponseDto>>;
+        return _r as __StrictHttpResponse<Array<JobResponseDto>>;
       })
     );
   }
@@ -181,9 +181,9 @@ class JobControllerService extends __BaseService {
    * @param vehicleId vehicleId
    * @return OK
    */
-  getServicePartHistoryUsingGET(vehicleId?: number): __Observable<Array<ServicePartResponseDto>> {
-    return this.getServicePartHistoryUsingGETResponse(vehicleId).pipe(
-      __map(_r => _r.body as Array<ServicePartResponseDto>)
+  getJobHistoryUsingGET(vehicleId?: number): __Observable<Array<JobResponseDto>> {
+    return this.getJobHistoryUsingGETResponse(vehicleId).pipe(
+      __map(_r => _r.body as Array<JobResponseDto>)
     );
   }
 
@@ -191,7 +191,7 @@ class JobControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getServicePartByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<JobDto>> {
+  getJobByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<JobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -217,8 +217,8 @@ class JobControllerService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getServicePartByIdUsingGET(id: number): __Observable<JobDto> {
-    return this.getServicePartByIdUsingGETResponse(id).pipe(
+  getJobByIdUsingGET(id: number): __Observable<JobDto> {
+    return this.getJobByIdUsingGETResponse(id).pipe(
       __map(_r => _r.body as JobDto)
     );
   }
@@ -226,7 +226,7 @@ class JobControllerService extends __BaseService {
   /**
    * @param id id
    */
-  deleteServicePartUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteJobUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -251,8 +251,8 @@ class JobControllerService extends __BaseService {
   /**
    * @param id id
    */
-  deleteServicePartUsingDELETE(id: number): __Observable<null> {
-    return this.deleteServicePartUsingDELETEResponse(id).pipe(
+  deleteJobUsingDELETE(id: number): __Observable<null> {
+    return this.deleteJobUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -261,9 +261,9 @@ class JobControllerService extends __BaseService {
 module JobControllerService {
 
   /**
-   * Parameters for getServicePartListUsingGET
+   * Parameters for getJobListUsingGET
    */
-  export interface GetServicePartListUsingGETParams {
+  export interface GetJobListUsingGETParams {
 
     /**
      * size

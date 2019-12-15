@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
-import { LoadServicePageAction, SaveServicePartAction } from '../state/service-part.state';
+import { LoadServicePageAction, SaveJobAction } from '../state/service-part.state';
 import { AutocompleteNamePartAction } from '../state/part.state';
 import { Observable } from 'rxjs';
 import { AutocompleteNameServiceCarAction } from '../state/service-car.state';
@@ -79,7 +79,7 @@ export class ServicePartComponent implements OnInit {
     this.vehicleNumberPlate = plateNumber;
   }
   save() {
-    this.store.dispatch(new SaveServicePartAction(this.workerId, this.serviceId, this.partId, this.vehicleNumberPlate))
+    this.store.dispatch(new SaveJobAction(this.workerId, this.serviceId, this.partId, this.vehicleNumberPlate))
   }
   traySelect(event) {
     console.log(event)

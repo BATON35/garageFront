@@ -1,13 +1,13 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { JobControllerService } from 'src/api/services';
 import { tap } from 'rxjs/operators';
-import { JobDto, PageJobDto, ServicePartResponseDto } from 'src/api/models';
+import { JobDto, PageJobDto, JobResponseDto } from 'src/api/models';
 
 export class LoadHistoryAction {
   static readonly type = '[ServicePart] LoadHistoryAction';
   constructor(public vehicleId: number) { }
 }
-export class SaveServicePartAction {
+export class SaveJobAction {
   static readonly type = '[ServicePart] SaveServicePartAction';
   constructor(public workerId: number, public partId: number, public serviceId: number, public vehiclePlateNumber: string) { }
 }
@@ -24,7 +24,7 @@ export class LoadServicePageAction {
 
 export class ServicePartStateModel {
   public pageServicePartDto: PageJobDto;
-  public serviceHistory: ServicePartResponseDto[];
+  public serviceHistory: JobResponseDto[];
 }
 
 @State<ServicePartStateModel>({
@@ -38,7 +38,7 @@ export class ServicePartState {
   constructor(public JobControllerService: JobControllerService) { }
   @Action(CreateServicePartAction)
   add(ctx: StateContext<ServicePartStateModel>, { servicePartDto }: CreateServicePartAction) {
-    this.JobControllerService.saveServicePartUsingPOST(servicePartDto).pipe(
+    this.JobControllerService.saveJobUsingPOST(servicePartDto).pipe(
       tap(value => {
         console.log(value);
       })
@@ -46,24 +46,24 @@ export class ServicePartState {
   }
   @Action(LoadServicePageAction)
   loadServicePage(ctx: StateContext<ServicePartStateModel>, { page, size }: LoadServicePageAction) {
-    return this.JobControllerService.getServicePartListUsingGET({ size, page }).pipe(
+    return this.JobControllerService.getJobListUsingGET({ size, page }).pipe(
       tap(servicePart => ctx.patchState({
         pageServicePartDto: servicePart
       })
       ));
   }
-  @Action(SaveServicePartAction)
-  saveServicePart(ctx: StateContext<ServicePartStateModel>, { workerId, serviceId, partId, vehiclePlateNumber }: SaveServicePartAction) {
+  @Action(SaveJobAction)
+  saveServicePart(ctx: StateContext<ServicePartStateModel>, { workerId, serviceId, partId, vehiclePlateNumber }: SaveJobAction) {
     console.log(workerId + '/n ' + serviceId + ' ' + partId + ' ' + vehiclePlateNumber);
 
-    return this.JobControllerService.saveServicePartUsingPOST({
+    return this.JobControllerService.saveJobUsingPOST({
       workerId, serviceId, partIds: [partId], vehicleNumberPlate: vehiclePlateNumber
 
     });
   }
   @Action(LoadHistoryAction)
   loadHistory(ctx: StateContext<ServicePartStateModel>, { vehicleId }: LoadHistoryAction) {
-    return this.JobControllerService.getServicePartHistoryUsingGET(vehicleId).pipe(
+    return this.JobControllerService.getJobHistoryUsingGET(vehicleId).pipe(
       tap(servicePart => ctx.patchState({
         serviceHistory: servicePart
       }))

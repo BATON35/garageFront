@@ -1,6 +1,7 @@
 export { CarServiceDto } from './models/car-service-dto';
 export { ClientDto } from './models/client-dto';
 export { JobDto } from './models/job-dto';
+export { JobResponseDto } from './models/job-response-dto';
 export { Pageable } from './models/pageable';
 export { PageCarServiceDto } from './models/page-car-service-dto';
 export { PageClientDto } from './models/page-client-dto';
@@ -13,7 +14,6 @@ export { PageWorkerDto } from './models/page-worker-dto';
 export { PartDto } from './models/part-dto';
 export { Role } from './models/role';
 export { RoleDto } from './models/role-dto';
-export { ServicePartResponseDto } from './models/service-part-response-dto';
 export { Sort } from './models/sort';
 export { Template } from './models/template';
 export { UserDto } from './models/user-dto';

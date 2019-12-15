@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { CarServiceDto } from './car-service-dto';
 import { PartDto } from './part-dto';
-export interface ServicePartResponseDto {
+export interface JobResponseDto {
   carServiceDto?: CarServiceDto;
   createdDate?: string;
   partsDto?: Array<PartDto>;

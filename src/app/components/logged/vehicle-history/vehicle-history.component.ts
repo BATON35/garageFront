@@ -5,7 +5,7 @@ import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.comp
 import { dispatch } from 'rxjs/internal/observable/pairs';
 import { LoadHistoryAction } from '../state/service-part.state';
 import { Observable } from 'rxjs';
-import { ServicePartResponseDto } from 'src/api/models';
+import { JobResponseDto } from 'src/api/models';
 
 @Component({
   selector: 'app-vehicle-history',
@@ -14,7 +14,7 @@ import { ServicePartResponseDto } from 'src/api/models';
 })
 export class VehicleHistoryComponent implements OnInit {
   @Select(state => state.servicePart.serviceHistory)
-  serviceHistory$: Observable<ServicePartResponseDto[]>;
+  serviceHistory$: Observable<JobResponseDto[]>;
   displayedColumns: string[] = ["Part", "CarService", "Date"]
   constructor(public store: Store,
     public matDialogRef: MatDialogRef<VehicleDetailsComponent>,
