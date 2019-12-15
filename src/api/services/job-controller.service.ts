@@ -7,17 +7,17 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { PageServicePartDto } from '../models/page-service-part-dto';
-import { ServicePartDto } from '../models/service-part-dto';
+import { PageJobDto } from '../models/page-job-dto';
+import { JobDto } from '../models/job-dto';
 import { ServicePartResponseDto } from '../models/service-part-response-dto';
 
 /**
- * Service Part Controller Rest
+ * Job Controller
  */
 @Injectable({
   providedIn: 'root',
 })
-class ServicePartControllerRestService extends __BaseService {
+class JobControllerService extends __BaseService {
   static readonly getServicePartListUsingGETPath = '/api/service-part';
   static readonly saveServicePartUsingPOSTPath = '/api/service-part';
   static readonly updateServicePartUsingPUTPath = '/api/service-part';
@@ -33,7 +33,7 @@ class ServicePartControllerRestService extends __BaseService {
   }
 
   /**
-   * @param params The `ServicePartControllerRestService.GetServicePartListUsingGETParams` containing the following parameters:
+   * @param params The `JobControllerService.GetServicePartListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
@@ -41,7 +41,7 @@ class ServicePartControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getServicePartListUsingGETResponse(params: ServicePartControllerRestService.GetServicePartListUsingGETParams): __Observable<__StrictHttpResponse<PageServicePartDto>> {
+  getServicePartListUsingGETResponse(params: JobControllerService.GetServicePartListUsingGETParams): __Observable<__StrictHttpResponse<PageJobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -60,12 +60,12 @@ class ServicePartControllerRestService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<PageServicePartDto>;
+        return _r as __StrictHttpResponse<PageJobDto>;
       })
     );
   }
   /**
-   * @param params The `ServicePartControllerRestService.GetServicePartListUsingGETParams` containing the following parameters:
+   * @param params The `JobControllerService.GetServicePartListUsingGETParams` containing the following parameters:
    *
    * - `size`: size
    *
@@ -73,21 +73,21 @@ class ServicePartControllerRestService extends __BaseService {
    *
    * @return OK
    */
-  getServicePartListUsingGET(params: ServicePartControllerRestService.GetServicePartListUsingGETParams): __Observable<PageServicePartDto> {
+  getServicePartListUsingGET(params: JobControllerService.GetServicePartListUsingGETParams): __Observable<PageJobDto> {
     return this.getServicePartListUsingGETResponse(params).pipe(
-      __map(_r => _r.body as PageServicePartDto)
+      __map(_r => _r.body as PageJobDto)
     );
   }
 
   /**
-   * @param servicePartDto servicePartDto
+   * @param jobDto jobDto
    * @return OK
    */
-  saveServicePartUsingPOSTResponse(servicePartDto: ServicePartDto): __Observable<__StrictHttpResponse<ServicePartDto>> {
+  saveServicePartUsingPOSTResponse(jobDto: JobDto): __Observable<__StrictHttpResponse<JobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = servicePartDto;
+    __body = jobDto;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/service-part`,
@@ -101,29 +101,29 @@ class ServicePartControllerRestService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<ServicePartDto>;
+        return _r as __StrictHttpResponse<JobDto>;
       })
     );
   }
   /**
-   * @param servicePartDto servicePartDto
+   * @param jobDto jobDto
    * @return OK
    */
-  saveServicePartUsingPOST(servicePartDto: ServicePartDto): __Observable<ServicePartDto> {
-    return this.saveServicePartUsingPOSTResponse(servicePartDto).pipe(
-      __map(_r => _r.body as ServicePartDto)
+  saveServicePartUsingPOST(jobDto: JobDto): __Observable<JobDto> {
+    return this.saveServicePartUsingPOSTResponse(jobDto).pipe(
+      __map(_r => _r.body as JobDto)
     );
   }
 
   /**
-   * @param servicePartDto servicePartDto
+   * @param jobDto jobDto
    * @return OK
    */
-  updateServicePartUsingPUTResponse(servicePartDto: ServicePartDto): __Observable<__StrictHttpResponse<ServicePartDto>> {
+  updateServicePartUsingPUTResponse(jobDto: JobDto): __Observable<__StrictHttpResponse<JobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = servicePartDto;
+    __body = jobDto;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/api/service-part`,
@@ -137,17 +137,17 @@ class ServicePartControllerRestService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<ServicePartDto>;
+        return _r as __StrictHttpResponse<JobDto>;
       })
     );
   }
   /**
-   * @param servicePartDto servicePartDto
+   * @param jobDto jobDto
    * @return OK
    */
-  updateServicePartUsingPUT(servicePartDto: ServicePartDto): __Observable<ServicePartDto> {
-    return this.updateServicePartUsingPUTResponse(servicePartDto).pipe(
-      __map(_r => _r.body as ServicePartDto)
+  updateServicePartUsingPUT(jobDto: JobDto): __Observable<JobDto> {
+    return this.updateServicePartUsingPUTResponse(jobDto).pipe(
+      __map(_r => _r.body as JobDto)
     );
   }
 
@@ -191,7 +191,7 @@ class ServicePartControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getServicePartByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<ServicePartDto>> {
+  getServicePartByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<JobDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -209,7 +209,7 @@ class ServicePartControllerRestService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<ServicePartDto>;
+        return _r as __StrictHttpResponse<JobDto>;
       })
     );
   }
@@ -217,9 +217,9 @@ class ServicePartControllerRestService extends __BaseService {
    * @param id id
    * @return OK
    */
-  getServicePartByIdUsingGET(id: number): __Observable<ServicePartDto> {
+  getServicePartByIdUsingGET(id: number): __Observable<JobDto> {
     return this.getServicePartByIdUsingGETResponse(id).pipe(
-      __map(_r => _r.body as ServicePartDto)
+      __map(_r => _r.body as JobDto)
     );
   }
 
@@ -258,7 +258,7 @@ class ServicePartControllerRestService extends __BaseService {
   }
 }
 
-module ServicePartControllerRestService {
+module JobControllerService {
 
   /**
    * Parameters for getServicePartListUsingGET
@@ -277,4 +277,4 @@ module ServicePartControllerRestService {
   }
 }
 
-export { ServicePartControllerRestService }
+export { JobControllerService }

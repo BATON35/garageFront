@@ -5,10 +5,10 @@ import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration
 
 import { CarServiceControllerRestService } from './services/car-service-controller-rest.service';
 import { ClientControllerRestService } from './services/client-controller-rest.service';
-import { MailTemplateControllerRestService } from './services/mail-template-controller-rest.service';
 import { FileControllerService } from './services/file-controller.service';
+import { MailTemplateControllerRestService } from './services/mail-template-controller-rest.service';
 import { RoleControllerService } from './services/role-controller.service';
-import { ServicePartControllerRestService } from './services/service-part-controller-rest.service';
+import { JobControllerService } from './services/job-controller.service';
 import { UserControllerRestService } from './services/user-controller-rest.service';
 import { VehicleControllerRestService } from './services/vehicle-controller-rest.service';
 import { WorkerControllerRestService } from './services/worker-controller-rest.service';
@@ -29,10 +29,10 @@ import { PartControllerRestService } from './services/part-controller-rest.servi
     ApiConfiguration,
     CarServiceControllerRestService,
     ClientControllerRestService,
-    MailTemplateControllerRestService,
     FileControllerService,
+    MailTemplateControllerRestService,
     RoleControllerService,
-    ServicePartControllerRestService,
+    JobControllerService,
     UserControllerRestService,
     VehicleControllerRestService,
     WorkerControllerRestService,

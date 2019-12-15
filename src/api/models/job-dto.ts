@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface ServicePartDto {
+export interface JobDto {
   partIds?: Array<number>;
   serviceId?: number;
   vehicleNumberPlate?: string;

@@ -3,7 +3,7 @@
         <ng-container matColumnDef="Part">
             <mat-header-cell *matHeaderCellDef> Part </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <div *ngFor="let item of element.partDto"> {{ item.name }} {{item.price}}</div>
+                <div *ngFor="let item of element.partsDto"> {{ item.name }} {{item.price}}</div>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="CarService">

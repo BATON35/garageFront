@@ -1,10 +1,10 @@
 /* tslint:disable */
-import { ServicePartDto } from './service-part-dto';
+import { JobDto } from './job-dto';
 import { Pageable } from './pageable';
 import { Sort } from './sort';
-export interface PageServicePartDto {
+export interface PageJobDto {
   numberOfElements?: number;
-  content?: Array<ServicePartDto>;
+  content?: Array<JobDto>;
   first?: boolean;
   last?: boolean;
   number?: number;

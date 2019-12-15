@@ -15,7 +15,8 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
   providedIn: 'root',
 })
 class FileControllerService extends __BaseService {
-  static readonly getPDFUsingGETPath = '/api/pdf';
+  static readonly uploadFotoCarUsingPOSTPath = '/api/file';
+  static readonly getPDFUsingGETPath = '/api/file/{vehicleId}';
 
   constructor(
     config: __Configuration,
@@ -25,15 +26,62 @@ class FileControllerService extends __BaseService {
   }
 
   /**
-   * @return OK
+   * @param params The `FileControllerService.UploadFotoCarUsingPOSTParams` containing the following parameters:
+   *
+   * - `vehicleId`: vehicleId
+   *
+   * - `multipartFile`: multipartFile
    */
-  getPDFUsingGETResponse(): __Observable<__StrictHttpResponse<string>> {
+  uploadFotoCarUsingPOSTResponse(params: FileControllerService.UploadFotoCarUsingPOSTParams): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    let __formData = new FormData();
+    __body = __formData;
+    if (params.vehicleId != null) __params = __params.set('vehicleId', params.vehicleId.toString());
+    if (params.multipartFile != null) { __formData.append('multipartFile', params.multipartFile as string | Blob);}
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/file`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param params The `FileControllerService.UploadFotoCarUsingPOSTParams` containing the following parameters:
+   *
+   * - `vehicleId`: vehicleId
+   *
+   * - `multipartFile`: multipartFile
+   */
+  uploadFotoCarUsingPOST(params: FileControllerService.UploadFotoCarUsingPOSTParams): __Observable<null> {
+    return this.uploadFotoCarUsingPOSTResponse(params).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param vehicleId vehicleId
+   * @return OK
+   */
+  getPDFUsingGETResponse(vehicleId: number): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/pdf`,
+      this.rootUrl + `/api/file/${vehicleId}`,
       __body,
       {
         headers: __headers,
@@ -49,16 +97,33 @@ class FileControllerService extends __BaseService {
     );
   }
   /**
+   * @param vehicleId vehicleId
    * @return OK
    */
-  getPDFUsingGET(): __Observable<string> {
-    return this.getPDFUsingGETResponse().pipe(
+  getPDFUsingGET(vehicleId: number): __Observable<string> {
+    return this.getPDFUsingGETResponse(vehicleId).pipe(
       __map(_r => _r.body as string)
     );
   }
 }
 
 module FileControllerService {
+
+  /**
+   * Parameters for uploadFotoCarUsingPOST
+   */
+  export interface UploadFotoCarUsingPOSTParams {
+
+    /**
+     * vehicleId
+     */
+    vehicleId: number;
+
+    /**
+     * multipartFile
+     */
+    multipartFile: Blob;
+  }
 }
 
 export { FileControllerService }

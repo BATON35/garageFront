@@ -1,7 +1,7 @@
 import { State, Action, StateContext } from '@ngxs/store';
-import { ServicePartControllerRestService } from 'src/api/services';
+import { JobControllerService } from 'src/api/services';
 import { tap } from 'rxjs/operators';
-import { ServicePartDto, PageServicePartDto, ServicePartResponseDto } from 'src/api/models';
+import { JobDto, PageJobDto, ServicePartResponseDto } from 'src/api/models';
 
 export class LoadHistoryAction {
   static readonly type = '[ServicePart] LoadHistoryAction';
@@ -14,7 +14,7 @@ export class SaveServicePartAction {
 
 export class CreateServicePartAction {
   static readonly type = '[ServicePart] CreateServicePartAction';
-  constructor(public servicePartDto: ServicePartDto) { }
+  constructor(public servicePartDto: JobDto) { }
 }
 
 export class LoadServicePageAction {
@@ -23,7 +23,7 @@ export class LoadServicePageAction {
 }
 
 export class ServicePartStateModel {
-  public pageServicePartDto: PageServicePartDto;
+  public pageServicePartDto: PageJobDto;
   public serviceHistory: ServicePartResponseDto[];
 }
 
@@ -35,10 +35,10 @@ export class ServicePartStateModel {
   }
 })
 export class ServicePartState {
-  constructor(public servicePartControllerRestService: ServicePartControllerRestService) { }
+  constructor(public JobControllerService: JobControllerService) { }
   @Action(CreateServicePartAction)
   add(ctx: StateContext<ServicePartStateModel>, { servicePartDto }: CreateServicePartAction) {
-    this.servicePartControllerRestService.saveServicePartUsingPOST(servicePartDto).pipe(
+    this.JobControllerService.saveServicePartUsingPOST(servicePartDto).pipe(
       tap(value => {
         console.log(value);
       })
@@ -46,7 +46,7 @@ export class ServicePartState {
   }
   @Action(LoadServicePageAction)
   loadServicePage(ctx: StateContext<ServicePartStateModel>, { page, size }: LoadServicePageAction) {
-    return this.servicePartControllerRestService.getServicePartListUsingGET({ size, page }).pipe(
+    return this.JobControllerService.getServicePartListUsingGET({ size, page }).pipe(
       tap(servicePart => ctx.patchState({
         pageServicePartDto: servicePart
       })
@@ -56,14 +56,14 @@ export class ServicePartState {
   saveServicePart(ctx: StateContext<ServicePartStateModel>, { workerId, serviceId, partId, vehiclePlateNumber }: SaveServicePartAction) {
     console.log(workerId + '/n ' + serviceId + ' ' + partId + ' ' + vehiclePlateNumber);
 
-    return this.servicePartControllerRestService.saveServicePartUsingPOST({
+    return this.JobControllerService.saveServicePartUsingPOST({
       workerId, serviceId, partIds: [partId], vehicleNumberPlate: vehiclePlateNumber
 
     });
   }
   @Action(LoadHistoryAction)
   loadHistory(ctx: StateContext<ServicePartStateModel>, { vehicleId }: LoadHistoryAction) {
-    return this.servicePartControllerRestService.getServicePartHistoryUsingGET(vehicleId).pipe(
+    return this.JobControllerService.getServicePartHistoryUsingGET(vehicleId).pipe(
       tap(servicePart => ctx.patchState({
         serviceHistory: servicePart
       }))

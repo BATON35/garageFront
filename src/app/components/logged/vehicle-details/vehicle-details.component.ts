@@ -74,7 +74,7 @@ export class VehicleDetailsComponent implements OnInit {
           model: this.vehicleDetailForm.value.model,
           numberPlate: this.vehicleDetailForm.value.numberPlate,
           overviewDate: this.vehicleDetailForm.value.overviewDate
-        }
+        }, null //do zrobienia
       )
     )
 

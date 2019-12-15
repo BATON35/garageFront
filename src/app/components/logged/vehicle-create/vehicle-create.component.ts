@@ -13,6 +13,7 @@ import { UserCreateComponent } from '../user-create/user-create.component';
   styleUrls: ['./vehicle-create.component.scss']
 })
 export class VehicleCreateComponent implements OnInit {
+  file: File = null;
   vehicleForm = new FormGroup({});
   vehicleFields: FormlyFieldConfig[] = [
     {
@@ -58,7 +59,7 @@ export class VehicleCreateComponent implements OnInit {
             brand: this.vehicleForm.value.brand,
             model: this.vehicleForm.value.model,
             numberPlate: this.vehicleForm.value.numberPlate
-          }
+          }, this.file
         )
       )
     } else {
@@ -76,5 +77,9 @@ export class VehicleCreateComponent implements OnInit {
   }
   deleteVehicle(id) {
     this.store.dispatch(new VehicleDeleteAction(id))
+  }
+  saveFile(file: FileList) {
+    this.file = file.item[0]
+    console.log(file)
   }
 }

@@ -129,7 +129,7 @@ const routs: Routes = [
     MatCheckboxModule,
     MatCardModule,
     MatSidenavModule,
-    TranslateModule,
+    TranslateModule
 
   ],
   entryComponents: [
