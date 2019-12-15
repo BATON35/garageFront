@@ -79,7 +79,7 @@ export class ServicePartComponent implements OnInit {
     this.vehicleNumberPlate = plateNumber;
   }
   save() {
-    this.store.dispatch(new SaveJobAction(this.workerId, this.serviceId, this.partId, this.vehicleNumberPlate))
+    this.store.dispatch(new SaveJobAction(this.workerId, this.partId, this.serviceId, this.vehicleNumberPlate))
   }
   traySelect(event) {
     console.log(event)
