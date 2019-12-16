@@ -9,7 +9,7 @@
       <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/parts">{{'menu.parts'|translate}}</a>
       <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
-        routerLink="/service-part">{{"menu.addService" | translate}}</a>
+        routerLink="/job">{{"menu.addService" | translate}}</a>
       <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/service-car">{{"menu.service" | translate}}</a>
       <a *ngIf="(token$ | async)" mat-list-item (click)="logout()">

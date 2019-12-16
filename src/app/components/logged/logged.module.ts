@@ -37,10 +37,9 @@ import { ClientState } from './client.state';
 import { UserListComponent } from './user-list/user-list.component';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.component';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
-import { ServicePartComponent } from './service-part/service-part.component';
 import { PartComponent } from './part/part.component';
 import { PartState } from './state/part.state';
-import { ServicePartState } from './state/service-part.state';
+import { JobState } from './state/service-part.state';
 import { ServiceCarComponent } from './service-car/service-car.component';
 import { ServiceCarState } from './state/service-car.state';
 import { PartCreateComponent } from './part-create/part-create.component';
@@ -50,6 +49,7 @@ import { HttpClient } from 'selenium-webdriver/http';
 import { VehicleHistoryComponent } from './vehicle-history/vehicle-history.component';
 import { FileState } from './state/file.state';
 import { ServiceCreateComponent } from './service-create/service-create.component';
+import { JobComponent } from './job/job.component';
 
 const routs: Routes = [
   {
@@ -69,8 +69,8 @@ const routs: Routes = [
     }
   },
   {
-    path: 'service-part',
-    component: ServicePartComponent,
+    path: 'job',
+    component: JobComponent,
     canActivate: [AuthGuard],
     data: {
       role: ['ROLE_USER']
@@ -94,12 +94,13 @@ const routs: Routes = [
     ClientListComponent,
     VehicleCreateComponent,
     VehicleDetailsComponent,
-    ServicePartComponent,
+    JobComponent,
     PartComponent,
     ServiceCarComponent,
     PartCreateComponent,
     VehicleHistoryComponent,
-    ServiceCreateComponent
+    ServiceCreateComponent,
+    JobComponent
 
 
   ],
@@ -115,7 +116,7 @@ const routs: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, ServicePartState, ServiceCarState, WorkerState, FileState]),
+    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState]),
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
@@ -139,7 +140,7 @@ const routs: Routes = [
     ClientListComponent,
     VehicleCreateComponent,
     VehicleDetailsComponent,
-    ServicePartComponent,
+    JobComponent,
     PartCreateComponent,
     VehicleHistoryComponent,
     ServiceCreateComponent

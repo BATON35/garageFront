@@ -1,5 +1,5 @@
-<div *ngIf=" serviceHistory$ | async as  serviceHistory">
-    <table mat-table [dataSource]="serviceHistory" class="mat-elevation-z8">
+<div *ngIf=" jobHistory$ | async as  jobHistory">
+    <table mat-table [dataSource]="jobHistory" class="mat-elevation-z8">
         <ng-container matColumnDef="Part">
             <mat-header-cell *matHeaderCellDef> Part </mat-header-cell>
             <mat-cell *matCellDef="let element">

@@ -13,8 +13,8 @@ import { JobResponseDto } from 'src/api/models';
   styleUrls: ['./vehicle-history.component.scss']
 })
 export class VehicleHistoryComponent implements OnInit {
-  @Select(state => state.servicePart.serviceHistory)
-  serviceHistory$: Observable<JobResponseDto[]>;
+  @Select(state => state.job.jobHistory)
+  jobHistory$: Observable<JobResponseDto[]>;
   displayedColumns: string[] = ["Part", "CarService", "Date"]
   constructor(public store: Store,
     public matDialogRef: MatDialogRef<VehicleDetailsComponent>,

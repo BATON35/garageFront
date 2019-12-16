@@ -18,12 +18,12 @@ import { JobResponseDto } from '../models/job-response-dto';
   providedIn: 'root',
 })
 class JobControllerService extends __BaseService {
-  static readonly getJobListUsingGETPath = '/api/service-part';
-  static readonly saveJobUsingPOSTPath = '/api/service-part';
-  static readonly updateJobUsingPUTPath = '/api/service-part';
-  static readonly getJobHistoryUsingGETPath = '/api/service-part/history';
-  static readonly getJobByIdUsingGETPath = '/api/service-part/{id}';
-  static readonly deleteJobUsingDELETEPath = '/api/service-part/{id}';
+  static readonly getJobListUsingGETPath = '/api/job';
+  static readonly saveJobUsingPOSTPath = '/api/job';
+  static readonly updateJobUsingPUTPath = '/api/job';
+  static readonly getJobHistoryUsingGETPath = '/api/job/history';
+  static readonly getJobByIdUsingGETPath = '/api/job/{id}';
+  static readonly deleteJobUsingDELETEPath = '/api/job/{id}';
 
   constructor(
     config: __Configuration,
@@ -49,7 +49,7 @@ class JobControllerService extends __BaseService {
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/service-part`,
+      this.rootUrl + `/api/job`,
       __body,
       {
         headers: __headers,
@@ -90,7 +90,7 @@ class JobControllerService extends __BaseService {
     __body = jobDto;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/api/service-part`,
+      this.rootUrl + `/api/job`,
       __body,
       {
         headers: __headers,
@@ -126,7 +126,7 @@ class JobControllerService extends __BaseService {
     __body = jobDto;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/api/service-part`,
+      this.rootUrl + `/api/job`,
       __body,
       {
         headers: __headers,
@@ -162,7 +162,7 @@ class JobControllerService extends __BaseService {
     if (vehicleId != null) __params = __params.set('vehicleId', vehicleId.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/service-part/history`,
+      this.rootUrl + `/api/job/history`,
       __body,
       {
         headers: __headers,
@@ -198,7 +198,7 @@ class JobControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/service-part/${id}`,
+      this.rootUrl + `/api/job/${id}`,
       __body,
       {
         headers: __headers,
@@ -233,7 +233,7 @@ class JobControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/service-part/${id}`,
+      this.rootUrl + `/api/job/${id}`,
       __body,
       {
         headers: __headers,
