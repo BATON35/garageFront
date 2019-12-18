@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import { PageClientDto, ClientDto } from 'src/api/models';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { VehicleDeleteAction, ToggleNotificationAction } from '../vehicle.state';
-import { ServicePartComponent } from '../service-part/service-part.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';

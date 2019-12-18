@@ -51,6 +51,8 @@ export class VehicleCreateComponent implements OnInit {
   ngOnInit() {
   }
   submit() {
+    console.log('vehicle.component')
+    console.log(this.file)
     if (this.vehicle.vehicleDto) {
       this.store.dispatch(
         new VehicleUpdateAction(
@@ -79,7 +81,6 @@ export class VehicleCreateComponent implements OnInit {
     this.store.dispatch(new VehicleDeleteAction(id))
   }
   saveFile(file: FileList) {
-    this.file = file.item[0]
-    console.log(file)
+    this.file = file[0]
   }
 }

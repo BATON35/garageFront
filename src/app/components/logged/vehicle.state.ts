@@ -4,11 +4,8 @@ import { PageVehicleDto } from './../../../api/models/page-vehicle-dto';
 import { tap } from 'rxjs/operators';
 import { State, Action, StateContext } from '@ngxs/store';
 import { VehicleDto } from './../../../api/models/vehicle-dto';
+import { UploadVehiclePhotoAction } from './state/file.state';
 
-export class UploadVehiclePhotoAction {
-    static readonly type = '${name} uload vehicle photo';
-    constructor(public file: File, public vehicleId: number) { }
-}
 
 export class AutoCompleteNameVehicleAction {
     static readonly type = '${name} auto complete name vehicle';
@@ -57,6 +54,8 @@ export class VehicleState {
     constructor(public vehicleService: VehicleControllerRestService, public fileService: FileControllerService) { }
     @Action(VehicleUpdateAction)
     update(ctx: StateContext<VehicleStateModel>, { vehicleDto, file }: VehicleUpdateAction) {
+        console.log('vehicleUpdate')
+        console.log(file)
         return this.vehicleService.updateVehicleUsingPUT(vehicleDto).pipe(tap(vehicle => {
             const page = ctx.getState().page
             const size = ctx.getState().size
@@ -98,12 +97,6 @@ export class VehicleState {
             }))
         )
     }
-    @Action(UploadVehiclePhotoAction)
-
-    uploadVehiclePhoto(ctx: StateContext<VehicleStateModel>, { file, vehicleId }: UploadVehiclePhotoAction) {
-        return this.fileService.uploadFotoCarUsingPOST({ vehicleId, multipartFile: file })
-    }
-
 }
 
 

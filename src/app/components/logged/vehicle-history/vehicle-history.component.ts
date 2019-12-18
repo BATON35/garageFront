@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 import { dispatch } from 'rxjs/internal/observable/pairs';
-import { LoadHistoryAction } from '../state/service-part.state';
+import { LoadHistoryAction } from '../state/job.state';
 import { Observable } from 'rxjs';
 import { JobResponseDto } from 'src/api/models';
 

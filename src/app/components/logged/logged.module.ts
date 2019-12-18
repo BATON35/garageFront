@@ -39,17 +39,17 @@ import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.compo
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { PartComponent } from './part/part.component';
 import { PartState } from './state/part.state';
-import { JobState } from './state/service-part.state';
+import { JobState } from './state/job.state';
 import { ServiceCarComponent } from './service-car/service-car.component';
 import { ServiceCarState } from './state/service-car.state';
 import { PartCreateComponent } from './part-create/part-create.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'src/app/app.module';
-import { HttpClient } from 'selenium-webdriver/http';
 import { VehicleHistoryComponent } from './vehicle-history/vehicle-history.component';
 import { FileState } from './state/file.state';
 import { ServiceCreateComponent } from './service-create/service-create.component';
 import { JobComponent } from './job/job.component';
+import { ChartsModule } from 'ng2-charts';
+import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
 
 const routs: Routes = [
   {
@@ -83,6 +83,14 @@ const routs: Routes = [
     data: {
       role: ['ROLE_USER']
     }
+  },
+  {
+    path: 'worker-statistic',
+    component: WorkerStatisticComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_USER']
+    }
   }
 ];
 @NgModule({
@@ -100,7 +108,7 @@ const routs: Routes = [
     PartCreateComponent,
     VehicleHistoryComponent,
     ServiceCreateComponent,
-    JobComponent
+    WorkerStatisticComponent
 
 
   ],
@@ -130,7 +138,8 @@ const routs: Routes = [
     MatCheckboxModule,
     MatCardModule,
     MatSidenavModule,
-    TranslateModule
+    TranslateModule,
+    ChartsModule
 
   ],
   entryComponents: [
