@@ -51,8 +51,6 @@ export class VehicleCreateComponent implements OnInit {
   ngOnInit() {
   }
   submit() {
-    console.log('vehicle.component')
-    console.log(this.file)
     if (this.vehicle.vehicleDto) {
       this.store.dispatch(
         new VehicleUpdateAction(
