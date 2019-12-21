@@ -20,3 +20,4 @@ export { UserDto } from './models/user-dto';
 export { VehicleDto } from './models/vehicle-dto';
 export { Worker } from './models/worker';
 export { WorkerDto } from './models/worker-dto';
+export { WorkerStatisticSell } from './models/worker-statistic-sell';

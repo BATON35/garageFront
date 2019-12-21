@@ -50,6 +50,7 @@ import { ServiceCreateComponent } from './service-create/service-create.componen
 import { JobComponent } from './job/job.component';
 import { ChartsModule } from 'ng2-charts';
 import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
+import { WorkerStatisticState } from './state/worker-statistic.state';
 
 const routs: Routes = [
   {
@@ -124,7 +125,7 @@ const routs: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState]),
+    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState, WorkerStatisticState]),
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
