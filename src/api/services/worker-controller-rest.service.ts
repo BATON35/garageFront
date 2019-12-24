@@ -7,10 +7,11 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { WorkerStatisticSell } from '../models/worker-statistic-sell';
 import { WorkerDto } from '../models/worker-dto';
 import { Worker } from '../models/worker';
 import { PageWorkerDto } from '../models/page-worker-dto';
+import { WorkerStatisticSell } from '../models/worker-statistic-sell';
+import { StatisticDto } from '../models/statistic-dto';
 
 /**
  * Worker Controller Rest
@@ -19,11 +20,11 @@ import { PageWorkerDto } from '../models/page-worker-dto';
   providedIn: 'root',
 })
 class WorkerControllerRestService extends __BaseService {
-  static readonly getStatisticUsingGETPath = '/api/workers';
   static readonly saveWorkerUsingPOSTPath = '/api/workers';
   static readonly updateWorkerUsingPUTPath = '/api/workers';
   static readonly autocompleteWorkerUsingGETPath = '/api/workers/autoComplete';
   static readonly searchWorkerUsingGETPath = '/api/workers/search';
+  static readonly getStatisticUsingPOSTPath = '/api/workers/statistic';
   static readonly getWorkerByIdUsingGETPath = '/api/workers/{id}';
   static readonly deleteWorkerUsingDELETEPath = '/api/workers/{id}';
   static readonly getWorkerListUsingGETPath = '/api/workers/{page}/{size}/{hasRole}';
@@ -33,39 +34,6 @@ class WorkerControllerRestService extends __BaseService {
     http: HttpClient
   ) {
     super(config, http);
-  }
-
-  /**
-   * @return OK
-   */
-  getStatisticUsingGETResponse(): __Observable<__StrictHttpResponse<Array<WorkerStatisticSell>>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/workers`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Array<WorkerStatisticSell>>;
-      })
-    );
-  }
-  /**
-   * @return OK
-   */
-  getStatisticUsingGET(): __Observable<Array<WorkerStatisticSell>> {
-    return this.getStatisticUsingGETResponse().pipe(
-      __map(_r => _r.body as Array<WorkerStatisticSell>)
-    );
   }
 
   /**
@@ -225,6 +193,42 @@ class WorkerControllerRestService extends __BaseService {
   searchWorkerUsingGET(params: WorkerControllerRestService.SearchWorkerUsingGETParams): __Observable<PageWorkerDto> {
     return this.searchWorkerUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageWorkerDto)
+    );
+  }
+
+  /**
+   * @param statisticDto statisticDto
+   * @return OK
+   */
+  getStatisticUsingPOSTResponse(statisticDto: StatisticDto): __Observable<__StrictHttpResponse<Array<WorkerStatisticSell>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = statisticDto;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/workers/statistic`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<WorkerStatisticSell>>;
+      })
+    );
+  }
+  /**
+   * @param statisticDto statisticDto
+   * @return OK
+   */
+  getStatisticUsingPOST(statisticDto: StatisticDto): __Observable<Array<WorkerStatisticSell>> {
+    return this.getStatisticUsingPOSTResponse(statisticDto).pipe(
+      __map(_r => _r.body as Array<WorkerStatisticSell>)
     );
   }
 

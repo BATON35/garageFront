@@ -1,4 +1,4 @@
 export class WorkerStatisticAction {
   static readonly type = '[WorkerStatistic] WorkerStatisticAction';
-  constructor() { }
+  constructor(public start: string, public end: string) { }
 }

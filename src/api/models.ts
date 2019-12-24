@@ -15,6 +15,7 @@ export { PartDto } from './models/part-dto';
 export { Role } from './models/role';
 export { RoleDto } from './models/role-dto';
 export { Sort } from './models/sort';
+export { StatisticDto } from './models/statistic-dto';
 export { Template } from './models/template';
 export { UserDto } from './models/user-dto';
 export { VehicleDto } from './models/vehicle-dto';

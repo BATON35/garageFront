@@ -17,9 +17,8 @@ export class WorkerStatisticStateModel {
 export class WorkerStatisticState {
   constructor(public workerControllerRestService: WorkerControllerRestService) { }
   @Action(WorkerStatisticAction)
-  getStatistic(ctx: StateContext<WorkerStatisticStateModel>, action: WorkerStatisticAction) {
-    console.log('WorkerStatistic   ')
-    return this.workerControllerRestService.getStatisticUsingGET().pipe(
+  getStatistic(ctx: StateContext<WorkerStatisticStateModel>, { start, end }: WorkerStatisticAction) {
+    return this.workerControllerRestService.getStatisticUsingPOST({ start, end }).pipe(
       tap(statistic => ctx.patchState({
         statistic
       }))

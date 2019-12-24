@@ -3,10 +3,11 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color, BaseChartDirective } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { Store, Select } from '@ngxs/store';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { WorkerStatisticAction } from '../state/worker-statistic.actions';
 import { Observable } from 'rxjs';
 import { WorkerStatisticSell } from 'src/api/models';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 
 @Component({
@@ -15,6 +16,27 @@ import { WorkerStatisticSell } from 'src/api/models';
   styleUrls: ['./worker-statistic.component.scss']
 })
 export class WorkerStatisticComponent implements OnInit {
+  workerStatisticForm = new FormGroup({});
+  date: FormlyFieldConfig[] = [
+    {
+      key: 'start',
+      type: 'datepicker',
+      templateOptions: {
+        label: 'start date',
+        Placeholder: 'start date',
+        require: true
+      }
+    },
+    {
+      key: 'end',
+      type: 'datepicker',
+      templateOptions: {
+        label: 'end date',
+        Placeholder: 'end date',
+        require: true
+      }
+    }
+  ];
   public lineChartData: ChartDataSets[] = [
     // { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
     // { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
@@ -95,24 +117,43 @@ export class WorkerStatisticComponent implements OnInit {
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
   @Select(state => state.workerStatistic.statistic)
   workers$: Observable<WorkerStatisticSell[]>
-  constructor(public store: Store) { }
+  constructor(public store: Store, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.store.dispatch(new WorkerStatisticAction())
+    this.store.dispatch(new WorkerStatisticAction('2019-01-01', '2019-12-31'))
     this.workers$.subscribe(statistics => {
       this.lineChartLabels = Array.from(new Set(statistics.map(element => element.date)))
       const names = Array.from(new Set(statistics.map(statistic => statistic.name)))
       this.lineChartData = []
       names.forEach(name => {
-        console.log('name = ' + name)
         this.lineChartData.push({
           data: statistics.filter(statistic => statistic.name == name).map(statistic => statistic.price),
           label: name
         })
       })
-      // this.lineChartData = statistics.map()
+    })
+    this.workerStatisticForm = this.formBuilder.group({
+      start: [
+        null,
+        Validators.required
+      ],
+      end: [
+        null,
+        Validators.required
+      ]
+
     })
   }
 
+  saveData() {
+    console.log(new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.').join('-'))
+    console.log(new Date(this.workerStatisticForm.value.end).toLocaleString().split(',')[0].split('.').join('-'))
+    // const start = new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.')
+    // const end = new Date(this.workerStatisticForm.value.end).toLocaleString().split(',')[0].split('.')
+    // this.store.dispatch(new WorkerStatisticAction(
+    //   start[2] + '-' + start[1] + '-' + start[0],
+    //   end[2] + '-' + end[1] + '-' + end[0]))
+    this.store.dispatch(new WorkerStatisticAction(this.workerStatisticForm.value.start, this.workerStatisticForm.value.end))
+  }
 
 }
