@@ -1,11 +1,13 @@
+import { element } from 'protractor';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
-import { VehicleUpdateAction, VehicleCreateAction, VehicleDeleteAction } from './../vehicle.state';
-import { Store } from '@ngxs/store';
+import { VehicleUpdateAction, VehicleCreateAction, VehicleDeleteAction, ClearVehicleAction } from './../vehicle.state';
+import { Store, Select } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { UserCreateComponent } from '../user-create/user-create.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-vehicle-create',
@@ -13,7 +15,7 @@ import { UserCreateComponent } from '../user-create/user-create.component';
   styleUrls: ['./vehicle-create.component.scss']
 })
 export class VehicleCreateComponent implements OnInit {
-  file: File = null;
+  file: File[] = [];
   vehicleForm = new FormGroup({});
   vehicleFields: FormlyFieldConfig[] = [
     {
@@ -44,15 +46,27 @@ export class VehicleCreateComponent implements OnInit {
       }
     }
   ]
+  @Select(state => state.vehicle.errorMessage)
+  errorMessage$: Observable<string>;
+  @Select(state => state.vehicle.ok)
+  ok$: Observable<boolean>;
+
   constructor(public store: Store,
     public matDialogRef: MatDialogRef<UserCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public vehicle: any) { }
 
   ngOnInit() {
+    this.ok$.subscribe(element => {
+      console.log("vehicle-create.component")
+      console.log(element)
+      if (element === true) {
+        console.log(" in if !!!!!!!!!!!!!")
+        this.store.dispatch(new ClearVehicleAction())
+        this.matDialogRef.close()
+      }
+    })
   }
   submit() {
-    console.log('vehicle.component')
-    console.log(this.file)
     if (this.vehicle.vehicleDto) {
       this.store.dispatch(
         new VehicleUpdateAction(
@@ -75,12 +89,13 @@ export class VehicleCreateComponent implements OnInit {
         )
       )
     }
-    this.matDialogRef.close()
   }
   deleteVehicle(id) {
     this.store.dispatch(new VehicleDeleteAction(id))
   }
   saveFile(file: FileList) {
-    this.file = file[0]
+    Array.from(file).forEach(element => {
+      this.file.push(element)
+    });
   }
 }

@@ -1,10 +1,11 @@
+import { element } from 'protractor';
 import { State, Action, StateContext } from '@ngxs/store';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 export class UploadVehiclePhotoAction {
   static readonly type = '${name} uload vehicle photo';
-  constructor(public file: File, public vehicleId: number) { }
+  constructor(public file: File[], public vehicleId: number) { }
 }
 
 export class DownloadVehicleHistoryAction {
@@ -46,7 +47,7 @@ export class FileState {
   uploadVehiclePhoto(ctx: StateContext<FileStateModel>, { file, vehicleId }: UploadVehiclePhotoAction) {
     const formData = new FormData();
     console.log(file)
-    formData.append('multipartFile', file, file.name);
+    file.forEach((element) => formData.append('multipartFile', element, element.name))
     console.log('UploadVehiclePhoto')
     return this.httpClient.post(`http://localhost:8080/api/file?vehicleId=${vehicleId}`, formData, {});
   }

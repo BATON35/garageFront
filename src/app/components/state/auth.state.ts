@@ -9,8 +9,6 @@ import { UserControllerRestService } from 'src/api/services';
 import { of } from 'rxjs';
 import Cookies from 'js-cookie';
 
-const name = 'auth';
-const fullName = '[' + name + ']';
 
 export class UpdateTokenAction {
   static readonly type = '${token} UpdateTokenAction';
@@ -68,6 +66,7 @@ export class AuthStateModel {
     currentUser: {}
   }
 })
+
 export class AuthState {
   constructor(
     public httpClient: HttpClient,

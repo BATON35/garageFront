@@ -2,7 +2,7 @@ import { BackToDefoultVehicleAction } from './../logged/vehicle.state';
 import { BackToDefoultClientAction } from './../logged/client.state';
 import { AuthGuard } from './../../guart/auth.guard';
 import { Router } from '@angular/router';
-import { LogoutAction, BackToDefoultAuthAction, AuthState } from "./../state/auth.state";
+import { LogoutAction, BackToDefoultAuthAction, AuthState, LoginFromCookieAction } from "./../state/auth.state";
 import { Component, OnInit } from "@angular/core";
 import { Store, Select } from "@ngxs/store";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
@@ -41,6 +41,7 @@ export class MenuComponent implements OnInit {
     this.user$.subscribe(value => this.currentUser = value)
     this.translateService.setDefaultLang('pl')
     setTimeout(() => { this.selectedLanguage = 'pl' }, 0)
+    this.store.dispatch(new LoginFromCookieAction())
   }
   logout() {
     this.store.dispatch(new LogoutAction())

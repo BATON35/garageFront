@@ -51,6 +51,7 @@ import { JobComponent } from './job/job.component';
 import { ChartsModule } from 'ng2-charts';
 import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
 import { WorkerStatisticState } from './state/worker-statistic.state';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 const routs: Routes = [
   {
@@ -140,7 +141,8 @@ const routs: Routes = [
     MatCardModule,
     MatSidenavModule,
     TranslateModule,
-    ChartsModule
+    ChartsModule,
+    NgxsReduxDevtoolsPluginModule.forRoot()
 
   ],
   entryComponents: [

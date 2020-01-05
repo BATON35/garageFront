@@ -1,38 +1,36 @@
-import { BackToDefoultAuthAction } from './../state/auth.state';
 import { UserDto } from './../../../api/models/user-dto';
 import { UserControllerRestService } from 'src/api/services';
-import { State, Action, StateContext, UpdateState } from '@ngxs/store';
+import { State, Action, StateContext } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { PageUserDto } from 'src/api/models';
 import { empty } from 'rxjs';
 
-const name = '[Users]';
 export class UsersPageAction {
-  static readonly type = '${name} usersPage';
+  static readonly type = '[User] UsersPageAction';
   constructor(public page: number, public searchText: string, public size: number, public hasRole: boolean) { }
 }
 
 
 export class UsersDeleteAction {
-  static readonly type = '${name} delete user';
+  static readonly type = '[User] UsersDeleteAction';
   constructor(public id: number) { }
 }
 
 export class UserUpdateAction {
-  static readonly type = '${name} update user';
+  static readonly type = '[User] UserUpdateAction';
   constructor(public userDto: UserDto) { }
 }
 export class UserSearchAction {
-  static readonly type = '${name} search user';
+  static readonly type = '[User] UserSearchAction';
   constructor(public searchText: string, public hasRole: boolean) { }
 }
 
 export class BackToDefoultUserAction {
-  static readonly type = '${name} back to defoult';
+  static readonly type = '[User] BackToDefoultUserAction';
   constructor() { }
 }
 export class LoadUserByChangRoleAction {
-  static readonly type = '${name} load user by change role';
+  static readonly type = '[User] LoadUserByChangRoleAction';
   constructor(public hasRole: boolean) { }
 }
 export class UsersStateModel {

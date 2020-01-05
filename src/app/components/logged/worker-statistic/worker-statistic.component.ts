@@ -120,14 +120,14 @@ export class WorkerStatisticComponent implements OnInit {
   constructor(public store: Store, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.store.dispatch(new WorkerStatisticAction('2019-01-01', '2019-12-31'))
+    this.store.dispatch(new WorkerStatisticAction('2019-01-01', '2019-04-31'))
     this.workers$.subscribe(statistics => {
       this.lineChartLabels = Array.from(new Set(statistics.map(element => element.date)))
       const names = Array.from(new Set(statistics.map(statistic => statistic.name)))
       this.lineChartData = []
       names.forEach(name => {
         this.lineChartData.push({
-          data: statistics.filter(statistic => statistic.name == name).map(statistic => statistic.price),
+          data: statistics.filter(statistic => statistic.name === name).map(statistic => statistic.price),
           label: name
         })
       })
