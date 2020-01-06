@@ -27,5 +27,10 @@ export class ServiceCarComponent implements OnInit {
   openModal() {
     this.matDialog.open(ServiceCreateComponent);
   }
-
+  deleteElement(element) {
+    console.log(element)
+  }
+  update(element) {
+    console.log(element)
+  }
 }

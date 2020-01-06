@@ -29,7 +29,7 @@
         <ng-container matColumnDef="delete">
             <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button (click)="delete(element.id)" mat-icon-button color="warn">
+                <button (click)="deleteElement(element.id)" mat-icon-button color="warn">
                     <mat-icon>delete_forever</mat-icon>
                 </button>
             </mat-cell>

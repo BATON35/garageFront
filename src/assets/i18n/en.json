@@ -11,5 +11,6 @@
   "panel.client.list.update": "Update",
   "panel.client.list.vehicle.add": "Add vehicle",
   "panel.client.list.delete": "Delete",
-  "panel.client.list.search": "Search client"
+  "panel.client.list.search": "Search client",
+  "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database"
 }

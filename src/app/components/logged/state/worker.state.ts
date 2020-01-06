@@ -10,7 +10,7 @@ export class AutocompleteNameWorkerAction {
 }
 
 export class WorkerStateModel {
-  public autocompleteWorker: WorkerDto[]
+  public autocompleteWorker: WorkerDto[];
 }
 
 @State<WorkerStateModel>({

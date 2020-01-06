@@ -118,7 +118,7 @@ export class VehicleState {
     }
     @Action(ClearVehicleAction)
     clearVehicle(ctx: StateContext<VehicleStateModel>, { }: ClearVehicleAction) {
-        console.log('vehicle action !!!!!!!');
+        console.log('clear vehicle action !!!!!!!');
         ctx.patchState({
             errorMessage: null,
             ok: false

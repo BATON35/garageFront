@@ -1,5 +1,5 @@
 <form [formGroup]="vehicleForm" (ngSubmit)="submit()">
-    <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="vehicle.vehicleDto">
+    <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="vehicleTemp">
     </formly-form>
     <input type="file" multiple="multiple" (change)="saveFile($event.target.files)">
     <div class="group">
@@ -9,5 +9,5 @@
     </div>
 </form>
 <div *ngIf="errorMessage$ | async as errorMessage">
-    <span>{{errorMessage}}</span>
+    <span translate [translateParams]="{value: vehicleTemp.numberPlate}">{{errorMessage}}</span>
 </div>
