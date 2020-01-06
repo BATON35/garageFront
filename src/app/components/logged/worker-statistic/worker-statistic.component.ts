@@ -116,22 +116,22 @@ export class WorkerStatisticComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
   @Select(state => state.workerStatistic.statistic)
-  workers$: Observable<WorkerStatisticSell[]>
+  workers$: Observable<WorkerStatisticSell[]>;
   constructor(public store: Store, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.store.dispatch(new WorkerStatisticAction('2019-01-01', '2019-04-31'))
+    this.store.dispatch(new WorkerStatisticAction('2019-01-01', '2019-12-29'));
     this.workers$.subscribe(statistics => {
-      this.lineChartLabels = Array.from(new Set(statistics.map(element => element.date)))
-      const names = Array.from(new Set(statistics.map(statistic => statistic.name)))
-      this.lineChartData = []
+      this.lineChartLabels = Array.from(new Set(statistics.map(element => element.date)));
+      const names = Array.from(new Set(statistics.map(statistic => statistic.name)));
+      this.lineChartData = [];
       names.forEach(name => {
         this.lineChartData.push({
           data: statistics.filter(statistic => statistic.name === name).map(statistic => statistic.price),
           label: name
-        })
-      })
-    })
+        });
+      });
+    });
     this.workerStatisticForm = this.formBuilder.group({
       start: [
         null,
@@ -142,18 +142,18 @@ export class WorkerStatisticComponent implements OnInit {
         Validators.required
       ]
 
-    })
+    });
   }
 
   saveData() {
-    console.log(new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.').join('-'))
-    console.log(new Date(this.workerStatisticForm.value.end).toLocaleString().split(',')[0].split('.').join('-'))
+    console.log(new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.').join('-'));
+    console.log(new Date(this.workerStatisticForm.value.end).toLocaleString().split(',')[0].split('.').join('-'));
     // const start = new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.')
     // const end = new Date(this.workerStatisticForm.value.end).toLocaleString().split(',')[0].split('.')
     // this.store.dispatch(new WorkerStatisticAction(
     //   start[2] + '-' + start[1] + '-' + start[0],
     //   end[2] + '-' + end[1] + '-' + end[0]))
-    this.store.dispatch(new WorkerStatisticAction(this.workerStatisticForm.value.start, this.workerStatisticForm.value.end))
+    this.store.dispatch(new WorkerStatisticAction(this.workerStatisticForm.value.start, this.workerStatisticForm.value.end));
   }
 
 }

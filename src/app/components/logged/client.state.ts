@@ -5,7 +5,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { ClientControllerRestService } from 'src/api/services';
 import { PageClientDto } from 'src/api/models';
 
-const name = "[Clients]"
+const name = '[Clients]';
 export class ClietnPageAction {
   static readonly type = '${name} clietPage';
   constructor(public page: number, public size: number) { }
@@ -37,10 +37,10 @@ export class BackToDefoultClientAction {
 }
 
 export class ClientStateModel {
-  public pageClientDto: PageClientDto
-  public page: number
-  public size: number
-  public autocomplete: string[]
+  public pageClientDto: PageClientDto;
+  public page: number;
+  public size: number;
+  public autocomplete: string[];
 }
 
 
@@ -61,8 +61,8 @@ export class ClientState {
   @Action(ClietnPageAction)
   page(ctx: StateContext<ClientStateModel>, { page, size }: ClietnPageAction) {
     if (!page && !size) {
-      page = ctx.getState().page
-      size = ctx.getState().size
+      page = ctx.getState().page;
+      size = ctx.getState().size;
 
     }
     return this.clientService
@@ -72,20 +72,20 @@ export class ClientState {
             pageClientDto: value,
             page,
             size
-          })
+          });
         }
-      ))
+      ));
   }
 
   @Action(ClientDeleteAction)
   delete(ctx: StateContext<ClientStateModel>, { id }: ClientDeleteAction) {
     return this.clientService.deleteClientUsingDELETE(id).pipe(tap(
       value => {
-        const page = ctx.getState().page
-        const size = ctx.getState().size
-        ctx.dispatch(new ClietnPageAction(page, size))
+        const page = ctx.getState().page;
+        const size = ctx.getState().size;
+        ctx.dispatch(new ClietnPageAction(page, size));
       }
-    ))
+    ));
   }
 
   @Action(ClientUpdateAction)
@@ -93,11 +93,11 @@ export class ClientState {
     return this.clientService.saveClientUsingPOST(clientDto.clientDto).pipe(
       tap(
         client => {
-          const page = ctx.getState().page
-          const size = ctx.getState().size
-          ctx.dispatch(new ClietnPageAction(page, size))
+          const page = ctx.getState().page;
+          const size = ctx.getState().size;
+          ctx.dispatch(new ClietnPageAction(page, size));
         })
-    )
+    );
   }
 
   @Action(ClientSearchAction)
@@ -107,10 +107,10 @@ export class ClientState {
         client => {
           ctx.patchState({
             pageClientDto: client
-          })
+          });
         }
       )
-    )
+    );
   }
 
   @Action(AutocompleteAction)
@@ -120,10 +120,10 @@ export class ClientState {
         value => {
           ctx.patchState({
             autocomplete: value
-          })
+          });
         }
       )
-    )
+    );
   }
   @Action(BackToDefoultClientAction)
   backToDefoultClient(ctx: StateContext<ClientStateModel>, BackToDefoultClientAction) {
@@ -132,6 +132,6 @@ export class ClientState {
       page: 0,
       size: 5,
       autocomplete: []
-    })
+    });
   }
 }

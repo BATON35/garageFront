@@ -48,7 +48,7 @@ export class VehicleStateModel {
 }
 
 @State<VehicleStateModel>({
-    name: "vehicle",
+    name: 'vehicle',
     defaults: {
         vehiclePage: {},
         page: 0,
@@ -62,23 +62,23 @@ export class VehicleState {
     constructor(public vehicleService: VehicleControllerRestService, public fileService: FileControllerService) { }
     @Action(VehicleUpdateAction)
     update(ctx: StateContext<VehicleStateModel>, { vehicleDto, file }: VehicleUpdateAction) {
-        console.log('vehicleUpdate')
-        console.log(file)
+        console.log('vehicleUpdate');
+        console.log(file);
         return this.vehicleService.updateVehicleUsingPUT(vehicleDto).pipe(
             tap(vehicle => {
-                const page = ctx.getState().page
-                const size = ctx.getState().size
-                ctx.dispatch(new ClietnPageAction(page, size))
-                ctx.dispatch(new UploadVehiclePhotoAction(file, vehicle.id))
+                const page = ctx.getState().page;
+                const size = ctx.getState().size;
+                ctx.dispatch(new ClietnPageAction(page, size));
+                ctx.dispatch(new UploadVehiclePhotoAction(file, vehicle.id));
                 ctx.patchState({
                     ok: true
-                })
+                });
             }),
             catchError((err, caught) => {
                 ctx.patchState({
                     errorMessage: err.error.message
-                })
-                return empty()
+                });
+                return empty();
             })
         );
     }
@@ -86,14 +86,14 @@ export class VehicleState {
     @Action(VehicleCreateAction)
     create(ctx: StateContext<VehicleStateModel>, { vehicleDto, clientId }: VehicleCreateAction) {
         return this.vehicleService.saveVehicleUsingPOST({ vehicleDto, clientId }).pipe(tap(vehicle => {
-            ctx.dispatch(new ClietnPageAction(null, null))
+            ctx.dispatch(new ClietnPageAction(null, null));
         }));
     }
     @Action(VehicleDeleteAction)
     delete(ctx: StateContext<VehicleStateModel>, { id }: VehicleDeleteAction) {
-        console.log(id)
+        console.log(id);
         return this.vehicleService.deleteVehicleUsingDELETE(id).pipe(tap(value => {
-            ctx.dispatch(new ClietnPageAction(null, null))
+            ctx.dispatch(new ClietnPageAction(null, null));
         }));
     }
     @Action(ToggleNotificationAction)
@@ -106,7 +106,7 @@ export class VehicleState {
             vehiclePage: {},
             page: 0,
             size: 5
-        })
+        });
     }
     @Action(AutoCompleteNameVehicleAction)
     autoCompleteNameVehicle(ctx: StateContext<VehicleStateModel>, { text }: AutoCompleteNameVehicleAction) {
@@ -114,15 +114,15 @@ export class VehicleState {
             tap(vehicle => ctx.patchState({
                 autocompleteVehicle: vehicle
             }))
-        )
+        );
     }
     @Action(ClearVehicleAction)
     clearVehicle(ctx: StateContext<VehicleStateModel>, { }: ClearVehicleAction) {
-        console.log("vehicle action !!!!!!!")
+        console.log('vehicle action !!!!!!!');
         ctx.patchState({
             errorMessage: null,
             ok: false
-        })
+        });
     }
 }
 

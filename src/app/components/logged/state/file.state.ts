@@ -28,27 +28,26 @@ export class FileState {
     return this.httpClient.get(`http://localhost:8080/api/file/${id}`, {
       responseType: 'blob'
     }).pipe(tap(file => {
-      let link = document.createElement("a");
+      const link = document.createElement('a');
       if (link.download !== undefined) {
-        let url = URL.createObjectURL(file);
-        link.setAttribute("href", url);
-        link.setAttribute("download", 'ticket.pdf');
+        const url = URL.createObjectURL(file);
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'ticket.pdf');
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+      } else {
+        // html5 download not supported
       }
-      else {
-        //html5 download not supported
-      }
-    }))
+    }));
   }
   @Action(UploadVehiclePhotoAction)
   uploadVehiclePhoto(ctx: StateContext<FileStateModel>, { file, vehicleId }: UploadVehiclePhotoAction) {
     const formData = new FormData();
-    console.log(file)
-    file.forEach((element) => formData.append('multipartFile', element, element.name))
-    console.log('UploadVehiclePhoto')
+    console.log(file);
+    file.forEach((element) => formData.append('multipartFile', element, element.name));
+    console.log('UploadVehiclePhoto');
     return this.httpClient.post(`http://localhost:8080/api/file?vehicleId=${vehicleId}`, formData, {});
   }
 }

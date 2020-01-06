@@ -31,9 +31,12 @@ import { DownloadVehicleHistoryAction } from '../state/file.state';
 })
 export class ClientListComponent implements OnInit {
   selectedLanguage = null;
-  displayedColumns: string[] = ['id', 'name', 'email', 'update', 'addVehicle', 'delete'];
-  displayedVehiclesColumns: string[] = ['id', 'brand', 'model', 'numberPlate', 'update', 'delete', 'details', 'notification', 'service', 'history'];
-
+  displayedColumns: string[] = [
+    'id', 'name', 'email', 'update', 'addVehicle', 'delete'
+  ];
+  displayedVehiclesColumns: string[] = [
+    'id', 'brand', 'model', 'numberPlate', 'update', 'delete', 'details', 'notification', 'service', 'history'
+  ];
   @Select(state => state.client.pageClientDto)
   clients$: Observable<PageClientDto>;
   @Select(state => state.client.autocomplete)
@@ -113,6 +116,6 @@ export class ClientListComponent implements OnInit {
     });
   }
   downloadVehicleHistory(id) {
-    this.store.dispatch(new DownloadVehicleHistoryAction(id))
+    this.store.dispatch(new DownloadVehicleHistoryAction(id));
   }
 }

@@ -54,7 +54,7 @@ export class VehicleDetailsComponent implements OnInit {
         disabled: true
       }
     }
-  ]
+  ];
 
   constructor(public store: Store,
     public matDialogRef: MatDialogRef<VehicleDetailsComponent>,
@@ -64,7 +64,7 @@ export class VehicleDetailsComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.vehicle)
+    console.log(this.vehicle);
 
     this.store.dispatch(
       new VehicleUpdateAction(
@@ -76,8 +76,8 @@ export class VehicleDetailsComponent implements OnInit {
           overviewDate: this.vehicleDetailForm.value.overviewDate
         }, null //do zrobienia
       )
-    )
+    );
 
-    this.matDialogRef.close()
+    this.matDialogRef.close();
   }
 }

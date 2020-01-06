@@ -19,33 +19,33 @@ export class VehicleCreateComponent implements OnInit {
   vehicleForm = new FormGroup({});
   vehicleFields: FormlyFieldConfig[] = [
     {
-      key: "brand",
-      type: "input",
+      key: 'brand',
+      type: 'input',
       templateOptions: {
-        label: "marka pojazdu",
-        Placeholder: "marka pojazdu",
+        label: 'marka pojazdu',
+        Placeholder: 'marka pojazdu',
         require: true
       }
     },
     {
-      key: "model",
-      type: "input",
+      key: 'model',
+      type: 'input',
       templateOptions: {
-        label: "model",
-        Placeholder: "model",
+        label: 'model',
+        Placeholder: 'model',
         require: true
       }
     },
     {
-      key: "numberPlate",
-      type: "input",
+      key: 'numberPlate',
+      type: 'input',
       templateOptions: {
-        label: "numer rejestracyjny",
-        Placeholder: "numer rejestracyjny",
+        label: 'numer rejestracyjny',
+        Placeholder: 'numer rejestracyjny',
         require: true
       }
     }
-  ]
+  ];
   @Select(state => state.vehicle.errorMessage)
   errorMessage$: Observable<string>;
   @Select(state => state.vehicle.ok)
@@ -57,14 +57,14 @@ export class VehicleCreateComponent implements OnInit {
 
   ngOnInit() {
     this.ok$.subscribe(element => {
-      console.log("vehicle-create.component")
-      console.log(element)
+      console.log('vehicle-create.component');
+      console.log(element);
       if (element === true) {
-        console.log(" in if !!!!!!!!!!!!!")
-        this.store.dispatch(new ClearVehicleAction())
-        this.matDialogRef.close()
+        console.log(' in if !!!!!!!!!!!!!');
+        this.store.dispatch(new ClearVehicleAction());
+        this.matDialogRef.close();
       }
-    })
+    });
   }
   submit() {
     if (this.vehicle.vehicleDto) {
@@ -77,7 +77,7 @@ export class VehicleCreateComponent implements OnInit {
             numberPlate: this.vehicleForm.value.numberPlate
           }, this.file
         )
-      )
+      );
     } else {
       this.store.dispatch(
         new VehicleCreateAction(
@@ -87,15 +87,15 @@ export class VehicleCreateComponent implements OnInit {
             numberPlate: this.vehicleForm.value.numberPlate
           }, this.vehicle.client
         )
-      )
+      );
     }
   }
   deleteVehicle(id) {
-    this.store.dispatch(new VehicleDeleteAction(id))
+    this.store.dispatch(new VehicleDeleteAction(id));
   }
   saveFile(file: FileList) {
     Array.from(file).forEach(element => {
-      this.file.push(element)
+      this.file.push(element);
     });
   }
 }

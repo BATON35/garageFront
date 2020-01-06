@@ -126,7 +126,9 @@ const routs: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState, WorkerStatisticState]),
+    NgxsModule.forFeature([
+      UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState, WorkerStatisticState
+    ]),
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
