@@ -19,7 +19,7 @@ export class LoadServiceCarPageAction {
   constructor(public page: number, public size: number) { }
 }
 export class ServiceCarAction {
-  static readonly type = '[ServiceCar] Add item';
+  static readonly type = '[ServiceCar] ServiceCarAction';
   constructor(public payload: string) { }
 }
 

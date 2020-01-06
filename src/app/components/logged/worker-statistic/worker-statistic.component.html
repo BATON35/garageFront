@@ -10,7 +10,7 @@
         <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>
     <div class="group">
-        <button (click)="saveData()" type="submit" class="button" mat-raised-button color="primary"
+        <button (click)="displayData()" type="submit" class="button" mat-raised-button color="primary"
             [disabled]="!workerStatisticForm.valid">
             Dodaj
         </button>
@@ -19,7 +19,7 @@
 <div class="flex">
     <div class="flex-item">
         <div style="display: block;">
-            <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+            <canvas baseChart width="40" height="40" [datasets]="lineChartData" [labels]="lineChartLabels"
                 [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
                 [chartType]="lineChartType" [plugins]="lineChartPlugins"></canvas>
         </div>

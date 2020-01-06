@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 export class UploadVehiclePhotoAction {
-  static readonly type = '${name} uload vehicle photo';
+  static readonly type = '[file] UploadVehiclePhotoAction';
   constructor(public file: File[], public vehicleId: number) { }
 }
 
 export class DownloadVehicleHistoryAction {
-  static readonly type = '[File] download vehicle history';
+  static readonly type = '[File] UploadVehiclePhotoAction';
   constructor(public id: number) { }
 }
 

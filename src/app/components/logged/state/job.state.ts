@@ -12,11 +12,6 @@ export class SaveJobAction {
   constructor(public workerId: number, public partId: number, public serviceId: number, public vehiclePlateNumber: string) { }
 }
 
-// export class CreateJobAction {
-//   static readonly type = '[ServicePart] CreateJobAction';
-//   constructor(public servicePartDto: JobDto) { }
-// }
-
 export class LoadJobPageAction {
   static readonly type = '[Job] LoadJobPageAction';
   constructor(public page: number, public size: number) { }
@@ -36,14 +31,7 @@ export class JobStateModel {
 })
 export class JobState {
   constructor(public JobControllerService: JobControllerService) { }
-  // @Action(CreateJobAction)
-  // add(ctx: StateContext<ServicePartStateModel>, { servicePartDto }: CreateJobAction) {
-  //   this.JobControllerService.saveJobUsingPOST(servicePartDto).pipe(
-  //     tap(value => {
-  //       console.log(value);
-  //     })
-  //   );
-  // }
+
   @Action(LoadJobPageAction)
   loadServicePage(ctx: StateContext<JobStateModel>, { page, size }: LoadJobPageAction) {
     return this.JobControllerService.getJobListUsingGET({ size, page }).pipe(

@@ -7,32 +7,32 @@ import { PageClientDto } from 'src/api/models';
 
 const name = '[Clients]';
 export class ClietnPageAction {
-  static readonly type = '${name} clietPage';
+  static readonly type = '[Client] ClietnPageAction';
   constructor(public page: number, public size: number) { }
 }
 
 export class ClientUpdateAction {
-  static readonly type = '${name} update client';
+  static readonly type = '[Client] ClientUpdateAction';
   constructor(public clientDto: ClientDto) { }
 }
 
 export class ClientDeleteAction {
-  static readonly type = '${name} add client';
+  static readonly type = '[Client] ClientDeleteAction';
   constructor(public id: number) { }
 }
 
 export class ClientSearchAction {
-  static readonly type = '${name} search client';
+  static readonly type = '[Client] ClientSearchAction';
   constructor(public searchText: string) { }
 }
 
 export class AutocompleteAction {
-  static readonly type = '${name} autocomplete client';
+  static readonly type = '[Client] AutocompleteAction';
   constructor(public autocomplete: string) { }
 }
 
 export class BackToDefoultClientAction {
-  static readonly type = '${name} back to tefoult client';
+  static readonly type = '[Client] BackToDefoultClientAction';
   constructor() { }
 }
 

@@ -4,16 +4,16 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { PagePartDto, PartDto } from 'src/api/models';
 
 export class PartUpdateAction {
-  static readonly type = '[Part] update part';
+  static readonly type = '[Part] PartUpdateAction';
   constructor(public partDto: PartDto) { }
 }
 
 export class AutocompleteNamePartAction {
-  static readonly type = '${ServicePart} AutocompleteNamePartAction';
+  static readonly type = '[Part] AutocompleteNamePartAction';
   constructor(public text: string) { }
 }
 export class LoadPartPageAction {
-  static readonly type = '[Part] Add part';
+  static readonly type = '[Part] LoadPartPageAction';
   constructor(public page: number, public size: number) { }
 }
 export class PartStateModel {

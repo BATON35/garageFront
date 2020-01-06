@@ -51,64 +51,64 @@ export class WorkerStatisticComponent implements OnInit {
       xAxes: [{}],
       yAxes: [
         {
-          id: 'y-axis-0',
-          position: 'left',
-        },
-        {
-          id: 'y-axis-1',
-          position: 'right',
-          gridLines: {
-            color: 'rgba(255,0,0,0.3)',
-          },
-          ticks: {
-            fontColor: 'red',
-          }
+          //   id: 'y-axis-0',
+          //   position: 'left',
+          // },
+          // {
+          //   id: 'y-axis-1',
+          //   position: 'right',
+          //   gridLines: {
+          //     color: 'rgba(255,0,0,0.3)',
+          //   },
+          //   ticks: {
+          //     fontColor: 'red',
+          //   }
         }
       ]
     },
     annotation: {
       annotations: [
         {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: 'March',
-          borderColor: 'orange',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
-          }
+          // type: 'line',
+          // mode: 'vertical',
+          // scaleID: 'x-axis-0',
+          // value: 'March',
+          // borderColor: 'orange',
+          // borderWidth: 2,
+          // label: {
+          //   enabled: true,
+          //   fontColor: 'orange',
+          //   content: 'LineAnno'
+          // }
         },
       ],
     },
   };
   public lineChartColors: Color[] = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
+    // { // grey
+    //   backgroundColor: 'rgba(148,159,177,0.2)',
+    //   borderColor: 'rgba(148,159,177,1)',
+    //   pointBackgroundColor: 'rgba(148,159,177,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    // },
+    // { // dark grey
+    //   backgroundColor: 'rgba(77,83,96,0.2)',
+    //   borderColor: 'rgba(77,83,96,1)',
+    //   pointBackgroundColor: 'rgba(77,83,96,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(77,83,96,1)'
+    // },
+    // { // red
+    //   backgroundColor: 'rgba(255,0,0,0.3)',
+    //   borderColor: 'red',
+    //   pointBackgroundColor: 'rgba(148,159,177,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    // }
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';
@@ -125,6 +125,8 @@ export class WorkerStatisticComponent implements OnInit {
       this.lineChartLabels = Array.from(new Set(statistics.map(element => element.date)));
       const names = Array.from(new Set(statistics.map(statistic => statistic.name)));
       this.lineChartData = [];
+      console.log('worker-statistic.component');
+      console.log(this.lineChartData);
       names.forEach(name => {
         this.lineChartData.push({
           data: statistics.filter(statistic => statistic.name === name).map(statistic => statistic.price),
@@ -145,7 +147,7 @@ export class WorkerStatisticComponent implements OnInit {
     });
   }
 
-  saveData() {
+  displayData() {
     console.log(new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.').join('-'));
     console.log(new Date(this.workerStatisticForm.value.end).toLocaleString().split(',')[0].split('.').join('-'));
     // const start = new Date(this.workerStatisticForm.value.start).toLocaleString().split(',')[0].split('.')
