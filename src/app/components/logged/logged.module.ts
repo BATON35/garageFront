@@ -25,7 +25,8 @@ import {
   MatAutocompleteModule,
   MatCheckboxModule,
   MatCardModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 import { UsersState } from './users.state';
@@ -144,6 +145,7 @@ const routs: Routes = [
     MatSidenavModule,
     TranslateModule,
     ChartsModule,
+    MatSnackBarModule,
     NgxsReduxDevtoolsPluginModule.forRoot()
 
   ],
