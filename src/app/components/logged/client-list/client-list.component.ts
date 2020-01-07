@@ -46,6 +46,11 @@ export class ClientListComponent implements OnInit {
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
 
+  isExpansionDetailRow = (i: number, row: Object) =>
+    row.hasOwnProperty('detailRow')
+
+  expandedElement;
+
   constructor(
     public store: Store,
     public matDialog: MatDialog,
