@@ -5,7 +5,7 @@
   "menu.logout": "Logout",
   "menu.addService": "Add service to vehicle",
   "menu.service": "Create Service",
-  "panel.client.zakladka": "Client service",
+  "panel.client.tab": "Client service",
   "panel.client.list.no": "No.",
   "panel.client.list.name": "Name",
   "panel.client.list.email": "Email.",

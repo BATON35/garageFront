@@ -5,7 +5,7 @@
   "menu.parts": "Utwórz cześci",
   "menu.addService": "Dodaj usluge do pojazdu",
   "menu.service": "Utworz usługe",
-  "panel.client.zakladka": "Obsluga klienta",
+  "panel.client.tab": "Obsluga klienta",
   "panel.client.list.no": "No.",
   "panel.client.list.name": "Imie",
   "panel.client.list.email": "Email.",
