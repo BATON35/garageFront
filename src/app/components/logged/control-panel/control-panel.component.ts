@@ -13,6 +13,7 @@ export class ControlPanelComponent implements OnInit {
 
 
   ngOnInit() {
+    this.translateService.setDefaultLang('pl');
   }
 
   onTabChange(event) {
