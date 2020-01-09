@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-control-panel',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControlPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(public translateService: TranslateService) { }
 
 
 
@@ -15,6 +16,6 @@ export class ControlPanelComponent implements OnInit {
   }
 
   onTabChange(event) {
-    console.log(event)
+
   }
 }
