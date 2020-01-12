@@ -5,6 +5,7 @@
   "menu.logout": "Logout",
   "menu.addService": "Add service to vehicle",
   "menu.service": "Create Service",
+
   "panel.client.tab": "Client service",
   "panel.client.list.no": "No.",
   "panel.client.list.name": "Name",
@@ -13,5 +14,12 @@
   "panel.client.list.vehicle.add": "Add vehicle",
   "panel.client.list.delete": "Delete",
   "panel.client.list.search": "Search client",
+  "panel.user.tab": "User service",
+  "panel.admin.tab": "Admin",
+
+  "client.add.name": "Client name",
+  "client.add.email": "Client email",
+  "client.add.button": "Add client",
+
   "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database"
 }

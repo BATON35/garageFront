@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-create',
@@ -18,7 +19,7 @@ export class ClientCreateComponent implements OnInit {
       key: 'name',
       type: 'input',
       templateOptions: {
-        label: 'nazwa Klienta',
+        label: '{{ \'panel.client.list.search\' | translate }}',
         Placeholder: 'nazwa Klienta',
         require: true
       }
@@ -34,7 +35,11 @@ export class ClientCreateComponent implements OnInit {
     }
   ];
 
-  constructor(public store: Store, public matDialogRef: MatDialogRef<ClientCreateComponent>, @Inject(MAT_DIALOG_DATA) public clientDto) { }
+  constructor(
+    public store: Store,
+    public matDialogRef: MatDialogRef<ClientCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public clientDto,
+    public translateService: TranslateService) { }
 
   ngOnInit() {
   }

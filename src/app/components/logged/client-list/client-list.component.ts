@@ -49,13 +49,11 @@ export class ClientListComponent implements OnInit {
   constructor(
     public store: Store,
     public matDialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
-    public translateService: TranslateService) { }
+    public breakpointObserver: BreakpointObserver
+  ) { }
 
   ngOnInit() {
     this.store.dispatch(new ClietnPageAction(0, 5));
-    this.translateService.setDefaultLang('pl');
-    setTimeout(() => { this.selectedLanguage = 'pl'; }, 0);
   }
 
   changePage(event) {

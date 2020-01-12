@@ -8,12 +8,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ControlPanelComponent implements OnInit {
 
-  constructor(public translateService: TranslateService) { }
-
-
+  constructor() { }
 
   ngOnInit() {
-    this.translateService.setDefaultLang('pl');
   }
 
   onTabChange(event) {

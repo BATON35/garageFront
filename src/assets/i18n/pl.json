@@ -5,6 +5,7 @@
   "menu.parts": "Utwórz cześci",
   "menu.addService": "Dodaj usluge do pojazdu",
   "menu.service": "Utworz usługe",
+
   "panel.client.tab": "Obsluga klienta",
   "panel.client.list.no": "No.",
   "panel.client.list.name": "Imie",
@@ -13,5 +14,12 @@
   "panel.client.list.vehicle.add": "Dodaj pojazd",
   "panel.client.list.delete": "Usuń",
   "panel.client.list.search": "Znajdz klienta",
+  "panel.user.tab": "Obsluga Urzytkownika",
+  "panel.admin.tab": "Administrator",
+
+  "client.add.name": "Nazwa klienta",
+  "client.add.email": "Emial klienta",
+  "client.add.button": "Dodaj kienta",
+
   "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych"
 }
