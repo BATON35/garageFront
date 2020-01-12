@@ -8,3 +8,6 @@
         </div>
     </formly-form>
 </form>
+<div *ngIf="errorMessage$ | async as errorMessage">
+    <span translate [translateParams]="{value: model.email}">{{errorMessage}}</span>
+</div>

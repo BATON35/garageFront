@@ -20,6 +20,7 @@ import {
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
@@ -41,7 +42,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
         deps: [HttpClient]
       }
     }),
-    MatSelectModule
+    MatSelectModule,
+    NgxsRouterPluginModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

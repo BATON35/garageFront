@@ -12,7 +12,6 @@ export class AuthInterceptor implements HttpInterceptor {
         req: import('@angular/common/http').HttpRequest<any>,
         next: import('@angular/common/http').HttpHandler
     ): import('rxjs').Observable<import('@angular/common/http').HttpEvent<any>> {
-        console.log('\ninterceptor invoke !!!!\n');
         const token = this.store.selectSnapshot(AuthState.getToken);
         if (token) {
             req = req.clone({

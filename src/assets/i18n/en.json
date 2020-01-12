@@ -21,5 +21,6 @@
   "client.add.email": "Client email",
   "client.add.button": "Add client",
 
-  "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database"
+  "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database",
+  "user.duplicate.email": "User with email {{value}} exist in database"
 }

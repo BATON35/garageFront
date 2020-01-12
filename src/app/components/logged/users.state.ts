@@ -5,6 +5,10 @@ import { tap, catchError } from 'rxjs/operators';
 import { PageUserDto } from 'src/api/models';
 import { empty } from 'rxjs';
 
+export class ClearUserAction {
+  static readonly type = '[User] ClearUserAction';
+  constructor() { }
+}
 export class UsersPageAction {
   static readonly type = '[User] UsersPageAction';
   constructor(public page: number, public searchText: string, public size: number, public hasRole: boolean) { }
@@ -39,6 +43,8 @@ export class UsersStateModel {
   searchText: string;
   size: number;
   hasRole: boolean;
+  errorMessage: string;
+  ok: boolean;
 }
 
 @State<UsersStateModel>({
@@ -48,7 +54,9 @@ export class UsersStateModel {
     page: 0,
     searchText: '',
     size: 5,
-    hasRole: false
+    hasRole: false,
+    errorMessage: null,
+    ok: false
   }
 })
 export class UsersState {
@@ -92,8 +100,13 @@ export class UsersState {
       const size = ctx.getState().size;
       const hasRole = ctx.getState().hasRole;
       ctx.dispatch(new UsersPageAction(page, searchText, size, hasRole));
-    }), catchError(error => {
-      console.log(error);
+      ctx.patchState({
+        ok: true
+      });
+    }), catchError(err => {
+      ctx.patchState({
+        errorMessage: err.error.message
+      });
       return empty();
     }));
   }
@@ -122,6 +135,13 @@ export class UsersState {
     ctx.dispatch(new UsersPageAction(ctx.getState().page, '', ctx.getState().size, hasRole));
     ctx.patchState({
       hasRole
+    });
+  }
+  @Action(ClearUserAction)
+  clearVehicle(ctx: StateContext<UsersStateModel>, { }: ClearUserAction) {
+    ctx.patchState({
+      errorMessage: null,
+      ok: false
     });
   }
 }

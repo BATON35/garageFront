@@ -1,17 +1,19 @@
+import { dispatch } from 'rxjs/internal/observable/pairs';
 import { UserDto } from './../../../../api/models/user-dto';
-import { UserUpdateAction } from './../users.state';
-import { Store } from '@ngxs/store';
+import { UserUpdateAction, ClearUserAction } from './../users.state';
+import { Store, Select } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
   styleUrls: ['./user-create.component.scss']
 })
-export class UserCreateComponent implements OnInit {
+export class UserCreateComponent implements OnInit, OnDestroy {
   model: any;
   userForm = new FormGroup({});
   userFields: FormlyFieldConfig[] = [
@@ -68,15 +70,42 @@ export class UserCreateComponent implements OnInit {
       }
     }
   ];
-  constructor(public store: Store, public matDialogRef: MatDialogRef<UserCreateComponent>, @Inject(MAT_DIALOG_DATA) public userDto: UserDto) { }
+  @Select(state => state.users.ok)
+  ok$: Observable<boolean>;
+  @Select(state => state.users.errorMessage)
+  errorMessage$: Observable<string>
+
+  constructor(
+    public store: Store,
+    public matDialogRef: MatDialogRef<UserCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public userDto: UserDto,
+    public matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
     if (this.userDto) {
       this.model = {
-        name: this.userDto.name, email: this.userDto.email, password: this.userDto.password,
+        name: this.userDto.name,
+        email: this.userDto.email,
+        password: this.userDto.password,
         roles: this.userDto.roles.map(role => role.name)
       };
     }
+    this.ok$.subscribe(element => {
+      console.log('ok$')
+      if (element === true) {
+        console.log("in if")
+        this.userDto.email = this.model.email;
+        this.userDto.name = this.model.name;
+        this.userDto.password = this.model.password;
+        this.userDto.roles = this.model.roles.map(role => role.name);
+        this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
+        this.matDialogRef.close();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new ClearUserAction());
   }
 
   submit() {
@@ -93,7 +122,6 @@ export class UserCreateComponent implements OnInit {
         }
       )
     );
-    this.matDialogRef.close();
   }
 
 }

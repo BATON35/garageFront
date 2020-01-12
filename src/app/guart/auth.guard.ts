@@ -18,8 +18,6 @@ export class AuthGuard implements CanActivate {
     const token: string = this.store.selectSnapshot<string>(
       state => state.auth.jwtToken
     );
-    // tslint:disable-next-line: semicolon
-    console.log(route.data.role)
     if (token) {
       if (route.data.role) {
         const currentUser = this.store.selectSnapshot(AuthState.currentUser);

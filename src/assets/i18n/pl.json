@@ -21,5 +21,6 @@
   "client.add.email": "Emial klienta",
   "client.add.button": "Dodaj kienta",
 
-  "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych"
+  "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych",
+  "user.duplicate.email": "Urzytkownik z mailem {{value}} znajduje sie juz w bazie danych"
 }

@@ -19,9 +19,12 @@ export class ClientCreateComponent implements OnInit {
       key: 'name',
       type: 'input',
       templateOptions: {
-        label: '{{ \'panel.client.list.search\' | translate }}',
+        label: 'client.add.name',
         Placeholder: 'nazwa Klienta',
         require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('client.add.name')
       }
     },
     {

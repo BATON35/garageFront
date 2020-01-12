@@ -9,7 +9,6 @@ import {
   ErrorLoginToFalseAction,
   LoginFromCookieAction
 } from '../state/auth.state';
-import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
@@ -141,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }
   ];
-  constructor(public store: Store, public router: Router) { }
+  constructor(public store: Store) { }
 
   ngOnInit() {
     this.store.dispatch(new LoginFromCookieAction());

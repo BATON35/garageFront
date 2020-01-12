@@ -58,7 +58,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
     public matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
-    console.log(this.vehicle)
+    console.log(this.vehicle);
     if (this.vehicle != null) {
       this.vehicleTemp.brand = this.vehicle.vehicleDto.brand;
       this.vehicleTemp.model = this.vehicle.vehicleDto.model;
