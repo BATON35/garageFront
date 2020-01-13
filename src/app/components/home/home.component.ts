@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       templateOptions: {
         type: 'password',
         label: 'haslo',
-        placeholder: 'haslo',
+        placeholder: 'wprowadz haslo',
         required: true,
         minLength: 6,
         maxLength: 34
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       templateOptions: {
         type: 'password',
         label: 'confirm pasword',
-        placeholder: 'confirmPassword',
+        placeholder: 'confirm Password',
         required: true
       },
       validators: {

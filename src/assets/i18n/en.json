@@ -17,8 +17,10 @@
   "panel.user.tab": "User service",
   "panel.admin.tab": "Admin",
 
-  "client.add.name": "Client name",
-  "client.add.email": "Client email",
+  "client.add.name.label": "Client name",
+  "client.add.name.placeholder": "Enter client name",
+  "client.add.email.label": "Client email",
+  "client.add.email.placeholder": "Enter emial",
   "client.add.button": "Add client",
 
   "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database",

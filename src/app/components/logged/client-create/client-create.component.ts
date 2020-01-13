@@ -19,21 +19,22 @@ export class ClientCreateComponent implements OnInit {
       key: 'name',
       type: 'input',
       templateOptions: {
-        label: 'client.add.name',
-        Placeholder: 'nazwa Klienta',
         require: true
       },
       expressionProperties: {
-        'templateOptions.label': this.translateService.stream('client.add.name')
+        'templateOptions.label': this.translateService.stream('client.add.name.label'),
+        'templateOptions.placeholder': this.translateService.stream('client.add.name.placeholder')
       }
     },
     {
       key: 'email',
       type: 'input',
       templateOptions: {
-        label: 'emial klienta',
-        Placeholder: 'email urzytkownika',
         require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('client.add.email.label'),
+        'templateOptions.placeholder': this.translateService.stream('client.add.email.placeholder')
       }
     }
   ];

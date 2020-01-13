@@ -17,7 +17,10 @@
   "panel.user.tab": "Obsluga Urzytkownika",
   "panel.admin.tab": "Administrator",
 
-  "client.add.name": "Nazwa klienta",
+  "client.add.name.label": "Nazwa klienta",
+  "client.add.name.placeholder": "Wprowadz nazwe klienta",
+  "client.add.email.label": "Email klienta",
+  "client.add.email.placeholder": "Wprowadz emial",
   "client.add.email": "Emial klienta",
   "client.add.button": "Dodaj kienta",
 
