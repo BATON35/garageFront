@@ -37,7 +37,7 @@ export class UserListComponent implements OnInit {
   }
   update(user: UserDto) {
     this.matDialog.open(UserCreateComponent, {
-      width: "500px",
+      width: '500px',
       data: user
     })
   }
@@ -46,7 +46,6 @@ export class UserListComponent implements OnInit {
     // console.log(searchText);
   }
   role(event) {
-    console.log(this.checked)
-    this.store.dispatch(new LoadUserByChangRoleAction(this.checked))
+    this.store.dispatch(new LoadUserByChangRoleAction(this.checked));
   }
 }

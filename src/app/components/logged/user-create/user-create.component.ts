@@ -1,18 +1,19 @@
 import { UserDto } from './../../../../api/models/user-dto';
-import { UserUpdateAction } from './../users.state';
-import { Store } from '@ngxs/store';
+import { UserUpdateAction, ClearUserAction } from './../users.state';
+import { Store, Select } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
   styleUrls: ['./user-create.component.scss']
 })
-export class UserCreateComponent implements OnInit {
-  model: any;
+export class UserCreateComponent implements OnInit, OnDestroy {
+  userTemp: any;
   userForm = new FormGroup({});
   userFields: FormlyFieldConfig[] = [
     {
@@ -68,15 +69,42 @@ export class UserCreateComponent implements OnInit {
       }
     }
   ];
-  constructor(public store: Store, public matDialogRef: MatDialogRef<UserCreateComponent>, @Inject(MAT_DIALOG_DATA) public userDto: UserDto) { }
+
+  @Select(state => state.user.ok)
+  ok$: Observable<boolean>;
+
+  constructor(
+    public store: Store,
+    public matDialogRef: MatDialogRef<UserCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public userDto: UserDto,
+    public matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
+    console.log('przed if1')
     if (this.userDto) {
-      this.model = {
-        name: this.userDto.name, email: this.userDto.email, password: this.userDto.password,
+      console.log('w if1')
+      this.userTemp = {
+        name: this.userDto.name,
+        email: this.userDto.email,
+        password: this.userDto.password,
         roles: this.userDto.roles.map(role => role.name)
       };
     }
+    console.log('przed if2')
+    console.log(this.ok$)
+    this.ok$.subscribe(ok => {
+      if (ok === false) {
+        this.store.dispatch(new ClearUserAction());
+        console.log('w if2')
+        this.matSnackBar.open('Zapisano zmiany', 'zamknij', { duration: 3000 });
+        this.matDialogRef.close();
+      }
+      console.log('za if2')
+    })
+
+  }
+  ngOnDestroy() {
+    this.store.dispatch(new ClearUserAction());
   }
 
   submit() {

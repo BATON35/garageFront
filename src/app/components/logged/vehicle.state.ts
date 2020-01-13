@@ -62,14 +62,13 @@ export class VehicleState {
     constructor(public vehicleService: VehicleControllerRestService, public fileService: FileControllerService) { }
     @Action(VehicleUpdateAction)
     update(ctx: StateContext<VehicleStateModel>, { vehicleDto, file }: VehicleUpdateAction) {
-        console.log('vehicleUpdate');
-        console.log(file);
         return this.vehicleService.updateVehicleUsingPUT(vehicleDto).pipe(
             tap(vehicle => {
                 const page = ctx.getState().page;
                 const size = ctx.getState().size;
                 ctx.dispatch(new ClietnPageAction(page, size));
                 ctx.dispatch(new UploadVehiclePhotoAction(file, vehicle.id));
+                console.log('VehicleUpdateAction!!!!!!');
                 ctx.patchState({
                     ok: true
                 });

@@ -46,10 +46,9 @@ export class ClientListComponent implements OnInit {
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
 
-  isExpansionDetailRow = (i: number, row: Object) =>
-    row.hasOwnProperty('detailRow')
+  public isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
 
-  expandedElement;
+  expandedElement: any;
 
   constructor(
     public store: Store,

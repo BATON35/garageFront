@@ -52,20 +52,22 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
   @Select(state => state.vehicle.ok)
   ok$: Observable<boolean>;
 
-  constructor(public store: Store,
+  constructor(
+    public store: Store,
     public matDialogRef: MatDialogRef<UserCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public vehicle: any,
     public matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
-    console.log(this.vehicle)
-    if (this.vehicle != null) {
+    if (this.vehicle) {
       this.vehicleTemp.brand = this.vehicle.vehicleDto.brand;
       this.vehicleTemp.model = this.vehicle.vehicleDto.model;
       this.vehicleTemp.numberPlate = this.vehicle.vehicleDto.numberPlate;
     }
-    this.ok$.subscribe(element => {
-      if (element === true) {
+    console.log("before if")
+    this.ok$.subscribe(ok => {
+      if (ok === true) {
+        console.log('inside if')
         this.store.dispatch(new ClearVehicleAction());
         this.vehicle.vehicleDto.brand = this.vehicleTemp.brand;
         this.vehicle.vehicleDto.model = this.vehicleTemp.model;
@@ -73,6 +75,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
         this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
         this.matDialogRef.close();
       }
+      console.log('after if')
     });
   }
   ngOnDestroy() {
