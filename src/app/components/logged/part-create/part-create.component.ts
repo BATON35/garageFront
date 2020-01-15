@@ -12,7 +12,7 @@ import { PartUpdateAction } from '../state/part.state';
 })
 export class PartCreateComponent implements OnInit {
 
-  partForm = new FormGroup({})
+  partForm = new FormGroup({});
   partFields: FormlyFieldConfig[] = [
     {
       key: 'name',
@@ -32,9 +32,12 @@ export class PartCreateComponent implements OnInit {
         required: true
       }
     }
-  ]
+  ];
 
-  constructor(public store: Store, public matDialogRef: MatDialogRef<PartCreateComponent>, @Inject(MAT_DIALOG_DATA) public partDto) { }
+  constructor(
+    public store: Store,
+    public matDialogRef: MatDialogRef<PartCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public partDto) { }
 
   ngOnInit() {
   }
@@ -47,7 +50,7 @@ export class PartCreateComponent implements OnInit {
           price: this.partForm.value.price,
         }
       )
-    )
+    );
     this.matDialogRef.close();
   }
 

@@ -3,7 +3,7 @@ import { VehicleCreateComponent } from './../vehicle-create/vehicle-create.compo
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
 import { MatDialog } from '@angular/material';
-import { ClietnPageAction, ClientDeleteAction, ClientUpdateAction, ClientSearchAction, AutocompleteAction } from './../client.state';
+import { ClietnPageAction, ClientDeleteAction, ClientSearchAction, AutocompleteAction } from './../client.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -30,6 +30,12 @@ import { DownloadVehicleHistoryAction } from '../state/file.state';
   ]
 })
 export class ClientListComponent implements OnInit {
+
+  constructor(
+    public store: Store,
+    public matDialog: MatDialog,
+    public breakpointObserver: BreakpointObserver,
+    public translateService: TranslateService) { }
   selectedLanguage = null;
   displayedColumns: string[] = [
     'id', 'name', 'email', 'update', 'addVehicle', 'delete'
@@ -46,15 +52,9 @@ export class ClientListComponent implements OnInit {
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
 
-  public isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
+  //expandedElement: any;
 
-  expandedElement: any;
-
-  constructor(
-    public store: Store,
-    public matDialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
-    public translateService: TranslateService) { }
+  //public isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
 
   ngOnInit() {
     this.store.dispatch(new ClietnPageAction(0, 5));

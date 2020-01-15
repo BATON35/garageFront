@@ -1,6 +1,5 @@
 import { BackToDefoultVehicleAction } from './../logged/vehicle.state';
 import { BackToDefoultClientAction } from './../logged/client.state';
-import { AuthGuard } from './../../guart/auth.guard';
 import { Router } from '@angular/router';
 import { LogoutAction, BackToDefoultAuthAction, AuthState, LoginFromCookieAction } from './../state/auth.state';
 import { Component, OnInit } from '@angular/core';

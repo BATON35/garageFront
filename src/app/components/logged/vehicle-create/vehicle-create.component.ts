@@ -1,4 +1,3 @@
-import { element } from 'protractor';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { VehicleUpdateAction, VehicleCreateAction, VehicleDeleteAction, ClearVehicleAction } from './../vehicle.state';
@@ -64,10 +63,10 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
       this.vehicleTemp.model = this.vehicle.vehicleDto.model;
       this.vehicleTemp.numberPlate = this.vehicle.vehicleDto.numberPlate;
     }
-    console.log("before if")
+    console.log('before if');
     this.ok$.subscribe(ok => {
       if (ok === true) {
-        console.log('inside if')
+        console.log('inside if');
         this.store.dispatch(new ClearVehicleAction());
         this.vehicle.vehicleDto.brand = this.vehicleTemp.brand;
         this.vehicle.vehicleDto.model = this.vehicleTemp.model;
@@ -75,7 +74,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
         this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
         this.matDialogRef.close();
       }
-      console.log('after if')
+      console.log('after if');
     });
   }
   ngOnDestroy() {

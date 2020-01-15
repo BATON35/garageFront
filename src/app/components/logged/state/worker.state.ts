@@ -27,7 +27,7 @@ export class WorkerState {
       tap(worker => ctx.patchState({
         autocompleteWorker: worker
       }))
-    )
+    );
   }
 }
 

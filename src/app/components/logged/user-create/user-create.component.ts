@@ -80,9 +80,9 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     public matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
-    console.log('przed if1')
+    console.log('przed if1');
     if (this.userDto) {
-      console.log('w if1')
+      console.log('w if1');
       this.userTemp = {
         name: this.userDto.name,
         email: this.userDto.email,
@@ -90,17 +90,17 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         roles: this.userDto.roles.map(role => role.name)
       };
     }
-    console.log('przed if2')
-    console.log(this.ok$)
+    console.log('przed if2');
+    console.log(this.ok$);
     this.ok$.subscribe(ok => {
       if (ok === false) {
         this.store.dispatch(new ClearUserAction());
-        console.log('w if2')
+        console.log('w if2');
         this.matSnackBar.open('Zapisano zmiany', 'zamknij', { duration: 3000 });
         this.matDialogRef.close();
       }
-      console.log('za if2')
-    })
+      console.log('za if2');
+    });
 
   }
   ngOnDestroy() {

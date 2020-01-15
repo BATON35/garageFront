@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserDto } from './../../../api/models/user-dto';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
@@ -101,8 +100,6 @@ export class AuthState {
               jwtToken: token,
               errorLogin: false
             });
-            console.log('login action ');
-            console.log(token);
             Cookies.set('jwtToken', token);
             ctx.dispatch(new CurrentUserAction());
             this.router.navigate(['/panel']);

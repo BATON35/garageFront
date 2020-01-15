@@ -49,9 +49,9 @@ export class ServiceCarState {
     }).pipe(tap(
       serviceCar => ctx.patchState({
         pageCarServiceDto: serviceCar,
-        page: page,
-        size: size
-      })))
+        page,
+        size
+      })));
 
   }
   @Action(AutocompleteNameServiceCarAction)
@@ -60,11 +60,11 @@ export class ServiceCarState {
       tap(carService => ctx.patchState({
         serviceCarAutocomplete: carService
       }))
-    )
+    );
   }
   @Action(SaveServiceCarAction)
   saveServiceCar(ctx: StateContext<ServiceCarStateModel>, { carServiceDto }: SaveServiceCarAction) {
-    console.log("service-car !!!!!!!!!")
+    console.log('service-car !!!!!!!!!');
     return this.carServiceControllerRestService.saveCarServiceUsingPOST(carServiceDto)
       .pipe(tap(serviceCar => ctx.dispatch(new LoadServiceCarPageAction(ctx.getState().page, ctx.getState().size))));
   }

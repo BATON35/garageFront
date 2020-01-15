@@ -68,7 +68,6 @@ export class VehicleState {
                 const size = ctx.getState().size;
                 ctx.dispatch(new ClietnPageAction(page, size));
                 ctx.dispatch(new UploadVehiclePhotoAction(file, vehicle.id));
-                console.log('VehicleUpdateAction!!!!!!');
                 ctx.patchState({
                     ok: true
                 });
@@ -90,7 +89,6 @@ export class VehicleState {
     }
     @Action(VehicleDeleteAction)
     delete(ctx: StateContext<VehicleStateModel>, { id }: VehicleDeleteAction) {
-        console.log(id);
         return this.vehicleService.deleteVehicleUsingDELETE(id).pipe(tap(value => {
             ctx.dispatch(new ClietnPageAction(null, null));
         }));
@@ -117,7 +115,6 @@ export class VehicleState {
     }
     @Action(ClearVehicleAction)
     clearVehicle(ctx: StateContext<VehicleStateModel>, { }: ClearVehicleAction) {
-        console.log('clear vehicle action !!!!!!!');
         ctx.patchState({
             errorMessage: null,
             ok: false

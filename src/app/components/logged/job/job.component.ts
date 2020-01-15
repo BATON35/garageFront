@@ -21,16 +21,16 @@ export class JobComponent implements OnInit {
   serviceId: number;
   vehicleNumberPlate: string;
   @Select(state => state.part.partsAutocomplete)
-  partAutocomplete$: Observable<PartDto[]>
+  partAutocomplete$: Observable<PartDto[]>;
 
   @Select(state => state.serviceCar.serviceCarAutocomplete)
-  carServiceAutocomplete$: Observable<CarServiceDto[]>
+  carServiceAutocomplete$: Observable<CarServiceDto[]>;
 
   @Select(state => state.worker.autocompleteWorker)
-  workerAutocomplete$: Observable<WorkerDto[]>
+  workerAutocomplete$: Observable<WorkerDto[]>;
 
   @Select(state => state.vehicle.autocompleteVehicle)
-  vehicleAutocomplete$: Observable<VehicleStateModel[]>
+  vehicleAutocomplete$: Observable<VehicleStateModel[]>;
 
   constructor(public store: Store, public formBuilder: FormBuilder) { }
 
@@ -40,46 +40,45 @@ export class JobComponent implements OnInit {
       serviceName: [''],
       vehicleNamberPlate: [''],
       workerId: ['']
-    })
-    this.carServiceAutocomplete$.subscribe(element => console.log(element))
+    });
+    this.carServiceAutocomplete$.subscribe(element => console.log(element));
   }
 
   searchPart(text) {
-    this.store.dispatch(new AutocompleteNamePartAction(text))
+    this.store.dispatch(new AutocompleteNamePartAction(text));
   }
 
   searchServiceCar(text) {
-    this.store.dispatch(new AutocompleteNameServiceCarAction(text))
+    this.store.dispatch(new AutocompleteNameServiceCarAction(text));
   }
 
   searchWorker(text) {
-    this.store.dispatch(new AutocompleteNameWorkerAction(text))
+    this.store.dispatch(new AutocompleteNameWorkerAction(text));
   }
   searchVehicle(text) {
-    this.store.dispatch(new AutoCompleteNameVehicleAction(text))
+    this.store.dispatch(new AutoCompleteNameVehicleAction(text));
   }
   selectWorker(id) {
-    console.log('worker ' + id)
+    console.log('worker ' + id);
     this.workerId = id;
   }
   selectPart(id) {
-    console.log('part ' + id)
+    console.log('part ' + id);
     this.partId = id;
   }
   selectService(id) {
-    console.log('service ' + id)
+    console.log('service ' + id);
     this.serviceId = id;
   }
 
   selectVehicle(plateNumber) {
-    console.log('vehicle ' + plateNumber)
+    console.log('vehicle ' + plateNumber);
     this.vehicleNumberPlate = plateNumber;
   }
   save() {
-    this.store.dispatch(new SaveJobAction(this.workerId, this.partId, this.serviceId, this.vehicleNumberPlate))
+    this.store.dispatch(new SaveJobAction(this.workerId, this.partId, this.serviceId, this.vehicleNumberPlate));
   }
   traySelect(event) {
-    console.log(event)
   }
 
 }

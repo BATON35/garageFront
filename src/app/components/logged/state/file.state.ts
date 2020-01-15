@@ -1,4 +1,3 @@
-import { element } from 'protractor';
 import { State, Action, StateContext } from '@ngxs/store';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';

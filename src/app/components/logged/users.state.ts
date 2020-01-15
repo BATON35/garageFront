@@ -4,8 +4,6 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { PageUserDto } from 'src/api/models';
 import { empty } from 'rxjs';
-import { ClearVehicleAction } from './vehicle.state';
-
 export class ClearUserAction {
   static readonly type = '[User] ClearUserAction';
   constructor() { }
@@ -134,7 +132,6 @@ export class UsersState {
   }
   @Action(ClearUserAction)
   clearVehicle(ctx: StateContext<UsersStateModel>, { }: ClearUserAction) {
-    console.log('clear user action !!!!!!!');
     ctx.patchState({
       errorMessage: null,
       ok: false

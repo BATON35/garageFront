@@ -1,7 +1,7 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { JobControllerService } from 'src/api/services';
 import { tap } from 'rxjs/operators';
-import { JobDto, PageJobDto, JobResponseDto } from 'src/api/models';
+import { PageJobDto, JobResponseDto } from 'src/api/models';
 
 export class LoadHistoryAction {
   static readonly type = '[Job] LoadHistoryAction';

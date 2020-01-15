@@ -47,7 +47,7 @@ export class PartState {
         tap(part => ctx.patchState({
           partsAutocomplete: part
         }))
-      )
+      );
     }
   }
   @Action(PartUpdateAction)
@@ -55,9 +55,9 @@ export class PartState {
     return this.partController.savePartUsingPOST(partDto.partDto).pipe(
       tap(
         part => {
-          ctx.dispatch(new LoadPartPageAction(0, 5))
+          ctx.dispatch(new LoadPartPageAction(0, 5));
         }
       )
-    )
+    );
   }
 }

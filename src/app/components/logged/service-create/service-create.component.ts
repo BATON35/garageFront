@@ -10,7 +10,7 @@ import { SaveServiceCarAction } from '../state/service-car.state';
   styleUrls: ['./service-create.component.scss']
 })
 export class ServiceCreateComponent implements OnInit {
-  serviceForm = new FormGroup({})
+  serviceForm = new FormGroup({});
   serviceFields: FormlyFieldConfig[] = [
     {
       key: 'name',
@@ -39,18 +39,17 @@ export class ServiceCreateComponent implements OnInit {
         required: false
       }
     }
-  ]
+  ];
   constructor(public store: Store) { }
 
   ngOnInit() {
   }
   save() {
-    console.log("save service!!!!!!!!!!!!!!!!!!!!!")
     this.store.dispatch(new SaveServiceCarAction({
       name: this.serviceForm.value.name,
       price: this.serviceForm.value.price,
       description: this.serviceForm.value.description,
-    }))
+    }));
   }
 
 }

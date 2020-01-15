@@ -1,7 +1,6 @@
 import { VehicleUpdateAction } from './../vehicle.state';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
-import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngxs/store';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -56,7 +55,8 @@ export class VehicleDetailsComponent implements OnInit {
     }
   ];
 
-  constructor(public store: Store,
+  constructor(
+    public store: Store,
     public matDialogRef: MatDialogRef<VehicleDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public vehicle: any) { }
 
@@ -74,7 +74,7 @@ export class VehicleDetailsComponent implements OnInit {
           model: this.vehicleDetailForm.value.model,
           numberPlate: this.vehicleDetailForm.value.numberPlate,
           overviewDate: this.vehicleDetailForm.value.overviewDate
-        }, null //do zrobienia
+        }, null
       )
     );
 

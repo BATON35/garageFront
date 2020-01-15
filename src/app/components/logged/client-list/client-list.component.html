@@ -61,7 +61,7 @@
       </ng-container>
       <ng-container matColumnDef="expandedDetail">
         <mat-cell *matCellDef="let detail">
-          <!-- <table mat-table [style.border]="'3px solid blue'" [dataSource]="detail.vehicles" class="mat-elevation-z8"
+          <table mat-table [style.border]="'3px solid blue'" [dataSource]="detail.vehicles" class="mat-elevation-z8"
             multiTemplateDataRows>
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
@@ -151,8 +151,7 @@
             </mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedVehiclesColumns">
             </mat-row>
-          </table> -->
-          <span>dddddddddddd</span>
+          </table>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
