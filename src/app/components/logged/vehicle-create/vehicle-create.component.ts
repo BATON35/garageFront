@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { element } from 'protractor';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
@@ -23,27 +24,33 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
       key: 'brand',
       type: 'input',
       templateOptions: {
-        label: 'marka pojazdu',
-        Placeholder: 'marka pojazdu',
         require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('vehicle.add.brand.label'),
+        'templateOptions.placeholder': this.translateService.stream('vehicle.add.brand.placeholder')
       }
     },
     {
       key: 'model',
       type: 'input',
       templateOptions: {
-        label: 'model',
-        Placeholder: 'model',
         require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('vehicle.add.model.label'),
+        'templateOptions.placeholder': this.translateService.stream('vehicle.add.model.placeholder')
       }
     },
     {
       key: 'numberPlate',
       type: 'input',
       templateOptions: {
-        label: 'numer rejestracyjny',
-        Placeholder: 'numer rejestracyjny',
         require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('vehicle.add.numberPlate.label'),
+        'templateOptions.placeholder': this.translateService.stream('vehicle.add.numberPlate.pladeholder')
       }
     }
   ];
@@ -55,7 +62,8 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
   constructor(public store: Store,
     public matDialogRef: MatDialogRef<UserCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public vehicle: any,
-    public matSnackBar: MatSnackBar) { }
+    public matSnackBar: MatSnackBar,
+    public translateService: TranslateService) { }
 
   ngOnInit() {
     console.log(this.vehicle);

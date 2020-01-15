@@ -7,7 +7,7 @@
   "menu.service": "Utworz usługe",
 
   "panel.client.tab": "Obsluga klienta",
-  "panel.client.list.no": "No.",
+  "panel.client.list.no": "Nr.",
   "panel.client.list.name": "Imie",
   "panel.client.list.email": "Email.",
   "panel.client.list.update": "Zmien Dane",
@@ -23,6 +23,24 @@
   "client.add.email.placeholder": "Wprowadz emial",
   "client.add.email": "Emial klienta",
   "client.add.button": "Dodaj kienta",
+
+  "vehicle.add.brand.label": "Marka pojazdu",
+  "vehicle.add.brand.placeholder": "Wprowadz markę pojazdu",
+  "vehicle.add.model.label": "Model pojazdu",
+  "vehicle.add.model.placeholder": "Wprowadz model pojazdu",
+  "vehicle.add.numberPlate.label": "Numer rejestracyjny",
+  "vehicle.add.numberPlate.pladeholder": "Wprowadz numer rejestracyjny pojazdu",
+
+  "vehicle.list.number": "Nr",
+  "vehicle.list.make": "Marka",
+  "vehicle.list.model": "Model",
+  "vehicle.list.numberPlate": "Numer rejestracyjny",
+  "vehicle.list.change": "Zmien dane",
+  "vehicle.list.delete": "Usuń",
+  "vehicle.list.details": "Pokaż szczegoły",
+  "vehicle.list.checkUp": "Przypomnij o przeglondzie",
+  "vehicle.list.history": "Pokaż historie",
+  "vehicle.list.download": "Pobierz historie",
 
   "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych",
   "user.duplicate.email": "Urzytkownik z mailem {{value}} znajduje sie juz w bazie danych"
