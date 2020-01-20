@@ -29,6 +29,7 @@
   "vehicle.add.model.placeholder": "Enter vehicle model",
   "vehicle.add.numberPlate.label": "Number plate",
   "vehicle.add.numberPlate.pladeholder": "Enter number plate",
+  "vehicle.add.button": "Update",
 
   "vehicle.list.number": "No",
   "vehicle.list.make": "Make",

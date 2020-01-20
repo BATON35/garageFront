@@ -54,6 +54,8 @@ import { ChartsModule } from 'ng2-charts';
 import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
 import { WorkerStatisticState } from './state/worker-statistic.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { MatPaginatorIntl } from '@angular/material';
+import { CustomPaginator } from './user-list/UserCustomPaginator';
 
 const routs: Routes = [
   {
@@ -163,6 +165,10 @@ const routs: Routes = [
     VehicleHistoryComponent,
     ServiceCreateComponent
   ],
-  providers: [AuthGuard]
+  providers: [
+    AuthGuard,
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() }
+  ]
+
 })
 export class LoggedModule { }

@@ -30,6 +30,7 @@
   "vehicle.add.model.placeholder": "Wprowadz model pojazdu",
   "vehicle.add.numberPlate.label": "Numer rejestracyjny",
   "vehicle.add.numberPlate.pladeholder": "Wprowadz numer rejestracyjny pojazdu",
+  "vehicle.add.button": "Zmień",
 
   "vehicle.list.number": "Nr",
   "vehicle.list.make": "Marka",
