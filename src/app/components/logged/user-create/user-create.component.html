@@ -1,5 +1,5 @@
 <form [formGroup]="userForm" (ngSubmit)="submit()">
-    <formly-form [fields]="userFields" [form]="userForm" [model]="model">
+    <formly-form [fields]="userFields" [form]="userForm" [model]="userTemp">
         <div class="group">
             <button id="saveUser" type="submit" class="button" mat-raised-button color="primary"
                 [disabled]="!userForm.valid">

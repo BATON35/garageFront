@@ -1,46 +1,45 @@
-import { state } from '@angular/animations';
 import { tap } from 'rxjs/operators';
 import { ClientDto } from './../../../api/models/client-dto';
 import { State, Action, StateContext } from '@ngxs/store';
 import { ClientControllerRestService } from 'src/api/services';
 import { PageClientDto } from 'src/api/models';
 
-const name = "[Clients]"
+const name = '[Clients]';
 export class ClietnPageAction {
-  static readonly type = '${name} clietPage';
+  static readonly type = '[Client] ClietnPageAction';
   constructor(public page: number, public size: number) { }
 }
 
 export class ClientUpdateAction {
-  static readonly type = '${name} update client';
+  static readonly type = '[Client] ClientUpdateAction';
   constructor(public clientDto: ClientDto) { }
 }
 
 export class ClientDeleteAction {
-  static readonly type = '${name} add client';
+  static readonly type = '[Client] ClientDeleteAction';
   constructor(public id: number) { }
 }
 
 export class ClientSearchAction {
-  static readonly type = '${name} search client';
+  static readonly type = '[Client] ClientSearchAction';
   constructor(public searchText: string) { }
 }
 
 export class AutocompleteAction {
-  static readonly type = '${name} autocomplete client';
+  static readonly type = '[Client] AutocompleteAction';
   constructor(public autocomplete: string) { }
 }
 
 export class BackToDefoultClientAction {
-  static readonly type = '${name} back to tefoult client';
+  static readonly type = '[Client] BackToDefoultClientAction';
   constructor() { }
 }
 
 export class ClientStateModel {
-  public pageClientDto: PageClientDto
-  public page: number
-  public size: number
-  public autocomplete: string[]
+  public pageClientDto: PageClientDto;
+  public page: number;
+  public size: number;
+  public autocomplete: string[];
 }
 
 
@@ -61,8 +60,8 @@ export class ClientState {
   @Action(ClietnPageAction)
   page(ctx: StateContext<ClientStateModel>, { page, size }: ClietnPageAction) {
     if (!page && !size) {
-      page = ctx.getState().page
-      size = ctx.getState().size
+      page = ctx.getState().page;
+      size = ctx.getState().size;
 
     }
     return this.clientService
@@ -72,20 +71,20 @@ export class ClientState {
             pageClientDto: value,
             page,
             size
-          })
+          });
         }
-      ))
+      ));
   }
 
   @Action(ClientDeleteAction)
   delete(ctx: StateContext<ClientStateModel>, { id }: ClientDeleteAction) {
     return this.clientService.deleteClientUsingDELETE(id).pipe(tap(
       value => {
-        const page = ctx.getState().page
-        const size = ctx.getState().size
-        ctx.dispatch(new ClietnPageAction(page, size))
+        const page = ctx.getState().page;
+        const size = ctx.getState().size;
+        ctx.dispatch(new ClietnPageAction(page, size));
       }
-    ))
+    ));
   }
 
   @Action(ClientUpdateAction)
@@ -93,11 +92,11 @@ export class ClientState {
     return this.clientService.saveClientUsingPOST(clientDto.clientDto).pipe(
       tap(
         client => {
-          const page = ctx.getState().page
-          const size = ctx.getState().size
-          ctx.dispatch(new ClietnPageAction(page, size))
+          const page = ctx.getState().page;
+          const size = ctx.getState().size;
+          ctx.dispatch(new ClietnPageAction(page, size));
         })
-    )
+    );
   }
 
   @Action(ClientSearchAction)
@@ -107,10 +106,10 @@ export class ClientState {
         client => {
           ctx.patchState({
             pageClientDto: client
-          })
+          });
         }
       )
-    )
+    );
   }
 
   @Action(AutocompleteAction)
@@ -120,10 +119,10 @@ export class ClientState {
         value => {
           ctx.patchState({
             autocomplete: value
-          })
+          });
         }
       )
-    )
+    );
   }
   @Action(BackToDefoultClientAction)
   backToDefoultClient(ctx: StateContext<ClientStateModel>, BackToDefoultClientAction) {
@@ -132,6 +131,6 @@ export class ClientState {
       page: 0,
       size: 5,
       autocomplete: []
-    })
+    });
   }
 }

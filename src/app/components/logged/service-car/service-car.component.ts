@@ -12,20 +12,22 @@ import { ServiceCreateComponent } from '../service-create/service-create.compone
   styleUrls: ['./service-car.component.scss']
 })
 export class ServiceCarComponent implements OnInit {
-  displayedColumns: string[] = ["id", "name", "price", "update"]
+  displayedColumns: string[] = ['id', 'name', 'price', 'update'];
   @Select(state => state.serviceCar.pageCarServiceDto)
-  sevrice$: Observable<PageCarServiceDto>
+  sevrice$: Observable<PageCarServiceDto>;
   constructor(public store: Store, public matDialog: MatDialog) { }
 
   ngOnInit() {
-    this.store.dispatch(new LoadServiceCarPageAction(0, 5))
+    this.store.dispatch(new LoadServiceCarPageAction(0, 5));
   }
   changePage(event) {
     this.store.dispatch(new LoadServiceCarPageAction(event.pageIndex, event.pageSize));
-    console.log(event)
   }
   openModal() {
     this.matDialog.open(ServiceCreateComponent);
   }
-
+  deleteElement(element) {
+  }
+  update(element) {
+  }
 }

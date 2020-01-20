@@ -25,7 +25,9 @@ import {
   MatAutocompleteModule,
   MatCheckboxModule,
   MatCardModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatSelectModule
 } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 import { UsersState } from './users.state';
@@ -50,6 +52,8 @@ import { ServiceCreateComponent } from './service-create/service-create.componen
 import { JobComponent } from './job/job.component';
 import { ChartsModule } from 'ng2-charts';
 import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
+import { WorkerStatisticState } from './state/worker-statistic.state';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 const routs: Routes = [
   {
@@ -124,7 +128,9 @@ const routs: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxsModule.forFeature([UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState]),
+    NgxsModule.forFeature([
+      UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState, WorkerStatisticState
+    ]),
     MatIconModule,
     MatGridListModule,
     MatDialogModule,
@@ -139,7 +145,10 @@ const routs: Routes = [
     MatCardModule,
     MatSidenavModule,
     TranslateModule,
-    ChartsModule
+    ChartsModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    NgxsReduxDevtoolsPluginModule.forRoot()
 
   ],
   entryComponents: [

@@ -1,3 +1,4 @@
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsModule } from '@ngxs/store';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoggedModule } from './components/logged/logged.module';
@@ -20,6 +21,7 @@ import {
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
@@ -41,7 +43,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
         deps: [HttpClient]
       }
     }),
-    MatSelectModule
+    MatSelectModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

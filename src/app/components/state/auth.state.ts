@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { Router } from '@angular/router';
 import { UserDto } from './../../../api/models/user-dto';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
@@ -9,47 +8,45 @@ import { UserControllerRestService } from 'src/api/services';
 import { of } from 'rxjs';
 import Cookies from 'js-cookie';
 
-const name = 'auth';
-const fullName = '[' + name + ']';
 
 export class UpdateTokenAction {
-  static readonly type = '${token} UpdateTokenAction';
+  static readonly type = '[Auth] UpdateTokenAction';
   constructor(public token: string) { }
 }
 export class LoginAction {
-  static readonly type = '${fullName} Login';
+  static readonly type = '[Auth] LoginAction';
   constructor(public userName: string, public password: string) { }
 }
 
 export class RegistrationAction {
-  static readonly type = '${fullName} Registration';
+  static readonly type = '[Auth] RegistrationAction';
   constructor(public userDto: UserDto) { }
 }
 
 export class LogoutAction {
-  static readonly type = '${fullName} Logout';
+  static readonly type = '[Auth] LogoutAction';
   constructor() { }
 }
 export class CurrentUserAction {
-  static readonly type = '${fullName} UserInfo';
+  static readonly type = '$[Auth] CurrentUserAction';
   constructor() { }
 }
 export class ErrorLoginToFalseAction {
-  static readonly type = '${fullName} errorLoginToFalseAction';
+  static readonly type = '[Auth] ErrorLoginToFalseAction';
   constructor() { }
 }
 export class ErrorRegistrationToFalseAction {
-  static readonly type = '${fullName} errorRegistrationToFalseAction';
+  static readonly type = '[Auth] ErrorRegistrationToFalseAction';
   constructor() { }
 }
 
 export class LoginFromCookieAction {
-  static readonly type = '${fullName} loginFromCookieAction';
+  static readonly type = '[Auth] LoginFromCookieAction';
   constructor() { }
 }
 
 export class BackToDefoultAuthAction {
-  static readonly type = '${fullName} back to defoult auth';
+  static readonly type = '[Auth] BackToDefoultAuthAction';
   constructor() { }
 }
 export class AuthStateModel {
@@ -68,6 +65,7 @@ export class AuthStateModel {
     currentUser: {}
   }
 })
+
 export class AuthState {
   constructor(
     public httpClient: HttpClient,
@@ -102,8 +100,6 @@ export class AuthState {
               jwtToken: token,
               errorLogin: false
             });
-            console.log('login action ');
-            console.log(token);
             Cookies.set('jwtToken', token);
             ctx.dispatch(new CurrentUserAction());
             this.router.navigate(['/panel']);

@@ -145,7 +145,7 @@ class UserControllerRestService extends __BaseService {
    *
    * - `page`: page
    *
-   * - `hasRole`: hasRole
+   * - `roles`: roles
    *
    * @return OK
    */
@@ -156,7 +156,7 @@ class UserControllerRestService extends __BaseService {
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.hasRole != null) __params = __params.set('hasRole', params.hasRole.toString());
+    (params.roles || []).forEach(val => {if (val != null) __params = __params.append('roles', val.toString())});
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/users/search`,
@@ -183,7 +183,7 @@ class UserControllerRestService extends __BaseService {
    *
    * - `page`: page
    *
-   * - `hasRole`: hasRole
+   * - `roles`: roles
    *
    * @return OK
    */
@@ -287,9 +287,9 @@ module UserControllerRestService {
     page: number;
 
     /**
-     * hasRole
+     * roles
      */
-    hasRole: boolean;
+    roles?: Array<string>;
   }
 }
 

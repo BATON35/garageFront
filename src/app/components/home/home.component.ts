@@ -1,43 +1,49 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { FormlyFieldConfig } from "@ngx-formly/core";
-import { Store, Select } from "@ngxs/store";
-import { LoginAction, RegistrationAction, ErrorRegistrationToFalseAction, ErrorLoginToFalseAction, LoginFromCookieAction } from "../state/auth.state";
-import { Router } from "@angular/router";
-import { takeUntil, tap } from "rxjs/operators";
-import { Subject, Observable } from "rxjs";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import { Store, Select } from '@ngxs/store';
+import {
+  LoginAction,
+  RegistrationAction,
+  ErrorRegistrationToFalseAction,
+  ErrorLoginToFalseAction,
+  LoginFromCookieAction
+} from '../state/auth.state';
+import { Router } from '@angular/router';
+import { takeUntil, tap } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   @Select(state => state.auth.errorLogin)
-  errorLogin$: Observable<boolean>
+  errorLogin$: Observable<boolean>;
   @Select(state => state.auth.errorRegister)
-  errorRegister$: Observable<boolean>
+  errorRegister$: Observable<boolean>;
   onDestroy$ = new Subject<void>();
   loginForm = new FormGroup({});
   rejestrationForm = new FormGroup({});
   selectedIndex = 0;
   loginFields: FormlyFieldConfig[] = [
     {
-      key: "userNameLogin",
-      type: "input",
+      key: 'userNameLogin',
+      type: 'input',
       templateOptions: {
-        label: "nazwa urzytkownika",
-        placeholder: "nazwa urzytkownika",
+        label: 'nazwa urzytkownika',
+        placeholder: 'nazwa urzytkownika',
         required: true
       }
     },
     {
-      key: "passwordLogin",
-      type: "input",
+      key: 'passwordLogin',
+      type: 'input',
       templateOptions: {
-        type: "password",
-        label: "haslo",
-        placeholder: "haslo",
+        type: 'password',
+        label: 'haslo',
+        placeholder: 'haslo',
         required: true
       }
     }
@@ -45,51 +51,51 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   registerFields: FormlyFieldConfig[] = [
     {
-      key: "userName",
-      type: "input",
+      key: 'userName',
+      type: 'input',
       templateOptions: {
-        label: "nazwa urzytkownika",
-        placeholder: "nazwa urzytkownika",
+        label: 'nazwa urzytkownika',
+        placeholder: 'nazwa urzytkownika',
         required: true,
         minLength: 3
       }
     },
     {
-      key: "password",
-      type: "input",
+      key: 'password',
+      type: 'input',
       templateOptions: {
-        type: "password",
-        label: "haslo",
-        placeholder: "haslo",
+        type: 'password',
+        label: 'haslo',
+        placeholder: 'haslo',
         required: true,
         minLength: 6,
         maxLength: 34
       }
     },
     {
-      key: "confirmPassword",
-      type: "input",
+      key: 'confirmPassword',
+      type: 'input',
       templateOptions: {
-        type: "password",
-        label: "confirm pasword",
-        placeholder: "confirmPassword",
+        type: 'password',
+        label: 'confirm pasword',
+        placeholder: 'confirmPassword',
         required: true
       },
       validators: {
         fieldMatch: {
           expression: control =>
             control.value === this.rejestrationForm.value.password,
-          message: "hasla nie są identyczne"
+          message: 'hasla nie są identyczne'
         }
       },
       expressionProperties: {
-        "templateOptions.disabled": () =>
-          !this.rejestrationForm.get("password").valid
+        'templateOptions.disabled': () =>
+          !this.rejestrationForm.get('password').valid
       },
       lifecycle: {
         onInit: (form, field) => {
           form
-            .get("password")
+            .get('password')
             .valueChanges.pipe(
               takeUntil(this.onDestroy$),
               tap(() => {
@@ -101,14 +107,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     {
-      key: "email",
-      type: "input",
+      key: 'email',
+      type: 'input',
       templateOptions: {
         validate: true,
-        pattern: "[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*",
-        type: "emial",
-        label: "email urzytkownika",
-        placeholder: "email urzytkownika",
+        pattern: '[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*',
+        type: 'emial',
+        label: 'email urzytkownika',
+        placeholder: 'email urzytkownika',
         required: true
       },
       validation: {
@@ -118,14 +124,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     {
-      key: "telNumer",
-      type: "input",
+      key: 'telNumer',
+      type: 'input',
       templateOptions: {
         validate: true,
-        pattern: "^(\\d{3}-{0,1}\\d{3}-{0,1}\\d{3})+$",
-        typt: "tel",
-        label: "numer telefonu",
-        placeholder: "numer telefonu urzytkownika",
+        pattern: '^(\\d{3}-{0,1}\\d{3}-{0,1}\\d{3})+$',
+        typt: 'tel',
+        label: 'numer telefonu',
+        placeholder: 'numer telefonu urzytkownika',
         required: true
       },
       validation: {
@@ -138,7 +144,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(public store: Store, public router: Router) { }
 
   ngOnInit() {
-    this.store.dispatch(new LoginFromCookieAction())
+    this.store.dispatch(new LoginFromCookieAction());
   }
 
   ngOnDestroy(): void {
@@ -154,7 +160,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
   register() {
-    let userDto = {
+    const userDto = {
       name: this.rejestrationForm.value.userName,
       password: this.rejestrationForm.value.password,
       email: this.rejestrationForm.value.email
@@ -164,14 +170,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   clearForm(event) {
     if (event === 0) {
-      this.store.dispatch(new ErrorRegistrationToFalseAction())
-      this.rejestrationForm.reset()
+      this.store.dispatch(new ErrorRegistrationToFalseAction());
+      this.rejestrationForm.reset();
       Object.keys(this.rejestrationForm.controls).forEach(key => {
         this.rejestrationForm.get(key).setErrors(null);
       });
     } else {
-      this.store.dispatch(new ErrorLoginToFalseAction())
-      this.loginForm.reset()
+      this.store.dispatch(new ErrorLoginToFalseAction());
+      this.loginForm.reset();
       Object.keys(this.loginForm.controls).forEach(key => {
         this.loginForm.get(key).setErrors(null);
       });

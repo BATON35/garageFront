@@ -64,35 +64,31 @@
           <table mat-table [style.border]="'3px solid blue'" [dataSource]="detail.vehicles" class="mat-elevation-z8"
             multiTemplateDataRows>
             <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> {{ "vehicle.list.number" | translate }} </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{ element.id }}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="brand">
-              <mat-header-cell *matHeaderCellDef> Marka </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> {{ "vehicle.list.make" | translate }} </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{ element.brand }}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="model">
-              <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> {{ "vehicle.list.model" | translate }} </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{ element.model }}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="numberPlate">
-              <mat-header-cell *matHeaderCellDef>
-                Numer rejestracyjny
-              </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> {{ "vehicle.list.numberPlate" | translate }} </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 {{ element.numberPlate }}
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="update">
-              <mat-header-cell *matHeaderCellDef>
-                Zmien Dane
-              </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{ "vehicle.list.change" | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="updateVehicle(element)" mat-icon-button color="primary">
                   <mat-icon>update</mat-icon>
@@ -100,7 +96,7 @@
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="delete">
-              <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> {{ "vehicle.list.delete" | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="deleteVehicle(element.id)" mat-icon-button color="primary">
                   <mat-icon>delete</mat-icon>
@@ -108,9 +104,7 @@
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="details">
-              <mat-header-cell *matHeaderCellDef>
-                Pokaz szczegoły
-              </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{ "vehicle.list.details" | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="updateVehicleDetails(element)" mat-icon-button color="primary">
                   <mat-icon>update</mat-icon>
@@ -118,19 +112,15 @@
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="notification">
-              <mat-header-cell *matHeaderCellDef>
-                Przypomnij o przeglądzie
-              </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{ "vehicle.list.checkUp" | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <mat-slide-toggle [checked]="element.notification" (toggleChange)="changeNotification(element.id)">
-                  {{ element.notification }}
+                  <!-- {{ element.notification }} -->
                 </mat-slide-toggle>
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="service">
-              <mat-header-cell *matHeaderCellDef>
-                Pokaż historie
-              </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{ "vehicle.list.history" | translate }}</mat-header-cell>
               <mat-cell fxFlex="100" *matCellDef="let element">
                 <button (click)="showHistory(element)" mat-icon-button color="primary">
                   <mat-icon>update</mat-icon>
@@ -138,12 +128,10 @@
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="history">
-              <mat-header-cell *matHeaderCellDef>
-                Pobierz historie
-              </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>{{ "vehicle.list.download" | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <button (click)="downloadVehicleHistory(element.id)" mat-icon-button color="primary">
-                  <mat-icon>Pobierz</mat-icon>
+                  <mat-icon>D</mat-icon>
                 </button>
               </mat-cell>
             </ng-container>
@@ -157,8 +145,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
       <mat-row *matRowDef="let row; columns: displayedColumns" matRipple class="element-row"
-        [class.expanded]="expandedElement == row" (click)="
-          expandedElement === row
+        [class.expanded]="expandedElement == row" (click)="expandedElement === row
             ? (expandedElement = null)
             : (expandedElement = row)
         "></mat-row>
@@ -172,7 +159,7 @@
     <div>
       <div style="display:inline">
         <button (click)="openModal()" type="submit" class="button" mat-raised-button color="primary">
-          Dodaj klienta
+          {{"client.add.button" | translate}}
         </button>
       </div>
       <div style="display:inline">

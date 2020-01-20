@@ -3,7 +3,7 @@ import { VehicleCreateComponent } from './../vehicle-create/vehicle-create.compo
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
 import { MatDialog } from '@angular/material';
-import { ClietnPageAction, ClientDeleteAction, ClientUpdateAction, ClientSearchAction, AutocompleteAction } from './../client.state';
+import { ClietnPageAction, ClientDeleteAction, ClientSearchAction, AutocompleteAction } from './../client.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -30,10 +30,19 @@ import { DownloadVehicleHistoryAction } from '../state/file.state';
   ]
 })
 export class ClientListComponent implements OnInit {
-  selectedLanguage = null;
-  displayedColumns: string[] = ['id', 'name', 'email', 'update', 'addVehicle', 'delete'];
-  displayedVehiclesColumns: string[] = ['id', 'brand', 'model', 'numberPlate', 'update', 'delete', 'details', 'notification', 'service', 'history'];
 
+  constructor(
+    public store: Store,
+    public matDialog: MatDialog,
+    public breakpointObserver: BreakpointObserver,
+    public translateService: TranslateService) { }
+  selectedLanguage = null;
+  displayedColumns: string[] = [
+    'id', 'name', 'email', 'update', 'addVehicle', 'delete'
+  ];
+  displayedVehiclesColumns: string[] = [
+    'id', 'brand', 'model', 'numberPlate', 'update', 'delete', 'details', 'notification', 'service', 'history'
+  ];
   @Select(state => state.client.pageClientDto)
   clients$: Observable<PageClientDto>;
   @Select(state => state.client.autocomplete)
@@ -43,11 +52,9 @@ export class ClientListComponent implements OnInit {
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
 
-  constructor(
-    public store: Store,
-    public matDialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
-    public translateService: TranslateService) { }
+  expandedElement: any;
+
+  public isExpansionDetailRow = (i: number, row: ClientDto) => row.vehicles.length > 0;
 
   ngOnInit() {
     this.store.dispatch(new ClietnPageAction(0, 5));
@@ -113,6 +120,6 @@ export class ClientListComponent implements OnInit {
     });
   }
   downloadVehicleHistory(id) {
-    this.store.dispatch(new DownloadVehicleHistoryAction(id))
+    this.store.dispatch(new DownloadVehicleHistoryAction(id));
   }
 }

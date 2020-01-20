@@ -1,7 +1,25 @@
+<form [formGroup]="workerStatisticForm">
+    <mat-form-field>
+        <input formControlName="start" matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <input formControlName="end" matInput [matDatepicker]="pickerEnd" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+    <div class="group">
+        <button (click)="displayData()" type="submit" class="button" mat-raised-button color="primary"
+            [disabled]="!workerStatisticForm.valid">
+            Dodaj
+        </button>
+    </div>
+</form>
 <div class="flex">
     <div class="flex-item">
-        <div style="display: block;">
-            <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+        <div style="display: block;" class="canvas">
+            <canvas baseChart width="40" height="40" [datasets]="lineChartData" [labels]="lineChartLabels"
                 [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
                 [chartType]="lineChartType" [plugins]="lineChartPlugins"></canvas>
         </div>

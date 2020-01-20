@@ -2,7 +2,7 @@ import { AuthState, UpdateTokenAction } from './../components/state/auth.state';
 import { Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpResponse } from '@angular/common/http';
-import { first, flatMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

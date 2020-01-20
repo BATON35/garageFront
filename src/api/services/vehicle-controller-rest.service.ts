@@ -20,6 +20,7 @@ class VehicleControllerRestService extends __BaseService {
   static readonly getVehicleListUsingGETPath = '/api/vehicles';
   static readonly updateVehicleUsingPUTPath = '/api/vehicles';
   static readonly autocompleteVehicleUsingGETPath = '/api/vehicles/autoComplete';
+  static readonly getPhotosPathsUsingGETPath = '/api/vehicles/photo/{id}';
   static readonly saveVehicleUsingPOSTPath = '/api/vehicles/{clientId}';
   static readonly getVehicleByIdUsingGETPath = '/api/vehicles/{id}';
   static readonly deleteVehicleUsingDELETEPath = '/api/vehicles/{id}';
@@ -173,6 +174,42 @@ class VehicleControllerRestService extends __BaseService {
   autocompleteVehicleUsingGET(text: string): __Observable<Array<VehicleDto>> {
     return this.autocompleteVehicleUsingGETResponse(text).pipe(
       __map(_r => _r.body as Array<VehicleDto>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  getPhotosPathsUsingGETResponse(id: number): __Observable<__StrictHttpResponse<Array<Array<number>>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/vehicles/photo/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<Array<number>>>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  getPhotosPathsUsingGET(id: number): __Observable<Array<Array<number>>> {
+    return this.getPhotosPathsUsingGETResponse(id).pipe(
+      __map(_r => _r.body as Array<Array<number>>)
     );
   }
 

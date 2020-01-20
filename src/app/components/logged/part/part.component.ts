@@ -27,8 +27,8 @@ export class PartComponent implements OnInit {
   openModal() {
     this.matDialog.open(PartCreateComponent, { width: '500px' });
   }
-
-
-
-
+  delete(id) {
+  }
+  update(element) {
+  }
 }

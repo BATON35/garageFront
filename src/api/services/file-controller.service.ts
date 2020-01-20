@@ -39,7 +39,7 @@ class FileControllerService extends __BaseService {
     let __formData = new FormData();
     __body = __formData;
     if (params.vehicleId != null) __params = __params.set('vehicleId', params.vehicleId.toString());
-    if (params.multipartFile != null) { __formData.append('multipartFile', params.multipartFile as string | Blob);}
+    (params.multipartFile || []).forEach(val => {if (val != null) __formData.append('multipartFile', val as string | Blob)});
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/file`,
@@ -122,7 +122,7 @@ module FileControllerService {
     /**
      * multipartFile
      */
-    multipartFile: Blob;
+    multipartFile: Array<Blob>;
   }
 }
 

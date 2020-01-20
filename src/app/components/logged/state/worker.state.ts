@@ -10,7 +10,7 @@ export class AutocompleteNameWorkerAction {
 }
 
 export class WorkerStateModel {
-  public autocompleteWorker: WorkerDto[]
+  public autocompleteWorker: WorkerDto[];
 }
 
 @State<WorkerStateModel>({
@@ -27,7 +27,7 @@ export class WorkerState {
       tap(worker => ctx.patchState({
         autocompleteWorker: worker
       }))
-    )
+    );
   }
 }
 

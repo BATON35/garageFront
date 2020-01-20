@@ -1,7 +1,7 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { JobControllerService } from 'src/api/services';
 import { tap } from 'rxjs/operators';
-import { JobDto, PageJobDto, JobResponseDto } from 'src/api/models';
+import { PageJobDto, JobResponseDto } from 'src/api/models';
 
 export class LoadHistoryAction {
   static readonly type = '[Job] LoadHistoryAction';
@@ -11,11 +11,6 @@ export class SaveJobAction {
   static readonly type = '[Job] SaveJobAction';
   constructor(public workerId: number, public partId: number, public serviceId: number, public vehiclePlateNumber: string) { }
 }
-
-// export class CreateJobAction {
-//   static readonly type = '[ServicePart] CreateJobAction';
-//   constructor(public servicePartDto: JobDto) { }
-// }
 
 export class LoadJobPageAction {
   static readonly type = '[Job] LoadJobPageAction';
@@ -36,14 +31,7 @@ export class JobStateModel {
 })
 export class JobState {
   constructor(public JobControllerService: JobControllerService) { }
-  // @Action(CreateJobAction)
-  // add(ctx: StateContext<ServicePartStateModel>, { servicePartDto }: CreateJobAction) {
-  //   this.JobControllerService.saveJobUsingPOST(servicePartDto).pipe(
-  //     tap(value => {
-  //       console.log(value);
-  //     })
-  //   );
-  // }
+
   @Action(LoadJobPageAction)
   loadServicePage(ctx: StateContext<JobStateModel>, { page, size }: LoadJobPageAction) {
     return this.JobControllerService.getJobListUsingGET({ size, page }).pipe(

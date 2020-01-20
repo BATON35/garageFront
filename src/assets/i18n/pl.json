@@ -11,5 +11,6 @@
   "panel.client.list.update": "Zmien Dane",
   "panel.client.list.vehicle.add": "Dodaj pojazd",
   "panel.client.list.delete": "Usuń",
-  "panel.client.list.search": "Znajdz klienta"
+  "panel.client.list.search": "Znajdz klienta",
+  "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych"
 }

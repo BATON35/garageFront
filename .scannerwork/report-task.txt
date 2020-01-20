@@ -2,5 +2,5 @@ projectKey=garege
 serverUrl=http://localhost:9000
 serverVersion=7.9.1.27448
 dashboardUrl=http://localhost:9000/dashboard?id=garege
-ceTaskId=AWzZAcxJn_toKG86yF3S
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWzZAcxJn_toKG86yF3S
+ceTaskId=AW--JvOB-zpcPrqs2U2A
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AW--JvOB-zpcPrqs2U2A

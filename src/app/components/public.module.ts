@@ -10,7 +10,7 @@ import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 import { AuthState } from './state/auth.state';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 const routs: Routes = [
   {
     path: 'login',
@@ -53,11 +53,9 @@ export function maxValidationMessage(err, field) {
     BrowserAnimationsModule,
     MatButtonModule,
     NgxsModule.forFeature([AuthState]),
-    NgxsStoragePluginModule.forRoot({
-      // key: "auth.jwtToken"
-    }),
     HttpClientModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   entryComponents: [HomeComponent]
 })
