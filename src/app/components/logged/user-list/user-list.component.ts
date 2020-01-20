@@ -3,7 +3,7 @@ import { UserCreateComponent } from './../user-create/user-create.component';
 import { UsersPageAction, UsersDeleteAction, UserSearchAction, LoadUserByChangRoleAction } from './../users.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, empty } from 'rxjs';
 import { PageUserDto } from 'src/api/models';
 import { MatDialog } from '@angular/material';
 
@@ -13,8 +13,23 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  selectedRoles: string[];
   checked: boolean = false;
   displayedColumns: string[] = ['id', 'userName', 'email', 'update', 'delete'];
+  roles = [
+    {
+      label: 'Employee',
+      value: 'ROLE_EMPLOYEE'
+    },
+    {
+      label: 'Admin',
+      value: 'ROLE_ADMIN'
+    },
+    {
+      label: 'User',
+      value: 'ROLE_USER'
+    }
+  ]
 
   @Select(state => state.users.userPage)
   users$: Observable<PageUserDto>;
@@ -22,10 +37,10 @@ export class UserListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.store.dispatch(new UsersPageAction(0, '', 5, this.checked));
+    this.store.dispatch(new UsersPageAction(0, '', 5, null));
   }
   changePage(event) {
-    this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, this.checked));
+    this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, this.selectedRoles));
   }
   delete(id) {
     this.store.dispatch(new UsersDeleteAction(id));
@@ -42,9 +57,10 @@ export class UserListComponent implements OnInit {
     });
   }
   search(searchText) {
-    this.store.dispatch(new UserSearchAction(searchText, this.checked));
+    this.store.dispatch(new UserSearchAction(searchText, this.selectedRoles));
   }
-  role(event) {
-    this.store.dispatch(new LoadUserByChangRoleAction(this.checked));
+  role(roles) {
+    this.selectedRoles = roles;
+    this.store.dispatch(new LoadUserByChangRoleAction(roles));
   }
 }

@@ -26,7 +26,8 @@ import {
   MatCheckboxModule,
   MatCardModule,
   MatSidenavModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSelectModule
 } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 import { UsersState } from './users.state';
@@ -146,6 +147,7 @@ const routs: Routes = [
     TranslateModule,
     ChartsModule,
     MatSnackBarModule,
+    MatSelectModule,
     NgxsReduxDevtoolsPluginModule.forRoot()
 
   ],

@@ -52,9 +52,9 @@ export class ClientListComponent implements OnInit {
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
 
-  //expandedElement: any;
+  expandedElement: any;
 
-  //public isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
+  public isExpansionDetailRow = (i: number, row: ClientDto) => row.vehicles.length > 0;
 
   ngOnInit() {
     this.store.dispatch(new ClietnPageAction(0, 5));

@@ -90,8 +90,6 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         roles: this.userDto.roles.map(role => role.name)
       };
     }
-    console.log('przed if2');
-    console.log(this.ok$);
     this.ok$.subscribe(ok => {
       if (ok === false) {
         this.store.dispatch(new ClearUserAction());

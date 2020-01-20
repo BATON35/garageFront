@@ -1,7 +1,7 @@
 import { BackToDefoultVehicleAction } from './../logged/vehicle.state';
 import { BackToDefoultClientAction } from './../logged/client.state';
 import { Router } from '@angular/router';
-import { LogoutAction, BackToDefoultAuthAction, AuthState, LoginFromCookieAction } from './../state/auth.state';
+import { LogoutAction, BackToDefoultAuthAction, LoginFromCookieAction } from './../state/auth.state';
 import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';

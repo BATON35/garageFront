@@ -10,7 +10,7 @@ export class ClearUserAction {
 }
 export class UsersPageAction {
   static readonly type = '[User] UsersPageAction';
-  constructor(public page: number, public searchText: string, public size: number, public hasRole: boolean) { }
+  constructor(public page: number, public searchText: string, public size: number, public roles: string[]) { }
 }
 export class UsersDeleteAction {
   static readonly type = '[User] UsersDeleteAction';
@@ -22,7 +22,7 @@ export class UserUpdateAction {
 }
 export class UserSearchAction {
   static readonly type = '[User] UserSearchAction';
-  constructor(public searchText: string, public hasRole: boolean) { }
+  constructor(public searchText: string, public roles: string[]) { }
 }
 
 export class BackToDefoultUserAction {
@@ -31,16 +31,16 @@ export class BackToDefoultUserAction {
 }
 export class LoadUserByChangRoleAction {
   static readonly type = '[User] LoadUserByChangRoleAction';
-  constructor(public hasRole: boolean) { }
+  constructor(public roles: string[]) { }
 }
 export class UsersStateModel {
   userPage: PageUserDto;
   page: number;
   searchText: string;
   size: number;
-  hasRole: boolean;
   errorMessage: string;
   ok: boolean;
+  roles: string[];
 }
 
 @State<UsersStateModel>({
@@ -50,26 +50,25 @@ export class UsersStateModel {
     page: 0,
     searchText: '',
     size: 5,
-    hasRole: false,
     errorMessage: null,
-    ok: false
+    ok: false,
+    roles: []
   }
 })
 export class UsersState {
   constructor(public userService: UserControllerRestService) { }
 
   @Action(UsersPageAction)
-  add(ctx: StateContext<UsersStateModel>, { page, searchText, size, hasRole }: UsersPageAction) {
+  add(ctx: StateContext<UsersStateModel>, { page, searchText, size, roles }: UsersPageAction) {
     return this.userService
-      .searchUsersUsingGET({ size, searchText, page, hasRole })
+      .searchUsersUsingGET({ size, searchText, roles, page })
       .pipe(
         tap(value => {
           ctx.patchState({
             userPage: value,
             page,
             searchText,
-            size,
-            hasRole
+            size
           });
         })
 
@@ -82,8 +81,8 @@ export class UsersState {
         const page = ctx.getState().page;
         const searchText = ctx.getState().searchText;
         const size = ctx.getState().size;
-        const hasRole = ctx.getState().hasRole;
-        ctx.dispatch(new UsersPageAction(page, searchText, size, hasRole));
+        const roles = ctx.getState().roles;
+        ctx.dispatch(new UsersPageAction(page, searchText, size, roles));
       }));
   }
 
@@ -93,9 +92,8 @@ export class UsersState {
       const page = ctx.getState().page;
       const searchText = ctx.getState().searchText;
       const size = ctx.getState().size;
-      const hasRole = ctx.getState().hasRole;
-      ctx.dispatch(new UsersPageAction(page, searchText, size, hasRole));
-      console.log('UserUpdateAction!!!!!!');
+      const roles = ctx.getState().roles;
+      ctx.dispatch(new UsersPageAction(page, searchText, size, roles));
       ctx.patchState({
         ok: true
       });
@@ -104,8 +102,8 @@ export class UsersState {
     }));
   }
   @Action(UserSearchAction)
-  search(ctx: StateContext<UsersStateModel>, { searchText, hasRole }: UserSearchAction) {
-    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 0, hasRole }).pipe(
+  search(ctx: StateContext<UsersStateModel>, { searchText, roles }: UserSearchAction) {
+    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, roles, page: 0 }).pipe(
       tap(
         user => {
           ctx.patchState({
@@ -124,10 +122,10 @@ export class UsersState {
     });
   }
   @Action(LoadUserByChangRoleAction)
-  loadUserByChangeRole(ctx: StateContext<UsersStateModel>, { hasRole }: LoadUserByChangRoleAction) {
-    ctx.dispatch(new UsersPageAction(ctx.getState().page, '', ctx.getState().size, hasRole));
+  loadUserByChangeRole(ctx: StateContext<UsersStateModel>, { roles }: LoadUserByChangRoleAction) {
+    ctx.dispatch(new UsersPageAction(ctx.getState().page, '', ctx.getState().size, roles));
     ctx.patchState({
-      hasRole
+      roles
     });
   }
   @Action(ClearUserAction)

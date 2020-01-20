@@ -12,6 +12,6 @@ export class ControlPanelComponent implements OnInit {
   ngOnInit() {
   }
 
-  onTabChange() {
+  onTabChange(event) {
   }
 }
