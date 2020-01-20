@@ -5,12 +5,43 @@
   "menu.parts": "Utwórz cześci",
   "menu.addService": "Dodaj usluge do pojazdu",
   "menu.service": "Utworz usługe",
-  "panel.client.list.no": "No.",
+
+  "panel.client.tab": "Obsluga klienta",
+  "panel.client.list.no": "Nr.",
   "panel.client.list.name": "Imie",
   "panel.client.list.email": "Email.",
   "panel.client.list.update": "Zmien Dane",
   "panel.client.list.vehicle.add": "Dodaj pojazd",
   "panel.client.list.delete": "Usuń",
   "panel.client.list.search": "Znajdz klienta",
-  "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych"
+  "panel.user.tab": "Obsluga Urzytkownika",
+  "panel.admin.tab": "Administrator",
+
+  "client.add.name.label": "Nazwa klienta",
+  "client.add.name.placeholder": "Wprowadz nazwe klienta",
+  "client.add.email.label": "Email klienta",
+  "client.add.email.placeholder": "Wprowadz emial",
+  "client.add.email": "Emial klienta",
+  "client.add.button": "Dodaj kienta",
+
+  "vehicle.add.brand.label": "Marka pojazdu",
+  "vehicle.add.brand.placeholder": "Wprowadz markę pojazdu",
+  "vehicle.add.model.label": "Model pojazdu",
+  "vehicle.add.model.placeholder": "Wprowadz model pojazdu",
+  "vehicle.add.numberPlate.label": "Numer rejestracyjny",
+  "vehicle.add.numberPlate.pladeholder": "Wprowadz numer rejestracyjny pojazdu",
+
+  "vehicle.list.number": "Nr",
+  "vehicle.list.make": "Marka",
+  "vehicle.list.model": "Model",
+  "vehicle.list.numberPlate": "Numer rejestracyjny",
+  "vehicle.list.change": "Zmien dane",
+  "vehicle.list.delete": "Usuń",
+  "vehicle.list.details": "Pokaż szczegoły",
+  "vehicle.list.checkUp": "Przypomnij o przeglondzie",
+  "vehicle.list.history": "Pokaż historie",
+  "vehicle.list.download": "Pobierz historie",
+
+  "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych",
+  "user.duplicate.email": "Urzytkownik z mailem {{value}} znajduje sie juz w bazie danych"
 }

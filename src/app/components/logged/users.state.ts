@@ -41,6 +41,7 @@ export class UsersStateModel {
   errorMessage: string;
   ok: boolean;
   roles: string[];
+
 }
 
 @State<UsersStateModel>({
@@ -98,12 +99,23 @@ export class UsersState {
         ok: true
       });
     }), catchError(error => {
+      // =======
+      //       const hasRole = ctx.getState().hasRole;
+      //       ctx.dispatch(new UsersPageAction(page, searchText, size, hasRole));
+      //       ctx.patchState({
+      //         ok: true
+      //       });
+      //     }), catchError(err => {
+      //       ctx.patchState({
+      //         errorMessage: err.error.message
+      //       });
+      // >>>>>>> feature/translation
       return empty();
     }));
   }
   @Action(UserSearchAction)
   search(ctx: StateContext<UsersStateModel>, { searchText, roles }: UserSearchAction) {
-    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 33, roles }).pipe(
+    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 0, roles }).pipe(
       tap(
         user => {
           ctx.patchState({

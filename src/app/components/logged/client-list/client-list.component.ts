@@ -52,14 +52,13 @@ export class ClientListComponent implements OnInit {
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
 
+
   expandedElement: any;
 
   public isExpansionDetailRow = (i: number, row: ClientDto) => row.vehicles.length > 0;
 
   ngOnInit() {
     this.store.dispatch(new ClietnPageAction(0, 5));
-    this.translateService.setDefaultLang('pl');
-    setTimeout(() => { this.selectedLanguage = 'pl'; }, 0);
   }
 
   changePage(event) {

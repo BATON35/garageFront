@@ -9,7 +9,6 @@ import {
   ErrorLoginToFalseAction,
   LoginFromCookieAction
 } from '../state/auth.state';
-import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
@@ -66,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       templateOptions: {
         type: 'password',
         label: 'haslo',
-        placeholder: 'haslo',
+        placeholder: 'wprowadz haslo',
         required: true,
         minLength: 6,
         maxLength: 34
@@ -78,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       templateOptions: {
         type: 'password',
         label: 'confirm pasword',
-        placeholder: 'confirmPassword',
+        placeholder: 'confirm Password',
         required: true
       },
       validators: {
@@ -141,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }
   ];
-  constructor(public store: Store, public router: Router) { }
+  constructor(public store: Store) { }
 
   ngOnInit() {
     this.store.dispatch(new LoginFromCookieAction());

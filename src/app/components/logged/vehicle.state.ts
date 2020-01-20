@@ -72,7 +72,7 @@ export class VehicleState {
                     ok: true
                 });
             }),
-            catchError((err, caught) => {
+            catchError((err) => {
                 ctx.patchState({
                     errorMessage: err.error.message
                 });

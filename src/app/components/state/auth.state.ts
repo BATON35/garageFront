@@ -7,6 +7,7 @@ import { JwtResponse } from 'src/app/model/jwt-response';
 import { UserControllerRestService } from 'src/api/services';
 import { of } from 'rxjs';
 import Cookies from 'js-cookie';
+import { Navigate } from '@ngxs/router-plugin';
 
 
 export class UpdateTokenAction {
@@ -96,28 +97,31 @@ export class AuthState {
         .post<JwtResponse>('http://localhost:8080/login', form)
         .pipe(
           tap(({ token, expirationDate }) => {
+            ctx.dispatch(new Navigate(['/panel']));
+            console.log('correct login')
             ctx.patchState({
               jwtToken: token,
               errorLogin: false
             });
             Cookies.set('jwtToken', token);
+            console.log('cooki added')
             ctx.dispatch(new CurrentUserAction());
-            this.router.navigate(['/panel']);
           }),
           catchError((a, b) => {
+            console.log('error login')
             ctx.patchState({
               errorLogin: true
             });
             return of();
-
           })
         );
     } else {
+      console.log('token from cookie')
       ctx.patchState({
         jwtToken: Cookies.get('jwtToken')
       });
+      ctx.dispatch(new Navigate(['/panel']));
       ctx.dispatch(new CurrentUserAction());
-      this.router.navigate(['/panel']);
     }
   }
   @Action(CurrentUserAction)
@@ -136,7 +140,6 @@ export class AuthState {
       .saveUserUsingPOST(userDto.userDto)
       .pipe(
         tap(value => {
-          console.log(value);
           ctx.patchState({ errorRegister: false });
         }),
         catchError((a, b) => {

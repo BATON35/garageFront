@@ -13,7 +13,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user-create.component.scss']
 })
 export class UserCreateComponent implements OnInit, OnDestroy {
+
   userTemp: any;
+
+  model: any;
+
   userForm = new FormGroup({});
   userFields: FormlyFieldConfig[] = [
     {
@@ -70,8 +74,10 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     }
   ];
 
-  @Select(state => state.user.ok)
+  @Select(state => state.users.ok)
   ok$: Observable<boolean>;
+  @Select(state => state.users.errorMessage)
+  errorMessage$: Observable<string>
 
   constructor(
     public store: Store,
@@ -80,9 +86,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     public matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
-    console.log('przed if1');
     if (this.userDto) {
-      console.log('w if1');
       this.userTemp = {
         name: this.userDto.name,
         email: this.userDto.email,
@@ -90,16 +94,31 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         roles: this.userDto.roles.map(role => role.name)
       };
     }
-    this.ok$.subscribe(ok => {
-      if (ok === false) {
-        this.store.dispatch(new ClearUserAction());
-        console.log('w if2');
-        this.matSnackBar.open('Zapisano zmiany', 'zamknij', { duration: 3000 });
+    // <<<<<<< HEAD
+    //     this.ok$.subscribe(ok => {
+    //       if (ok === false) {
+    //         this.store.dispatch(new ClearUserAction());
+    //         console.log('w if2');
+    //         this.matSnackBar.open('Zapisano zmiany', 'zamknij', { duration: 3000 });
+    //         this.matDialogRef.close();
+    //       }
+    //       console.log('za if2');
+    //     });
+
+    //   }
+    // =======
+    this.ok$.subscribe(element => {
+      console.log('ok$')
+      if (element === true) {
+        console.log("in if")
+        this.userDto.email = this.model.email;
+        this.userDto.name = this.model.name;
+        this.userDto.password = this.model.password;
+        this.userDto.roles = this.model.roles.map(role => role.name);
+        this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
         this.matDialogRef.close();
       }
-      console.log('za if2');
     });
-
   }
   ngOnDestroy() {
     this.store.dispatch(new ClearUserAction());
@@ -119,7 +138,6 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         }
       )
     );
-    this.matDialogRef.close();
   }
 
 }

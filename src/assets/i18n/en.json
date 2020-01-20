@@ -5,6 +5,8 @@
   "menu.logout": "Logout",
   "menu.addService": "Add service to vehicle",
   "menu.service": "Create Service",
+
+  "panel.client.tab": "Client service",
   "panel.client.list.no": "No.",
   "panel.client.list.name": "Name",
   "panel.client.list.email": "Email.",
@@ -12,5 +14,33 @@
   "panel.client.list.vehicle.add": "Add vehicle",
   "panel.client.list.delete": "Delete",
   "panel.client.list.search": "Search client",
-  "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database"
+  "panel.user.tab": "User service",
+  "panel.admin.tab": "Admin",
+
+  "client.add.name.label": "Client name",
+  "client.add.name.placeholder": "Enter client name",
+  "client.add.email.label": "Client email",
+  "client.add.email.placeholder": "Enter emial",
+  "client.add.button": "Add client",
+
+  "vehicle.add.brand.label": "Vehicle make",
+  "vehicle.add.brand.placeholder": "Enter vehicle make",
+  "vehicle.add.model.label": "Vehicle model",
+  "vehicle.add.model.placeholder": "Enter vehicle model",
+  "vehicle.add.numberPlate.label": "Number plate",
+  "vehicle.add.numberPlate.pladeholder": "Enter number plate",
+
+  "vehicle.list.number": "No",
+  "vehicle.list.make": "Make",
+  "vehicle.list.model": "Model",
+  "vehicle.list.numberPlate": "Number plate",
+  "vehicle.list.change": "Update",
+  "vehicle.list.delete": "Delete",
+  "vehicle.list.details": "Show details",
+  "vehicle.list.checkUp": "Check up reminder",
+  "vehicle.list.history": "Show history",
+  "vehicle.list.download": "Download history",
+
+  "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database",
+  "user.duplicate.email": "User with email {{value}} exist in database"
 }

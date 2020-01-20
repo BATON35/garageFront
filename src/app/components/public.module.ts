@@ -1,3 +1,4 @@
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
@@ -56,6 +57,7 @@ export function maxValidationMessage(err, field) {
     HttpClientModule,
     MatTabsModule,
     NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsRouterPluginModule,
   ],
   entryComponents: [HomeComponent]
 })
