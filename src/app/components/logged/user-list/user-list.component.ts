@@ -40,6 +40,7 @@ export class UserListComponent implements OnInit {
     this.store.dispatch(new UsersPageAction(0, '', 5, null));
   }
   changePage(event) {
+    console.log(event)
     this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, this.selectedRoles));
   }
   delete(id) {

@@ -61,7 +61,7 @@ export class UsersState {
   @Action(UsersPageAction)
   add(ctx: StateContext<UsersStateModel>, { page, searchText, size, roles }: UsersPageAction) {
     return this.userService
-      .searchUsersUsingGET({ size, searchText, roles, page })
+      .searchUsersUsingGET({ size, searchText, page, roles })
       .pipe(
         tap(value => {
           ctx.patchState({
@@ -103,7 +103,7 @@ export class UsersState {
   }
   @Action(UserSearchAction)
   search(ctx: StateContext<UsersStateModel>, { searchText, roles }: UserSearchAction) {
-    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, roles, page: 0 }).pipe(
+    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 33, roles }).pipe(
       tap(
         user => {
           ctx.patchState({
