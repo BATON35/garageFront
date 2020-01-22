@@ -1,3 +1,4 @@
+import { MatPaginatorCustom } from './components/logged/mat-paginator';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsModule } from '@ngxs/store';
 import { MenuComponent } from './components/menu/menu.component';
@@ -16,7 +17,8 @@ import {
   MatListModule,
   MatIconModule,
   MatToolbarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatPaginatorIntl
 } from '@angular/material';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -50,7 +52,9 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
     NgxsRouterPluginModule.forRoot()
   ],
   providers: [
+    { provide: MatPaginatorIntl, useClass: MatPaginatorCustom },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+
   ],
   bootstrap: [AppComponent]
 })

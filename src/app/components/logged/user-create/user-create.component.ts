@@ -94,27 +94,10 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         roles: this.userDto.roles.map(role => role.name)
       };
     }
-    // <<<<<<< HEAD
-    //     this.ok$.subscribe(ok => {
-    //       if (ok === false) {
-    //         this.store.dispatch(new ClearUserAction());
-    //         console.log('w if2');
-    //         this.matSnackBar.open('Zapisano zmiany', 'zamknij', { duration: 3000 });
-    //         this.matDialogRef.close();
-    //       }
-    //       console.log('za if2');
-    //     });
-
-    //   }
-    // =======
     this.ok$.subscribe(element => {
       console.log('ok$')
       if (element === true) {
         console.log("in if")
-        this.userDto.email = this.model.email;
-        this.userDto.name = this.model.name;
-        this.userDto.password = this.model.password;
-        this.userDto.roles = this.model.roles.map(role => role.name);
         this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
         this.matDialogRef.close();
       }

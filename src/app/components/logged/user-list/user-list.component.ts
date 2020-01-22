@@ -3,7 +3,7 @@ import { UserCreateComponent } from './../user-create/user-create.component';
 import { UsersPageAction, UsersDeleteAction, UserSearchAction, LoadUserByChangRoleAction } from './../users.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
-import { Observable, empty } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PageUserDto } from 'src/api/models';
 import { MatDialog } from '@angular/material';
 
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material';
 })
 export class UserListComponent implements OnInit {
   selectedRoles: string[];
-  checked: boolean = false;
+  checked = false;
   displayedColumns: string[] = ['id', 'userName', 'email', 'update', 'delete'];
   roles = [
     {

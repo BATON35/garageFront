@@ -42,7 +42,6 @@ export class ClientCreateComponent implements OnInit {
   constructor(
     public store: Store,
     public matDialogRef: MatDialogRef<ClientCreateComponent>,
-
     @Inject(MAT_DIALOG_DATA) public clientDto,
     public translateService: TranslateService) { }
 

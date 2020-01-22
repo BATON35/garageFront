@@ -1,5 +1,4 @@
 import { TranslateService } from '@ngx-translate/core';
-import { element } from 'protractor';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { VehicleUpdateAction, VehicleCreateAction, VehicleDeleteAction, ClearVehicleAction } from './../vehicle.state';
@@ -16,6 +15,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./vehicle-create.component.scss']
 })
 export class VehicleCreateComponent implements OnInit, OnDestroy {
+  message: string = this.translateService.instant('vehicle.ubdate.matSnackBar.message');
+  config: string = this.translateService.instant('vehicle.ubdate.matSnackBar.config');
   vehicleTemp: VehicleDto = {};
   file: File[] = [];
   vehicleForm = new FormGroup({});
@@ -80,7 +81,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
         this.vehicle.vehicleDto.brand = this.vehicleTemp.brand;
         this.vehicle.vehicleDto.model = this.vehicleTemp.model;
         this.vehicle.vehicleDto.numberPlate = this.vehicleTemp.numberPlate;
-        this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
+        this.matSnackBar.open(this.message, this.config, { duration: 2000 });
         this.matDialogRef.close();
       }
       console.log('after if');
@@ -89,18 +90,29 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.store.dispatch(new ClearVehicleAction());
   }
+
   submit() {
     if (this.vehicle.vehicleDto) {
-      this.store.dispatch(
-        new VehicleUpdateAction(
-          {
-            id: this.vehicle.vehicleDto.id,
-            brand: this.vehicleForm.value.brand,
-            model: this.vehicleForm.value.model,
-            numberPlate: this.vehicleForm.value.numberPlate
-          }, this.file
-        )
-      );
+      const vehicleForm: VehicleDto = {
+        id: this.vehicle.vehicleDto.id,
+        brand: this.vehicleForm.value.brand,
+        model: this.vehicleForm.value.model,
+        numberPlate: this.vehicleForm.value.numberPlate
+      };
+      if (vehicleForm != this.vehicle.vehicleDto) {
+        console.log('inside if vehicle-create.component.ts')
+        console.log(vehicleForm)
+        this.store.dispatch(
+          new VehicleUpdateAction(
+            {
+              id: this.vehicle.vehicleDto.id,
+              brand: this.vehicleForm.value.brand,
+              model: this.vehicleForm.value.model,
+              numberPlate: this.vehicleForm.value.numberPlate
+            }, this.file
+          )
+        );
+      }
     } else {
       this.store.dispatch(
         new VehicleCreateAction(

@@ -43,5 +43,9 @@
   "vehicle.list.download": "Download history",
 
   "vehicle.duplicate.number": "Vehicle with number plate {{value}} exist in database",
-  "user.duplicate.email": "User with email {{value}} exist in database"
+  "user.duplicate.email": "User with email {{value}} exist in database",
+
+  "PAGINATOR.ITEMS_PER_PAGE": "dddddddddddddd",
+  "vehicle.ubdate.matSnackBar.message": "saved",
+  "vehicle.ubdate.matSnackBar.config": "OK"
 }

@@ -44,5 +44,9 @@
   "vehicle.list.download": "Pobierz historie",
 
   "vehicle.duplicate.number": "Pojazd o numerze rejestracyjnym {{value}} znajduje sie juz w bazie danych",
-  "user.duplicate.email": "Urzytkownik z mailem {{value}} znajduje sie juz w bazie danych"
+  "user.duplicate.email": "Urzytkownik z mailem {{value}} znajduje sie juz w bazie danych",
+
+  "PAGINATOR.ITEMS_PER_PAGE": "dddddddddddsfasdfdsdddd",
+  "vehicle.ubdate.matSnackBar.message": "zapisono",
+  "vehicle.ubdate.matSnackBar.config": "OK"
 }

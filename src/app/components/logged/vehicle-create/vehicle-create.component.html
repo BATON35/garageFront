@@ -1,7 +1,12 @@
 <form [formGroup]="vehicleForm" (ngSubmit)="submit()">
     <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="vehicleTemp">
     </formly-form>
-    <input type="file" multiple="multiple" (change)="saveFile($event.target.files)">
+    <!-- <input class="btn-file-upload" value="valid" type="file" multiple="multiple"
+        (change)="saveFile($event.target.files)"> -->
+    <label color="primary">
+        <mat-icon>cloud_upload</mat-icon> Your text here<input type="file" style="display: none;" name="image"
+            (change)="saveFile($event.target.files)">
+    </label>
     <div class="group">
         <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid">
             {{"vehicle.add.button" | translate}}
