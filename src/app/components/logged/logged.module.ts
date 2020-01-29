@@ -54,6 +54,7 @@ import { ChartsModule } from 'ng2-charts';
 import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
 import { WorkerStatisticState } from './state/worker-statistic.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 
 const routs: Routes = [
@@ -113,7 +114,8 @@ const routs: Routes = [
     PartCreateComponent,
     VehicleHistoryComponent,
     ServiceCreateComponent,
-    WorkerStatisticComponent
+    WorkerStatisticComponent,
+    UserUpdateComponent
 
 
   ],
@@ -162,7 +164,8 @@ const routs: Routes = [
     JobComponent,
     PartCreateComponent,
     VehicleHistoryComponent,
-    ServiceCreateComponent
+    ServiceCreateComponent,
+    UserUpdateComponent
   ],
   providers: [
     AuthGuard

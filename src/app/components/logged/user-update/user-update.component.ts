@@ -1,39 +1,28 @@
-import { UserDto } from './../../../../api/models/user-dto';
-import { UserUpdateAction, ClearUserAction } from './../users.state';
+import { Component, OnInit, Inject, AfterViewChecked, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { FormGroup } from '@angular/forms';
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { UserDto } from 'src/api/models';
+import { UserUpdateAction, ClearUserAction } from '../users.state';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-user-create',
-  templateUrl: './user-create.component.html',
-  styleUrls: ['./user-create.component.scss']
+  selector: 'app-user-update',
+  templateUrl: './user-update.component.html',
+  styleUrls: ['./user-update.component.scss']
 })
-export class UserCreateComponent implements OnInit, OnDestroy {
+export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   userTemp: any;
-  model: any;
-  userForm = new FormGroup({});
-  userFields: FormlyFieldConfig[] = [
+  userUpdateForm = new FormGroup({});
+  userUpdateFields: FormlyFieldConfig[] = [
     {
       key: 'name',
       type: 'input',
       templateOptions: {
         label: 'nazwa Urzytkownika',
         Placeholder: 'nazwa Urzytkownika',
-        require: true
-      }
-    },
-    {
-      key: 'password',
-      type: 'input',
-      templateOptions: {
-        type: 'password',
-        label: 'haslo urzytkownika',
-        Placeholder: 'haslo urzytkownika',
         require: true
       }
     },
@@ -79,12 +68,22 @@ export class UserCreateComponent implements OnInit, OnDestroy {
 
   constructor(
     public store: Store,
-    public matDialogRef: MatDialogRef<UserCreateComponent>,
+    public matDialogRef: MatDialogRef<UserUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) public userDto: UserDto,
-    public matSnackBar: MatSnackBar) { }
+    public matSnackBar: MatSnackBar,
+    public changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     if (this.userDto) {
+      this.ok$.subscribe(element => {
+        console.log('ok$')
+        if (element === true) {
+          console.log("in if")
+          this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
+          this.matDialogRef.close();
+          this.store.dispatch(new ClearUserAction());
+        }
+      });
       this.userTemp = {
         name: this.userDto.name,
         email: this.userDto.email,
@@ -92,33 +91,26 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         roles: this.userDto.roles.map(role => role.name)
       };
     }
-    this.ok$.subscribe(element => {
-      console.log('ok$')
-      if (element === true) {
-        console.log("in if")
-        this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
-        this.matDialogRef.close();
+
+  }
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
+  }
+  ngOnDestroy(): void {
+
+  }
+  updateUser() {
+    this.store.dispatch(new UserUpdateAction(
+      {
+        id: this.userDto !== null ? this.userDto.id : null,
+        name: this.userUpdateForm.value.name,
+        email: this.userUpdateForm.value.email,
+        roles: this.userUpdateForm.value.roles.map(role => {
+          return { name: role };
+        })
       }
-    });
+    ));
+    console.log("user-update.component.ts");
+    console.log(this.userDto);
   }
-  ngOnDestroy() {
-    this.store.dispatch(new ClearUserAction());
-  }
-
-  createUser() {
-    this.store.dispatch(
-      new UserUpdateAction(
-        {
-          id: this.userDto !== null ? this.userDto.id : null,
-          name: this.userForm.value.name,
-          password: this.userForm.value.password,
-          email: this.userForm.value.email,
-          roles: this.userForm.value.roles.map(role => {
-            return { name: role };
-          })
-        }
-      )
-    );
-  }
-
 }

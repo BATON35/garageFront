@@ -1,8 +1,8 @@
-<form [formGroup]="userForm" (ngSubmit)="createUser()">
-    <formly-form [fields]="userFields" [form]="userForm" [model]="userTemp">
+<form [formGroup]="userUpdateForm" (ngSubmit)="updateUser()">
+    <formly-form [fields]="userUpdateFields" [form]="userUpdateForm" [model]="userTemp">
         <div class="group">
             <button id="saveUser" type="submit" class="button" mat-raised-button color="primary"
-                [disabled]="!userForm.valid">
+                [disabled]="!userUpdateForm.valid">
                 Dodaj
             </button>
         </div>

@@ -65,7 +65,7 @@ export class ClientListComponent implements OnInit {
     this.store.dispatch(new ClietnPageAction(event.pageIndex, event.pageSize));
   }
 
-  openModal() {
+  addClient() {
     this.matDialog.open(ClientCreateComponent, { width: '500px' });
   }
 
