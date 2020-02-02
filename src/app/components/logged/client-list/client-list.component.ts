@@ -118,7 +118,8 @@ export class ClientListComponent implements OnInit {
       data: vehicle
     });
   }
-  downloadVehicleHistory(id) {
-    this.store.dispatch(new DownloadVehicleHistoryAction(id));
+  downloadVehicleHistory(id, fileFormat) {
+    console.log(fileFormat)
+    this.store.dispatch(new DownloadVehicleHistoryAction(id, fileFormat));
   }
 }

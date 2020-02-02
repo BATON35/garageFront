@@ -130,7 +130,19 @@
             <ng-container matColumnDef="history">
               <mat-header-cell *matHeaderCellDef>{{ "vehicle.list.download" | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <button (click)="downloadVehicleHistory(element.id)" mat-icon-button color="primary">
+                <mat-form-field>
+                  <mat-label>Select format</mat-label>
+                  <mat-select #fileFormat>
+                    <mat-option>None</mat-option>
+                    <mat-option value="PDF">PDF</mat-option>
+                    <mat-option value="CSV">CSV</mat-option>
+                    <mat-option value="XML">XML</mat-option>
+                    <mat-option value="DOC">DOC</mat-option>
+                    <mat-option value="JSON">JSON</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button (click)="downloadVehicleHistory(element.numberPlate, fileFormat.value)" mat-icon-button
+                  color="primary">
                   <mat-icon>D</mat-icon>
                 </button>
               </mat-cell>

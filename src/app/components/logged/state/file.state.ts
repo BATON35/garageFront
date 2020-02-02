@@ -9,7 +9,7 @@ export class UploadVehiclePhotoAction {
 
 export class DownloadVehicleHistoryAction {
   static readonly type = '[File] UploadVehiclePhotoAction';
-  constructor(public id: number) { }
+  constructor(public numberPlate: string, public fileFormat: string) { }
 }
 
 export class FileStateModel {
@@ -23,15 +23,15 @@ export class FileStateModel {
 export class FileState {
   constructor(public httpClient: HttpClient) { }
   @Action(DownloadVehicleHistoryAction)
-  downloadVehicleHistory(ctx: StateContext<FileStateModel>, { id }: DownloadVehicleHistoryAction) {
-    return this.httpClient.get(`http://localhost:8080/api/file/${id}`, {
+  downloadVehicleHistory(ctx: StateContext<FileStateModel>, { numberPlate, fileFormat }: DownloadVehicleHistoryAction) {
+    return this.httpClient.get(`http://localhost:8080/api/file/${numberPlate}/${fileFormat}`, {
       responseType: 'blob'
     }).pipe(tap(file => {
       const link = document.createElement('a');
       if (link.download !== undefined) {
         const url = URL.createObjectURL(file);
         link.setAttribute('href', url);
-        link.setAttribute('download', 'ticket.pdf');
+        link.setAttribute('download', `${numberPlate}.` + fileFormat);
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();

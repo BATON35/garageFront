@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { VehicleControllerRestService, FileControllerService } from 'src/api/services';
 import { ClietnPageAction } from './client.state';
 import { PageVehicleDto } from './../../../api/models/page-vehicle-dto';
@@ -59,7 +60,10 @@ export class VehicleStateModel {
     }
 })
 export class VehicleState {
-    constructor(public vehicleService: VehicleControllerRestService, public fileService: FileControllerService) { }
+    constructor(
+        public vehicleService: VehicleControllerRestService,
+        public fileService: FileControllerService,
+        public matSnackBa: MatSnackBar) { }
     @Action(VehicleUpdateAction)
     update(ctx: StateContext<VehicleStateModel>, { vehicleDto, file }: VehicleUpdateAction) {
         return this.vehicleService.updateVehicleUsingPUT(vehicleDto).pipe(
@@ -85,12 +89,16 @@ export class VehicleState {
     create(ctx: StateContext<VehicleStateModel>, { vehicleDto, clientId }: VehicleCreateAction) {
         return this.vehicleService.saveVehicleUsingPOST({ vehicleDto, clientId }).pipe(tap(vehicle => {
             ctx.dispatch(new ClietnPageAction(null, null));
+            ctx.patchState({
+                ok: true
+            });
         }));
     }
     @Action(VehicleDeleteAction)
     delete(ctx: StateContext<VehicleStateModel>, { id }: VehicleDeleteAction) {
         return this.vehicleService.deleteVehicleUsingDELETE(id).pipe(tap(value => {
             ctx.dispatch(new ClietnPageAction(null, null));
+            this.matSnackBa.open("usunieto", "usnieto", { duration: 2000 })
         }));
     }
     @Action(ToggleNotificationAction)

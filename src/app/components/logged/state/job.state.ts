@@ -42,6 +42,7 @@ export class JobState {
   }
   @Action(SaveJobAction)
   saveJob(ctx: StateContext<JobStateModel>, { workerId, serviceId, partId, vehiclePlateNumber }: SaveJobAction) {
+    console.log(vehiclePlateNumber);
     return this.JobControllerService.saveJobUsingPOST({
       workerId, serviceId, partIds: [partId], vehicleNumberPlate: vehiclePlateNumber
 

@@ -77,6 +77,7 @@ export class JobComponent implements OnInit {
   }
   save() {
     this.store.dispatch(new SaveJobAction(this.workerId, this.partId, this.serviceId, this.vehicleNumberPlate));
+    console.log(this.vehicleNumberPlate)
   }
   traySelect(event) {
   }

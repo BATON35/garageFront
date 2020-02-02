@@ -68,7 +68,8 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
     public translateService: TranslateService) { }
 
   ngOnInit() {
-    if (this.vehicle) {
+    if (this.vehicle.vehicleDto) {
+      console.log(this.vehicle.vehicleDto)
       this.vehicleTemp.brand = this.vehicle.vehicleDto.brand;
       this.vehicleTemp.model = this.vehicle.vehicleDto.model;
       this.vehicleTemp.numberPlate = this.vehicle.vehicleDto.numberPlate;
@@ -78,9 +79,11 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
       if (ok === true) {
         console.log('inside if');
         this.store.dispatch(new ClearVehicleAction());
-        this.vehicle.vehicleDto.brand = this.vehicleTemp.brand;
-        this.vehicle.vehicleDto.model = this.vehicleTemp.model;
-        this.vehicle.vehicleDto.numberPlate = this.vehicleTemp.numberPlate;
+        if (this.vehicle.vehicleDto) {
+          this.vehicle.vehicleDto.brand = this.vehicleTemp.brand;
+          this.vehicle.vehicleDto.model = this.vehicleTemp.model;
+          this.vehicle.vehicleDto.numberPlate = this.vehicleTemp.numberPlate;
+        }
         this.matSnackBar.open(this.message, this.config, { duration: 2000 });
         this.matDialogRef.close();
       }
