@@ -14,7 +14,7 @@ import { JobResponseDto } from 'src/api/models';
 export class VehicleHistoryComponent implements OnInit {
   @Select(state => state.job.jobHistory)
   jobHistory$: Observable<JobResponseDto[]>;
-  displayedColumns: string[] = ['Part', 'CarService', 'Date'];
+  displayedColumns: string[] = ['Part', 'CarService', 'Worker', 'Date'];
   constructor(
     public store: Store,
     public matDialogRef: MatDialogRef<VehicleDetailsComponent>,

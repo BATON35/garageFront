@@ -11,6 +11,10 @@
             <mat-cell *matCellDef="let element"> {{ element.carServiceDto.name }} {{ element.carServiceDto.price }}
             </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="Worker">
+            <mat-header-cell *matHeaderCellDef> Worker </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.workerDto.name }} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="Date">
             <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.createdDate }} </mat-cell>
