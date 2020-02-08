@@ -5,7 +5,7 @@
         (change)="saveFile($event.target.files)"> -->
     <label color="primary">
         <mat-icon>cloud_upload</mat-icon> Your text here<input type="file" style="display: none;" name="image"
-            (change)="saveFile($event.target.files)">
+            multiple="multiple" (change)="saveFile($event.target.files)">
     </label>
     <div class="group">
         <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid">

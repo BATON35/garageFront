@@ -9,7 +9,7 @@ export class LoadHistoryAction {
 }
 export class SaveJobAction {
   static readonly type = '[Job] SaveJobAction';
-  constructor(public workerId: number, public partId: number, public serviceId: number, public vehiclePlateNumber: string) { }
+  constructor(public workerId: number, public partIds: number[], public serviceId: number, public vehiclePlateNumber: string) { }
 }
 
 export class LoadJobPageAction {
@@ -41,10 +41,10 @@ export class JobState {
       ));
   }
   @Action(SaveJobAction)
-  saveJob(ctx: StateContext<JobStateModel>, { workerId, serviceId, partId, vehiclePlateNumber }: SaveJobAction) {
-    console.log(vehiclePlateNumber);
+  saveJob(ctx: StateContext<JobStateModel>, { workerId, serviceId, partIds, vehiclePlateNumber }: SaveJobAction) {
+    console.log(partIds);
     return this.JobControllerService.saveJobUsingPOST({
-      workerId, serviceId, partIds: [partId], vehicleNumberPlate: vehiclePlateNumber
+      workerId, serviceId, partIds, vehicleNumberPlate: vehiclePlateNumber
 
     });
   }

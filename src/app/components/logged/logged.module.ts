@@ -27,7 +27,8 @@ import {
   MatCardModule,
   MatSidenavModule,
   MatSnackBarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatChipsModule
 } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 import { UsersState } from './users.state';
@@ -63,7 +64,7 @@ const routs: Routes = [
     component: ControlPanelComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER', 'ROLE_ADMIN']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -151,6 +152,7 @@ const routs: Routes = [
     ChartsModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatChipsModule,
     NgxsReduxDevtoolsPluginModule.forRoot()
 
   ],

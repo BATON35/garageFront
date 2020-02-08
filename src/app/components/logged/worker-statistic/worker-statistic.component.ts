@@ -37,9 +37,7 @@ export class WorkerStatisticComponent implements OnInit {
       }
     }
   ];
-  public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-  ];
+  public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,

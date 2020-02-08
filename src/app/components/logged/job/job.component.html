@@ -1,15 +1,32 @@
 <mat-card>
     <form [formGroup]="formGroup">
-        <mat-form-field>
-            <input [matAutocomplete]="auto" (keyup)="searchPart($event.target.value)" name="partName" matInput
+        <!-- <mat-form-field> -->
+        <!-- <input [matAutocomplete]="auto" (keyup)="searchPart($event.target.value)" name="partName" matInput
                 placeholder="partName">
             <mat-autocomplete (optionSelected)="traySelect($event)" #auto="matAutocomplete">
                 <mat-option *ngFor="let part of partAutocomplete$ | async" [value]="part.name"
-                    (click)="selectPart(part.id)">
+                    (click)="selectPart($event)">
+                    <span>{{part.name}}</span>
+                </mat-option>
+            </mat-autocomplete> -->
+        <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipList aria-label="part selection">
+                <mat-chip *ngFor="let part of temp" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(part)">
+                    {{part.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New fruit..." (keyup)="searchPart($event.target.value)" #fruitInput
+                    [formControl]="partCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            </mat-chip-list>
+            <mat-autocomplete (optionSelected)="traySelect($event)" #auto="matAutocomplete">
+                <mat-option *ngFor="let part of partAutocomplete$ | async" [value]="part" (click)="selectPart($event)">
                     <span>{{part.name}}</span>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
+        <!-- </mat-form-field> -->
         <br>
         <mat-form-field>
             <input [matAutocomplete]="auto1" (keyup)="searchServiceCar($event.target.value)" name="serviceName" matInput
@@ -45,7 +62,7 @@
         </mat-form-field>
         <button (click)="save()" type="submit" class="button" mat-raised-button color="primary"
             [disabled]="!formGroup.valid">
-            Zapisz
+            Dodaj
         </button>
     </form>
 </mat-card>
