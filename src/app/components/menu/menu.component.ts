@@ -30,6 +30,7 @@ export class MenuComponent implements OnInit, AfterViewChecked {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
+
   constructor(
     public store: Store,
     public breakpointObserver: BreakpointObserver,

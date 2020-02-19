@@ -93,9 +93,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
       };
     }
     this.ok$.subscribe(element => {
-      console.log('ok$')
       if (element === true) {
-        console.log("in if")
         this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
         this.matDialogRef.close();
       }

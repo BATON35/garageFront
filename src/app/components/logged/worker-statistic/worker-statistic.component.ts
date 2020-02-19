@@ -37,16 +37,30 @@ export class WorkerStatisticComponent implements OnInit {
       }
     }
   ];
-  public lineChartData: ChartDataSets[] = [];
+  public lineChartData: ChartDataSets[] = [
+    { data: [] }
+  ]
   public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
-      xAxes: [{}],
-      yAxes: [{}]
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Przerób [zł]'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Przedział czasu [rok-miesiac]'
+        }
+      }]
     },
     annotation: {
-      annotations: [{}]
+
+
     },
   };
   public lineChartColors: Color[] = [];

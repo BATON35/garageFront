@@ -1,14 +1,5 @@
 <mat-card>
     <form [formGroup]="formGroup">
-        <!-- <mat-form-field> -->
-        <!-- <input [matAutocomplete]="auto" (keyup)="searchPart($event.target.value)" name="partName" matInput
-                placeholder="partName">
-            <mat-autocomplete (optionSelected)="traySelect($event)" #auto="matAutocomplete">
-                <mat-option *ngFor="let part of partAutocomplete$ | async" [value]="part.name"
-                    (click)="selectPart($event)">
-                    <span>{{part.name}}</span>
-                </mat-option>
-            </mat-autocomplete> -->
         <mat-form-field class="example-chip-list">
             <mat-chip-list #chipList aria-label="part selection">
                 <mat-chip *ngFor="let part of temp" [selectable]="selectable" [removable]="removable"
@@ -16,8 +7,8 @@
                     {{part.name}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
-                <input placeholder="New fruit..." (keyup)="searchPart($event.target.value)" #fruitInput
-                    [formControl]="partCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                <input placeholder="{{'job.create.add.part' | translate}}" (keyup)="searchPart($event.target.value)"
+                    #fruitInput [formControl]="partCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
             </mat-chip-list>
             <mat-autocomplete (optionSelected)="traySelect($event)" #auto="matAutocomplete">
@@ -26,11 +17,10 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <!-- </mat-form-field> -->
         <br>
         <mat-form-field>
             <input [matAutocomplete]="auto1" (keyup)="searchServiceCar($event.target.value)" name="serviceName" matInput
-                placeholder="serviceName">
+                placeholder="{{'job.create.add.service' | translate}}">
             <mat-autocomplete #auto1="matAutocomplete">
                 <mat-option *ngFor="let service of carServiceAutocomplete$ | async" [value]="service.name"
                     (click)="selectService(service.id)">
@@ -41,7 +31,7 @@
         <br>
         <mat-form-field>
             <input [matAutocomplete]="auto2" (keyup)="searchVehicle($event.target.value)" name="vehiclePlateNumber"
-                matInput placeholder="vehiclePlateNumber">
+                matInput placeholder="{{'job.create.add.vehicle' | translate}}">
             <mat-autocomplete #auto2="matAutocomplete">
                 <mat-option *ngFor="let vehicle of vehicleAutocomplete$ | async" [value]="vehicle.numberPlate"
                     (click)="selectVehicle(vehicle.numberPlate)">
@@ -52,7 +42,7 @@
         <br>
         <mat-form-field>
             <input [matAutocomplete]="auto3" (keyup)="searchWorker($event.target.value)" name="workerId" matInput
-                placeholder="workerId">
+                placeholder="{{'job.create.add.worker' | translate}}">
             <mat-autocomplete #auto3="matAutocomplete">
                 <mat-option *ngFor="let worker of workerAutocomplete$ | async" [value]="worker.name"
                     (click)="selectWorker(worker.id)">
@@ -60,9 +50,9 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <button (click)="save()" type="submit" class="button" mat-raised-button color="primary"
-            [disabled]="!formGroup.valid">
-            Dodaj
-        </button>
     </form>
+    <button (click)="save()" type="submit" class="button" mat-raised-button color="primary"
+        [disabled]="!formGroup.valid">
+        {{'job.create.save' | translate}}
+    </button>
 </mat-card>

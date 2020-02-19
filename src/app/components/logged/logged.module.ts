@@ -46,7 +46,7 @@ import { JobState } from './state/job.state';
 import { ServiceCarComponent } from './service-car/service-car.component';
 import { ServiceCarState } from './state/service-car.state';
 import { PartCreateComponent } from './part-create/part-create.component';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { VehicleHistoryComponent } from './vehicle-history/vehicle-history.component';
 import { FileState } from './state/file.state';
 import { ServiceCreateComponent } from './service-create/service-create.component';
@@ -56,6 +56,7 @@ import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.co
 import { WorkerStatisticState } from './state/worker-statistic.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { UserUpdateComponent } from './user-update/user-update.component';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 
 
 const routs: Routes = [
@@ -72,7 +73,7 @@ const routs: Routes = [
     component: PartComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -80,7 +81,7 @@ const routs: Routes = [
     component: JobComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -88,7 +89,7 @@ const routs: Routes = [
     component: ServiceCarComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -96,7 +97,7 @@ const routs: Routes = [
     component: WorkerStatisticComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_ADMIN']
     }
   }
 ];
@@ -153,8 +154,8 @@ const routs: Routes = [
     MatSnackBarModule,
     MatSelectModule,
     MatChipsModule,
-    NgxsReduxDevtoolsPluginModule.forRoot()
-
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsRouterPluginModule.forRoot()
   ],
   entryComponents: [
     ControlPanelComponent,

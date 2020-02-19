@@ -2,7 +2,7 @@ import { VehicleDetailsComponent } from './../vehicle-details/vehicle-details.co
 import { VehicleCreateComponent } from './../vehicle-create/vehicle-create.component';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ClietnPageAction, ClientDeleteAction, ClientSearchAction, AutocompleteAction } from './../client.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
@@ -35,7 +35,8 @@ export class ClientListComponent implements OnInit {
     public store: Store,
     public matDialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
-    public translateService: TranslateService) { }
+    public translateService: TranslateService,
+    public matSnackBar: MatSnackBar) { }
   selectedLanguage = null;
   displayedColumns: string[] = [
     'id', 'name', 'email', 'update', 'addVehicle', 'delete'
@@ -113,13 +114,17 @@ export class ClientListComponent implements OnInit {
     this.store.dispatch(new AutocompleteAction(searchText));
   }
   showHistory(vehicle) {
-    this.matDialog.open(VehicleHistoryComponent, {
-      width: '100%',
-      data: vehicle
-    });
+    if (vehicle.hasHistory) {
+      this.matDialog.open(VehicleHistoryComponent, {
+        width: '100%',
+        data: vehicle
+      });
+    } else {
+      this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
+    }
+
   }
   downloadVehicleHistory(id, fileFormat) {
-    console.log(fileFormat)
     this.store.dispatch(new DownloadVehicleHistoryAction(id, fileFormat));
   }
 }

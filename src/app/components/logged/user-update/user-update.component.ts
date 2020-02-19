@@ -6,6 +6,7 @@ import { UserDto } from 'src/api/models';
 import { UserUpdateAction, ClearUserAction } from '../users.state';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-update',
@@ -21,9 +22,22 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       key: 'name',
       type: 'input',
       templateOptions: {
-        label: 'nazwa Urzytkownika',
-        Placeholder: 'nazwa Urzytkownika',
         require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.update.name.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.update.name.label')
+      }
+    },
+    {
+      key: 'surname',
+      type: 'input',
+      templateOptions: {
+        require: true
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.update.surname.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.update.surname.placeholder')
       }
     },
     {
@@ -33,14 +47,16 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
         validate: true,
         pattern: '[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*',
         type: 'emial',
-        label: 'email urzytkownika',
-        placeholder: 'email urzytkownika',
         required: true
       },
       validation: {
         messages: {
           pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym adresem email`
         }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.update.email.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.update.email.label')
       }
     },
     {
@@ -49,7 +65,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       templateOptions: {
         label: 'wybierz role',
         Placeholder: 'rola urzytkownika',
-        description: 'urzytkownik powinien posiadac role',
+        // description: 'urzytkownik powinien posiadac role',
         require: false,
         multiple: true,
         options: [
@@ -57,7 +73,14 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
           { value: 'ROLE_USER', label: 'User' },
           { value: 'ROLE_EMPLOYEE', label: 'Employee' }
         ]
-      }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.update.roles.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.update.roles.placeholder'),
+        'templateOptions.options[0].label': this.translateService.stream('ROLE_ADMIN'),
+        'templateOptions.options[1].label': this.translateService.stream('ROLE_USER'),
+        'templateOptions.options[2].label': this.translateService.stream('ROLE_EMPLOYEE'),
+      },
     }
   ];
 
@@ -71,14 +94,13 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
     public matDialogRef: MatDialogRef<UserUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) public userDto: UserDto,
     public matSnackBar: MatSnackBar,
-    public changeDetectorRef: ChangeDetectorRef) { }
+    public changeDetectorRef: ChangeDetectorRef,
+    public translateService: TranslateService) { }
 
   ngOnInit() {
     if (this.userDto) {
       this.ok$.subscribe(element => {
-        console.log('ok$')
         if (element === true) {
-          console.log("in if")
           this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
           this.matDialogRef.close();
           this.store.dispatch(new ClearUserAction());
@@ -86,6 +108,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       });
       this.userTemp = {
         name: this.userDto.name,
+        surname: this.userDto.surname,
         email: this.userDto.email,
         password: this.userDto.password,
         roles: this.userDto.roles.map(role => role.name)
@@ -104,13 +127,12 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       {
         id: this.userDto !== null ? this.userDto.id : null,
         name: this.userUpdateForm.value.name,
+        surname: this.userUpdateForm.value.surname,
         email: this.userUpdateForm.value.email,
         roles: this.userUpdateForm.value.roles.map(role => {
           return { name: role };
         })
       }
     ));
-    console.log("user-update.component.ts");
-    console.log(this.userDto);
   }
 }

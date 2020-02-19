@@ -63,7 +63,7 @@ export class AuthStateModel {
     errorLogin: false,
     errorRegister: false,
     jwtToken: null,
-    currentUser: {}
+    currentUser: null
   }
 })
 
@@ -89,6 +89,9 @@ export class AuthState {
     ctx: StateContext<AuthStateModel>,
     { userName, password }: LoginAction
   ) {
+    function delay(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
     const form = new FormData();
     form.append('userName', userName);
     form.append('password', password);
@@ -97,31 +100,32 @@ export class AuthState {
         .post<JwtResponse>('http://localhost:8080/login', form)
         .pipe(
           tap(({ token, expirationDate }) => {
-            ctx.dispatch(new Navigate(['/panel']));
-            console.log('correct login')
             ctx.patchState({
               jwtToken: token,
               errorLogin: false
             });
             Cookies.set('jwtToken', token);
-            console.log('cooki added')
             ctx.dispatch(new CurrentUserAction());
+            (async () => {
+              await delay(30);
+              ctx.dispatch(new Navigate(['/panel']));
+            })();
+
           }),
           catchError((a, b) => {
-            console.log('error login')
             ctx.patchState({
               errorLogin: true
             });
             return of();
+
           })
         );
     } else {
-      console.log('token from cookie')
       ctx.patchState({
         jwtToken: Cookies.get('jwtToken')
       });
-      ctx.dispatch(new Navigate(['/panel']));
       ctx.dispatch(new CurrentUserAction());
+      ctx.dispatch(new Navigate(['/panel']));
     }
   }
   @Action(CurrentUserAction)
@@ -170,9 +174,15 @@ export class AuthState {
   @Action(LoginFromCookieAction)
   loginFromCookie(ctx: StateContext<AuthStateModel>, LoginFromCookieAction) {
     if (Cookies.get('jwtToken')) {
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
       ctx.patchState({ jwtToken: Cookies.get('jwtToken') });
       ctx.dispatch(new CurrentUserAction());
-      this.router.navigate(['/panel']);
+      (async () => {
+        await delay(30);
+        ctx.dispatch(new Navigate(['/panel']));
+      })();
     }
   }
   @Action(BackToDefoultAuthAction)
@@ -181,7 +191,7 @@ export class AuthState {
       errorLogin: false,
       errorRegister: false,
       jwtToken: null,
-      currentUser: {}
+      currentUser: null
     });
   }
   @Action(UpdateTokenAction)

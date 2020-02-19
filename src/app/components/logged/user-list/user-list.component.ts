@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { PageUserDto } from 'src/api/models';
 import { MatDialog } from '@angular/material';
 import { UserUpdateComponent } from '../user-update/user-update.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-list',
@@ -20,7 +21,7 @@ export class UserListComponent implements OnInit, AfterViewChecked {
   displayedColumns: string[] = ['id', 'userName', 'email', 'update', 'delete'];
   roles = [
     {
-      label: 'Employee',
+      label: "Pracownik",
       value: 'ROLE_EMPLOYEE'
     },
     {
@@ -38,7 +39,8 @@ export class UserListComponent implements OnInit, AfterViewChecked {
   constructor(
     public store: Store,
     public matDialog: MatDialog,
-    public changeDetectorRef: ChangeDetectorRef) { }
+    public changeDetectorRef: ChangeDetectorRef,
+    public translateService: TranslateService) { }
 
 
   ngOnInit() {

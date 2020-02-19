@@ -18,13 +18,15 @@ import {
   MatIconModule,
   MatToolbarModule,
   MatSelectModule,
-  MatPaginatorIntl
+  MatPaginatorIntl,
+  MatBadgeModule
 } from '@angular/material';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
@@ -38,6 +40,9 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
+    MatBadgeModule,
+    MatExpansionModule,
+    NgxsRouterPluginModule.forRoot(),
     NgxsModule.forRoot([]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     TranslateModule.forRoot({
@@ -48,8 +53,7 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
       }
     }),
     MatSelectModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    NgxsRouterPluginModule.forRoot()
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginatorCustom },
