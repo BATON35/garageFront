@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { WorkerStatisticSell } from 'src/api/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { count } from 'rxjs/operators';
 
 
 @Component({
@@ -75,7 +76,9 @@ export class WorkerStatisticComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new WorkerStatisticAction('2019-01-01', '2019-12-29'));
+    console.log(this.workers$)
     this.workers$.subscribe(statistics => {
+      console.log(statistics)
       if (statistics.length !== 0) {
         this.lineChartLabels = Array.from(new Set(statistics.map(element => element.date)));
         const names = Array.from(new Set(statistics.map(statistic => statistic.name)));
