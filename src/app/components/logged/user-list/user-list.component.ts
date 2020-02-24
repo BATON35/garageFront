@@ -31,6 +31,10 @@ export class UserListComponent implements OnInit, AfterViewChecked {
     {
       label: 'User',
       value: 'ROLE_USER'
+    },
+    {
+      label: 'No roles',
+      value: null
     }
   ]
 
@@ -72,6 +76,6 @@ export class UserListComponent implements OnInit, AfterViewChecked {
   }
   role(roles) {
     this.selectedRoles = roles;
-    this.store.dispatch(new LoadUserByChangRoleAction(roles));
+    this.store.dispatch(new LoadUserByChangRoleAction([roles]));
   }
 }

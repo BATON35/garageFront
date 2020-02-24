@@ -49,9 +49,9 @@ export class ClientListComponent implements OnInit {
   @Select(state => state.client.autocomplete)
   autocomplete$: Observable<string[]>;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(map(result => result.matches));
+  // isHandset$: Observable<boolean> = this.breakpointObserver
+  //   .observe(Breakpoints.Handset)
+  //   .pipe(map(result => result.matches));
 
 
   expandedElement: any;
@@ -117,14 +117,25 @@ export class ClientListComponent implements OnInit {
     if (vehicle.hasHistory) {
       this.matDialog.open(VehicleHistoryComponent, {
         width: '100%',
+        height: '80%',
         data: vehicle
       });
     } else {
-      this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
+      this.matSnackBar.open('Pojazd nie posiada historii', 'zamknij', { duration: 2000 });
     }
 
   }
-  downloadVehicleHistory(id, fileFormat) {
-    this.store.dispatch(new DownloadVehicleHistoryAction(id, fileFormat));
+  downloadVehicleHistory(vehicle, fileFormat) {
+    if (fileFormat) {
+      if (vehicle.hasHistory) {
+        this.store.dispatch(new DownloadVehicleHistoryAction(vehicle.numberPlate, fileFormat));
+      } else {
+        this.matSnackBar.open('Pojazd nie posiada historii', 'zamknij', {
+          duration: 2000,
+        });
+      }
+    } else {
+      this.matSnackBar.open('Prosze wybrac format pliku', 'zamknik', { duration: 2000 })
+    }
   }
 }

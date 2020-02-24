@@ -2,6 +2,7 @@ export { CarServiceDto } from './models/car-service-dto';
 export { ClientDto } from './models/client-dto';
 export { JobDto } from './models/job-dto';
 export { JobResponseDto } from './models/job-response-dto';
+export { JobStatisticIncome } from './models/job-statistic-income';
 export { Pageable } from './models/pageable';
 export { PageCarServiceDto } from './models/page-car-service-dto';
 export { PageClientDto } from './models/page-client-dto';

@@ -7,6 +7,8 @@
       <a *ngIf="(token$ | async)" mat-list-item (click)="logout()">
         {{"menu.logout" | translate}}
       </a>
+      <a *ngIf="(token$ | async)" mat-list-item routerLink="/change-password">Zmien
+        hasło</a>
       <hr>
       <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/panel">{{'menu.dashboard'|translate}}</a>
@@ -24,17 +26,16 @@
           <mat-panel-title>
             {{user.name}}
           </mat-panel-title>
-          <mat-panel-description>
-            Informacje:
-          </mat-panel-description>
         </mat-expansion-panel-header>
         <span>Posiadane role: </span>
         <ul *ngFor="let role of user.roles">
           <li> {{ role.name | translate }} </li>
         </ul>
-        <span>Mail: </span>
+        <span>{{"menu.information" | translate}} </span>
         <ul>
-          <li>{{user.email}}</li>
+          <li>{{"menu.emial" | translate}} {{user.email}}</li>
+          <li>{{"menu.name" | translate}} {{user.name}}</li>
+          <li>{{"menu.surname" | translate}} {{user.surname}}</li>
         </ul>
       </mat-expansion-panel>
     </mat-accordion>

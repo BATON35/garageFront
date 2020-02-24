@@ -141,8 +141,7 @@
                     <mat-option value="JSON">JSON</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <button (click)="downloadVehicleHistory(element.numberPlate, fileFormat.value)" mat-icon-button
-                  color="primary">
+                <button (click)="downloadVehicleHistory(element, fileFormat.value)" mat-icon-button color="primary">
                   <mat-icon>D</mat-icon>
                 </button>
               </mat-cell>

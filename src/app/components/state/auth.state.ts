@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserDto } from './../../../api/models/user-dto';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
@@ -16,7 +17,7 @@ export class UpdateTokenAction {
 }
 export class LoginAction {
   static readonly type = '[Auth] LoginAction';
-  constructor(public userName: string, public password: string) { }
+  constructor(public userLogin: string, public password: string) { }
 }
 
 export class RegistrationAction {
@@ -71,7 +72,7 @@ export class AuthState {
   constructor(
     public httpClient: HttpClient,
     public userControllerRestService: UserControllerRestService,
-    public router: Router
+    public matSnackBar: MatSnackBar
   ) { }
 
   @Selector()
@@ -87,13 +88,13 @@ export class AuthState {
   @Action(LoginAction)
   login(
     ctx: StateContext<AuthStateModel>,
-    { userName, password }: LoginAction
+    { userLogin, password }: LoginAction
   ) {
     function delay(ms: number) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
     const form = new FormData();
-    form.append('userName', userName);
+    form.append('userLogin', userLogin);
     form.append('password', password);
     if (!Cookies.get('jwtToken')) {
       return this.httpClient
@@ -147,9 +148,16 @@ export class AuthState {
           ctx.patchState({ errorRegister: false });
         }),
         catchError((a, b) => {
+          console.log("error b")
+          console.log(b)
+          console.log("error a")
+          console.log(a)
           ctx.patchState({
             errorRegister: true
           });
+          if (a.status === 409) {
+            this.matSnackBar.open('Podany login jest zajety', 'zamkinij', { duration: 3000 });
+          }
           return of();
         }));
   }

@@ -33,6 +33,11 @@ export class LoadUserByChangRoleAction {
   static readonly type = '[User] LoadUserByChangRoleAction';
   constructor(public roles: string[]) { }
 }
+
+export class ChangePasswordAction {
+  static readonly type = '[User] ChangePasswordAction';
+  constructor(public password: string) { }
+}
 export class UsersStateModel {
   userPage: PageUserDto;
   page: number;
@@ -135,6 +140,8 @@ export class UsersState {
   }
   @Action(LoadUserByChangRoleAction)
   loadUserByChangeRole(ctx: StateContext<UsersStateModel>, { roles }: LoadUserByChangRoleAction) {
+    console.log("user.state roles")
+    console.log(roles)
     ctx.dispatch(new UsersPageAction(ctx.getState().page, '', ctx.getState().size, roles));
     ctx.patchState({
       roles
@@ -146,5 +153,9 @@ export class UsersState {
       errorMessage: null,
       ok: false
     });
+  }
+  @Action(ChangePasswordAction)
+  changePassword(ctx: StateContext<UsersStateModel>, { password }: ChangePasswordAction) {
+    return this.userService.changePasswordUsingPOST({ password });
   }
 }

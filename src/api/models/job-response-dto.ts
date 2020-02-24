@@ -6,5 +6,6 @@ export interface JobResponseDto {
   carServiceDto?: CarServiceDto;
   createdDate?: string;
   partsDto?: Array<PartDto>;
+  price?: number;
   workerDto?: WorkerDto;
 }

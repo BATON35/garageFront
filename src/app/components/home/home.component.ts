@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedIndex = 0;
   loginFields: FormlyFieldConfig[] = [
     {
-      key: 'userNameLogin',
+      key: 'userLogin',
       type: 'input',
       templateOptions: {
         label: 'strange behavior',
@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
       expressionProperties: {
-        'templateOptions.label': this.translateService.stream('home.username.label'),
-        'templateOptions.placeholder': this.translateService.stream('home.username.placeholder'),
+        'templateOptions.label': this.translateService.stream('home.userlogin.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.userlogin.placeholder'),
         'validation.messages.required': this.translateService.stream('home.message.required'),
         'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
         'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   registerFields: FormlyFieldConfig[] = [
     {
-      key: 'userName',
+      key: 'userLogin',
       type: 'input',
       templateOptions: {
         label: 'strange behavior',
@@ -103,8 +103,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
       expressionProperties: {
-        'templateOptions.label': this.translateService.stream('home.username.label'),
-        'templateOptions.placeholder': this.translateService.stream('home.username.placeholder'),
+        'templateOptions.label': this.translateService.stream('home.userlogin.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.userlogin.placeholder'),
         'validation.messages.required': this.translateService.stream('home.message.required'),
         'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
         'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
@@ -132,6 +132,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       templateOptions: {
         label: 'strange behavior',
         placeholder: 'do not remove',
+        type: 'password',
         required: true
       },
       validators: {
@@ -162,6 +163,58 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     {
+      key: 'name',
+      type: 'input',
+      templateOptions: {
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        minLength: 3,
+        maxLength: 32,
+        required: true
+      },
+      validation: {
+        messages: {
+          minLength: '',
+          maxLength: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.username.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.username.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
+      }
+    },
+    {
+      key: 'surname',
+      type: 'input',
+      templateOptions: {
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        minLength: 3,
+        maxLength: 32,
+        required: true
+      },
+      validation: {
+        messages: {
+          minLength: '',
+          maxLength: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.usersurname.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.usersurname.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
+      }
+    },
+    {
       key: 'email',
       type: 'input',
       templateOptions: {
@@ -186,7 +239,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     {
-      key: 'telNumer',
+      key: 'phoneNumber',
       type: 'input',
       templateOptions: {
         validate: true,
@@ -222,16 +275,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   submit() {
     this.store.dispatch(
       new LoginAction(
-        this.loginForm.value.userNameLogin,
+        this.loginForm.value.userLogin,
         this.loginForm.value.passwordLogin
       )
     );
   }
   register() {
     const userDto = {
-      name: this.rejestrationForm.value.userName,
+      login: this.rejestrationForm.value.userLogin,
       password: this.rejestrationForm.value.password,
-      email: this.rejestrationForm.value.email
+      email: this.rejestrationForm.value.email,
+      phoneNumber: this.rejestrationForm.value.phoneNumber,
+      name: this.rejestrationForm.value.name,
+      surname: this.rejestrationForm.value.surname
     };
     this.store.dispatch(new RegistrationAction(userDto));
     this.selectedIndex = 0;

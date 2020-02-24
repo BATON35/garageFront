@@ -19,6 +19,7 @@ import { PageUserDto } from '../models/page-user-dto';
 class UserControllerRestService extends __BaseService {
   static readonly saveUserUsingPOSTPath = '/api/users';
   static readonly updateUserUsingPUTPath = '/api/users';
+  static readonly changePasswordUsingPOSTPath = '/api/users/change-password';
   static readonly userInfoUsingGETPath = '/api/users/info';
   static readonly searchUsersUsingGETPath = '/api/users/search';
   static readonly getUserByIdUsingGETPath = '/api/users/{id}';
@@ -100,6 +101,40 @@ class UserControllerRestService extends __BaseService {
   updateUserUsingPUT(userDto: UserDto): __Observable<UserDto> {
     return this.updateUserUsingPUTResponse(userDto).pipe(
       __map(_r => _r.body as UserDto)
+    );
+  }
+
+  /**
+   * @param userDto userDto
+   */
+  changePasswordUsingPOSTResponse(userDto: UserDto): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = userDto;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/users/change-password`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param userDto userDto
+   */
+  changePasswordUsingPOST(userDto: UserDto): __Observable<null> {
+    return this.changePasswordUsingPOSTResponse(userDto).pipe(
+      __map(_r => _r.body as null)
     );
   }
 

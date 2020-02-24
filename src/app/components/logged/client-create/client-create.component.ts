@@ -55,7 +55,7 @@ export class ClientCreateComponent implements OnInit {
           id: this.clientDto !== null ? this.clientDto.id : null,
           name: this.clientForm.value.name,
           email: this.clientForm.value.email,
-          //    active: this.clientDto.value.active,
+          active: this.clientDto.active,
           // surname: this.clientDto.value.surname,
           // phoneNumber: this.clientDto.value.phoneNumber,
           // vehicles: this.clientDto.value.vehicles,

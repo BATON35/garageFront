@@ -57,12 +57,21 @@ import { WorkerStatisticState } from './state/worker-statistic.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { JobStatisticComponent } from './job-statistic/job-statistic.component';
 
 
 const routs: Routes = [
   {
     path: 'panel',
     component: ControlPanelComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
+    }
+  }, {
+    path: 'change-password',
+    component: ChangePasswordComponent,
     canActivate: [AuthGuard],
     data: {
       role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
@@ -99,6 +108,14 @@ const routs: Routes = [
     data: {
       role: ['ROLE_ADMIN']
     }
+  },
+  {
+    path: 'job-statistic',
+    component: JobStatisticComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_ADMIN']
+    }
   }
 ];
 @NgModule({
@@ -117,7 +134,9 @@ const routs: Routes = [
     VehicleHistoryComponent,
     ServiceCreateComponent,
     WorkerStatisticComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    ChangePasswordComponent,
+    JobStatisticComponent
 
 
   ],
