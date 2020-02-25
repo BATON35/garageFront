@@ -1,0 +1,10 @@
+<form [formGroup]="clientForm" (ngSubmit)="submit()">
+    <formly-form [fields]="clientFields" [form]="clientForm" [model]="clientDto">
+        <div class="group">
+            <button id="saveClient" type="submit" class="button" mat-raised-button color="primary"
+                [disabled]="!clientForm.valid">
+                {{"client.add.button.save" | translate}}
+            </button>
+        </div>
+    </formly-form>
+</form>

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { WorkerStatisticSell } from 'src/api/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { count } from 'rxjs/operators';
+
 
 
 @Component({

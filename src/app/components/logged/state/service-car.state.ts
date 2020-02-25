@@ -3,6 +3,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { CarServiceControllerRestService } from 'src/api/services';
 import { tap } from 'rxjs/operators';
 import { PageCarServiceDto } from 'src/api/models';
+import { MatSnackBar } from '@angular/material';
 
 
 export class SaveServiceCarAction {
@@ -22,6 +23,10 @@ export class ServiceCarAction {
   static readonly type = '[ServiceCar] ServiceCarAction';
   constructor(public payload: string) { }
 }
+export class DeleteServiceCarAction {
+  static readonly type = '[ServiceCar] DeleteServiceCarAction';
+  constructor(public id: number) { }
+}
 
 export class ServiceCarStateModel {
   public pageCarServiceDto: PageCarServiceDto;
@@ -40,7 +45,9 @@ export class ServiceCarStateModel {
   }
 })
 export class ServiceCarState {
-  constructor(public carServiceControllerRestService: CarServiceControllerRestService) { }
+  constructor(
+    public carServiceControllerRestService: CarServiceControllerRestService,
+    public matSnackBar: MatSnackBar) { }
   @Action(LoadServiceCarPageAction)
   loadServiceCarPage(ctx: StateContext<ServiceCarStateModel>, { page, size }: LoadServiceCarPageAction) {
     return this.carServiceControllerRestService.getCarServiceListUsingGET({
@@ -64,8 +71,14 @@ export class ServiceCarState {
   }
   @Action(SaveServiceCarAction)
   saveServiceCar(ctx: StateContext<ServiceCarStateModel>, { carServiceDto }: SaveServiceCarAction) {
-    console.log('service-car !!!!!!!!!');
     return this.carServiceControllerRestService.saveCarServiceUsingPOST(carServiceDto)
       .pipe(tap(serviceCar => ctx.dispatch(new LoadServiceCarPageAction(ctx.getState().page, ctx.getState().size))));
+  }
+  @Action(DeleteServiceCarAction)
+  deleteServiceCar(ctx: StateContext<ServiceCarStateModel>, { id }: DeleteServiceCarAction) {
+    return this.carServiceControllerRestService.deleteCarServiceUsingDELETE(id).pipe(tap(serviceCar => {
+      ctx.dispatch(new LoadServiceCarPageAction(ctx.getState().page, ctx.getState().size));
+      this.matSnackBar.open("usunieto", "usnieto", { duration: 2000 })
+    }))
   }
 }

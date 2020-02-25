@@ -2,8 +2,8 @@ import { MatDialog } from '@angular/material';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PageCarServiceDto } from 'src/api/models';
-import { LoadServiceCarPageAction } from '../state/service-car.state';
+import { PageCarServiceDto, CarServiceDto } from 'src/api/models';
+import { LoadServiceCarPageAction, DeleteServiceCarAction } from '../state/service-car.state';
 import { ServiceCreateComponent } from '../service-create/service-create.component';
 
 @Component({
@@ -12,7 +12,7 @@ import { ServiceCreateComponent } from '../service-create/service-create.compone
   styleUrls: ['./service-car.component.scss']
 })
 export class ServiceCarComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'price', 'update'];
+  displayedColumns: string[] = ['id', 'name', 'price', 'description', 'update', 'delete'];
   @Select(state => state.serviceCar.pageCarServiceDto)
   sevrice$: Observable<PageCarServiceDto>;
   constructor(public store: Store, public matDialog: MatDialog) { }
@@ -24,10 +24,19 @@ export class ServiceCarComponent implements OnInit {
     this.store.dispatch(new LoadServiceCarPageAction(event.pageIndex, event.pageSize));
   }
   openModal() {
-    this.matDialog.open(ServiceCreateComponent);
+    this.matDialog.open(ServiceCreateComponent, {
+      width: '500px'
+    });
   }
-  deleteElement(element) {
+  deleteElement(id) {
+    this.store.dispatch(new DeleteServiceCarAction(id));
   }
-  update(element) {
+  update(carServiceDto: CarServiceDto) {
+
+    this.matDialog.open(ServiceCreateComponent, {
+      width: '500px',
+      data: carServiceDto
+    });
   }
 }
+

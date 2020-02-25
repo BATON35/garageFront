@@ -4,6 +4,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { PageUserDto } from 'src/api/models';
 import { empty } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 export class ClearUserAction {
   static readonly type = '[User] ClearUserAction';
   constructor() { }
@@ -18,6 +19,10 @@ export class UsersDeleteAction {
 }
 export class UserUpdateAction {
   static readonly type = '[User] UserUpdateAction';
+  constructor(public userDto: UserDto) { }
+}
+export class UserCreateAction {
+  static readonly type = '[User] UserCreateAction';
   constructor(public userDto: UserDto) { }
 }
 export class UserSearchAction {
@@ -62,7 +67,9 @@ export class UsersStateModel {
   }
 })
 export class UsersState {
-  constructor(public userService: UserControllerRestService) { }
+  constructor(
+    public userService: UserControllerRestService,
+    public matSnackBar: MatSnackBar) { }
 
   @Action(UsersPageAction)
   add(ctx: StateContext<UsersStateModel>, { page, searchText, size, roles }: UsersPageAction) {
@@ -89,12 +96,32 @@ export class UsersState {
         const size = ctx.getState().size;
         const roles = ctx.getState().roles;
         ctx.dispatch(new UsersPageAction(page, searchText, size, roles));
+        this.matSnackBar.open("usunieto", "usnieto", { duration: 2000 });
       }));
   }
 
   @Action(UserUpdateAction)
   update(ctx: StateContext<UsersStateModel>, { userDto }: UserUpdateAction) {
     return this.userService.updateUserUsingPUT(userDto).pipe(tap(value => {
+      const page = ctx.getState().page;
+      const searchText = ctx.getState().searchText;
+      const size = ctx.getState().size;
+      const roles = ctx.getState().roles;
+      ctx.dispatch(new UsersPageAction(page, searchText, size, roles));
+      ctx.patchState({
+        ok: true
+      });
+    }), catchError(err => {
+      ctx.patchState({
+        errorMessage: err.error.message
+      });
+      return empty();
+    }));
+  }
+
+  @Action(UserCreateAction)
+  create(ctx: StateContext<UsersStateModel>, { userDto }: UserCreateAction) {
+    return this.userService.saveUserUsingPOST(userDto).pipe(tap(value => {
       const page = ctx.getState().page;
       const searchText = ctx.getState().searchText;
       const size = ctx.getState().size;

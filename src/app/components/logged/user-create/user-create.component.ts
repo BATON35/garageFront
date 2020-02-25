@@ -1,5 +1,5 @@
 import { UserDto } from './../../../../api/models/user-dto';
-import { UserUpdateAction, ClearUserAction } from './../users.state';
+import { ClearUserAction, UserCreateAction } from './../users.state';
 import { Store, Select } from '@ngxs/store';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
@@ -22,8 +22,17 @@ export class UserCreateComponent implements OnInit, OnDestroy {
       key: 'name',
       type: 'input',
       templateOptions: {
-        label: 'nazwa Urzytkownika',
-        Placeholder: 'nazwa Urzytkownika',
+        label: 'Imie Urzytkownika',
+        Placeholder: 'Imie Urzytkownika',
+        require: true
+      }
+    },
+    {
+      key: 'login',
+      type: 'input',
+      templateOptions: {
+        label: 'Login Urzytkownika',
+        Placeholder: 'Login Urzytkownika',
         require: true
       }
     },
@@ -32,8 +41,8 @@ export class UserCreateComponent implements OnInit, OnDestroy {
       type: 'input',
       templateOptions: {
         type: 'password',
-        label: 'haslo urzytkownika',
-        Placeholder: 'haslo urzytkownika',
+        label: 'Haslo urzytkownika',
+        Placeholder: 'Haslo urzytkownika',
         require: true
       }
     },
@@ -44,8 +53,8 @@ export class UserCreateComponent implements OnInit, OnDestroy {
         validate: true,
         pattern: '[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*',
         type: 'emial',
-        label: 'email urzytkownika',
-        placeholder: 'email urzytkownika',
+        label: 'Email urzytkownika',
+        placeholder: 'Email urzytkownika',
         required: true
       },
       validation: {
@@ -58,9 +67,9 @@ export class UserCreateComponent implements OnInit, OnDestroy {
       key: 'roles',
       type: 'select',
       templateOptions: {
-        label: 'wybierz role',
-        Placeholder: 'rola urzytkownika',
-        description: 'urzytkownik powinien posiadac role',
+        label: 'Wybierz role',
+        Placeholder: 'Rola urzytkownika',
+        description: 'Urzytkownik powinien posiadac role',
         require: false,
         multiple: true,
         options: [
@@ -105,9 +114,9 @@ export class UserCreateComponent implements OnInit, OnDestroy {
 
   createUser() {
     this.store.dispatch(
-      new UserUpdateAction(
+      new UserCreateAction(
         {
-          id: this.userDto !== null ? this.userDto.id : null,
+          login: this.userForm.value.login,
           name: this.userForm.value.name,
           password: this.userForm.value.password,
           email: this.userForm.value.email,

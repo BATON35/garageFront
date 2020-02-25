@@ -1,12 +1,12 @@
-import { element } from 'protractor';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ChartOptions, ChartType, ChartDataSets, ChartTooltipLabelColor } from 'chart.js';
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label } from 'ng2-charts';
 import { Select, Store } from '@ngxs/store';
 import { JobStatisticIncome } from 'src/api/models';
-import { JobStatisticAction } from '../state/job.state';
+import { JobStatisticAction } from '../state/job-statistic.actions';
+
 
 @Component({
   selector: 'app-job-statistic',
@@ -18,7 +18,20 @@ export class JobStatisticComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
-    scales: { xAxes: [{}], yAxes: [{}] },
+    scales: {
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Przychod [zł]'
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Przedział czasu [rok-miesiac]'
+        }
+      }]
+    },
     plugins: {
       datalabels: {
         anchor: 'end',
@@ -35,7 +48,7 @@ export class JobStatisticComponent implements OnInit {
     { data: [] }
   ];
 
-  @Select(state => state.job.statistic)
+  @Select(state => state.jobStatistic.statistic)
   jobs$: Observable<JobStatisticIncome[]>;
   constructor(public store: Store) { }
 

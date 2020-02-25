@@ -59,6 +59,8 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { JobStatisticComponent } from './job-statistic/job-statistic.component';
+import { JobStatisticState } from './state/job-statistic.state';
+import { ClientUpdateComponent } from './client-update/client-update.component';
 
 
 const routs: Routes = [
@@ -136,7 +138,8 @@ const routs: Routes = [
     WorkerStatisticComponent,
     UserUpdateComponent,
     ChangePasswordComponent,
-    JobStatisticComponent
+    JobStatisticComponent,
+    ClientUpdateComponent
 
 
   ],
@@ -153,7 +156,16 @@ const routs: Routes = [
     MatTableModule,
     MatPaginatorModule,
     NgxsModule.forFeature([
-      UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState, WorkerStatisticState
+      UsersState,
+      ClientState,
+      VehicleState,
+      PartState,
+      JobState,
+      ServiceCarState,
+      WorkerState,
+      FileState,
+      WorkerStatisticState,
+      JobStatisticState
     ]),
     MatIconModule,
     MatGridListModule,
@@ -187,7 +199,8 @@ const routs: Routes = [
     PartCreateComponent,
     VehicleHistoryComponent,
     ServiceCreateComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    ClientUpdateComponent
   ],
   providers: [
     AuthGuard

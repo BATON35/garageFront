@@ -12,6 +12,7 @@
       <hr>
       <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/panel">{{'menu.dashboard'|translate}}</a>
+      <hr>
       <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/parts">{{'menu.parts'|translate}}</a>
       <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item

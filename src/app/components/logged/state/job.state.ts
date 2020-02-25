@@ -16,16 +16,10 @@ export class LoadJobPageAction {
   static readonly type = '[Job] LoadJobPageAction';
   constructor(public page: number, public size: number) { }
 }
-export class JobStatisticAction {
-  static readonly type = '[Job] JobStatisticAction';
-  constructor() { }
-}
-
 
 export class JobStateModel {
   public pageJobDto: PageJobDto;
   public jobHistory: JobResponseDto[];
-  public statistic: JobStatisticIncome[];
 }
 
 
@@ -34,8 +28,7 @@ export class JobStateModel {
   name: 'job',
   defaults: {
     pageJobDto: {},
-    jobHistory: [],
-    statistic: []
+    jobHistory: []
   }
 })
 export class JobState {
@@ -63,14 +56,6 @@ export class JobState {
     return this.JobControllerService.getJobHistoryUsingGET(vehicleId).pipe(
       tap(job => ctx.patchState({
         jobHistory: job
-      }))
-    );
-  }
-  @Action(JobStatisticAction)
-  jobStatistic(ctx: StateContext<JobStateModel>, { }: JobStatisticAction) {
-    return this.JobControllerService.getStatisticUsingGET().pipe(
-      tap(statistic => ctx.patchState({
-        statistic
       }))
     );
   }

@@ -3,6 +3,7 @@ import { ClientDto } from './../../../api/models/client-dto';
 import { State, Action, StateContext } from '@ngxs/store';
 import { ClientControllerRestService } from 'src/api/services';
 import { PageClientDto } from 'src/api/models';
+import { MatSnackBar } from '@angular/material';
 
 const name = '[Clients]';
 export class ClietnPageAction {
@@ -12,6 +13,10 @@ export class ClietnPageAction {
 
 export class ClientUpdateAction {
   static readonly type = '[Client] ClientUpdateAction';
+  constructor(public clientDto: ClientDto) { }
+}
+export class ClientCreateAction {
+  static readonly type = '[Client] ClientCreateAction';
   constructor(public clientDto: ClientDto) { }
 }
 
@@ -55,7 +60,9 @@ export class ClientStateModel {
 })
 
 export class ClientState {
-  constructor(public clientService: ClientControllerRestService) { }
+  constructor(
+    public clientService: ClientControllerRestService,
+    public matSnackBar: MatSnackBar) { }
 
   @Action(ClietnPageAction)
   page(ctx: StateContext<ClientStateModel>, { page, size }: ClietnPageAction) {
@@ -83,13 +90,25 @@ export class ClientState {
         const page = ctx.getState().page;
         const size = ctx.getState().size;
         ctx.dispatch(new ClietnPageAction(page, size));
+        this.matSnackBar.open("usunieto", "usnieto", { duration: 2000 });
       }
     ));
   }
 
+  @Action(ClientCreateAction)
+  create(ctx: StateContext<ClientStateModel>, clientDto: ClientCreateAction) {
+    return this.clientService.saveClientUsingPOST(clientDto.clientDto).pipe(
+      tap(
+        client => {
+          const page = ctx.getState().page;
+          const size = ctx.getState().size;
+          ctx.dispatch(new ClietnPageAction(page, size));
+        })
+    );
+  }
   @Action(ClientUpdateAction)
   upadate(ctx: StateContext<ClientStateModel>, clientDto: ClientUpdateAction) {
-    return this.clientService.saveClientUsingPOST(clientDto.clientDto).pipe(
+    return this.clientService.updateClientUsingPUT(clientDto.clientDto).pipe(
       tap(
         client => {
           const page = ctx.getState().page;

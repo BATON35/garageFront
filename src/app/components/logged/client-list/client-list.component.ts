@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 import { VehicleHistoryComponent } from '../vehicle-history/vehicle-history.component';
 import { DownloadVehicleHistoryAction } from '../state/file.state';
+import { ClientUpdateComponent } from '../client-update/client-update.component';
 
 
 @Component({
@@ -75,7 +76,7 @@ export class ClientListComponent implements OnInit {
   }
 
   update(client: ClientDto) {
-    this.matDialog.open(ClientCreateComponent, {
+    this.matDialog.open(ClientUpdateComponent, {
       width: '500px',
       data: client
     });

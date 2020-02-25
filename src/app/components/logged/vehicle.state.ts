@@ -63,7 +63,7 @@ export class VehicleState {
     constructor(
         public vehicleService: VehicleControllerRestService,
         public fileService: FileControllerService,
-        public matSnackBa: MatSnackBar) { }
+        public matSnackBar: MatSnackBar) { }
     @Action(VehicleUpdateAction)
     update(ctx: StateContext<VehicleStateModel>, { vehicleDto, file }: VehicleUpdateAction) {
         return this.vehicleService.updateVehicleUsingPUT(vehicleDto).pipe(
@@ -98,7 +98,7 @@ export class VehicleState {
     delete(ctx: StateContext<VehicleStateModel>, { id }: VehicleDeleteAction) {
         return this.vehicleService.deleteVehicleUsingDELETE(id).pipe(tap(value => {
             ctx.dispatch(new ClietnPageAction(null, null));
-            this.matSnackBa.open("usunieto", "usnieto", { duration: 2000 })
+            this.matSnackBar.open("usunieto", "usnieto", { duration: 2000 })
         }));
     }
     @Action(ToggleNotificationAction)

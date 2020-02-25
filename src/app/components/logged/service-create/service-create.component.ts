@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Store } from '@ngxs/store';
@@ -40,16 +41,25 @@ export class ServiceCreateComponent implements OnInit {
       }
     }
   ];
-  constructor(public store: Store) { }
+  constructor(
+    public store: Store,
+    public matDialogRef: MatDialogRef<ServiceCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public carServiceDto) { }
 
   ngOnInit() {
   }
   save() {
-    this.store.dispatch(new SaveServiceCarAction({
-      name: this.serviceForm.value.name,
-      price: this.serviceForm.value.price,
-      description: this.serviceForm.value.description,
-    }));
+    this.store.dispatch(
+      new SaveServiceCarAction(
+        {
+          id: this.carServiceDto !== null ? this.carServiceDto.id : null,
+          name: this.serviceForm.value.name,
+          price: this.serviceForm.value.price,
+          description: this.serviceForm.value.description,
+        }
+      )
+    );
+    this.matDialogRef.close();
   }
 
 }
