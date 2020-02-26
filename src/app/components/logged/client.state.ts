@@ -66,13 +66,14 @@ export class ClientState {
 
   @Action(ClietnPageAction)
   page(ctx: StateContext<ClientStateModel>, { page, size }: ClietnPageAction) {
+    const deleted = false;
     if (!page && !size) {
       page = ctx.getState().page;
       size = ctx.getState().size;
 
     }
     return this.clientService
-      .getClientListUsingGET({ size, page }).pipe(tap(
+      .getClientListUsingGET({ size, page, deleted }).pipe(tap(
         value => {
           ctx.patchState({
             pageClientDto: value,

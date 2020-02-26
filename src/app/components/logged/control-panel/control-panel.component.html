@@ -6,8 +6,23 @@
     <app-user-list></app-user-list>
   </mat-tab>
   <mat-tab label="{{'panel.admin.tab' | translate}}">
-    <a routerLink="/worker-statistic">worker statistic</a>
-    <br>
-    <a routerLink="/job-statistic">job statistic</a>
+    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+      <mat-tab label="Deleted clients">
+        <app-client-list></app-client-list>
+      </mat-tab>
+      <mat-tab label="Deleted users">
+        <app-user-list></app-user-list>
+      </mat-tab>
+    </mat-tab-group>
   </mat-tab>
+  <div *ngIf="user$ | async as user">
+    <div *ngIf="user.roles[0].id == 1">
+      <mat-tab label="Statisticss">
+        <a routerLink="/worker-statistic">worker statistic</a>
+        <br>
+        <a routerLink="/job-statistic">job statistic</a>
+        {{user.roles[0].id}}
+      </mat-tab>
+    </div>
+  </div>
 </mat-tab-group>

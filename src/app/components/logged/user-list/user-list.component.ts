@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit, AfterViewChecked {
-
+  searchText: string = "";
   selectedRoles: string[];
   checked = false;
   displayedColumns: string[] = ['id', 'userName', 'email', 'update', 'delete'];
@@ -72,10 +72,12 @@ export class UserListComponent implements OnInit, AfterViewChecked {
     });
   }
   search(searchText) {
+    this.searchText = searchText;
     this.store.dispatch(new UserSearchAction(searchText, this.selectedRoles));
   }
   role(roles) {
-    this.selectedRoles = roles;
-    this.store.dispatch(new LoadUserByChangRoleAction([roles]));
+    this.selectedRoles = [roles];
+    this.store.dispatch(new UserSearchAction(this.searchText, this.selectedRoles));
+    // this.store.dispatch(new LoadUserByChangRoleAction([roles]));
   }
 }

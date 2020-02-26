@@ -191,7 +191,8 @@ class UserControllerRestService extends __BaseService {
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
-    (params.roles || []).forEach(val => {if (val != null) __params = __params.append('roles', val.toString())});
+    console.log(params.roles);
+    (params.roles || []).forEach(val => { if (val != null) __params = __params.append('roles', val.toString()) });
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/users/search`,

@@ -269,6 +269,8 @@ class ClientControllerRestService extends __BaseService {
    *
    * - `page`: page
    *
+   * - `deleted`: deleted
+   *
    * @return OK
    */
   getClientListUsingGETResponse(params: ClientControllerRestService.GetClientListUsingGETParams): __Observable<__StrictHttpResponse<PageClientDto>> {
@@ -277,6 +279,7 @@ class ClientControllerRestService extends __BaseService {
     let __body: any = null;
 
 
+    if (params.deleted != null) __params = __params.set('deleted', params.deleted.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/clients/${params.page}/${params.size}`,
@@ -300,6 +303,8 @@ class ClientControllerRestService extends __BaseService {
    * - `size`: size
    *
    * - `page`: page
+   *
+   * - `deleted`: deleted
    *
    * @return OK
    */
@@ -347,6 +352,11 @@ module ClientControllerRestService {
      * page
      */
     page: number;
+
+    /**
+     * deleted
+     */
+    deleted: boolean;
   }
 }
 

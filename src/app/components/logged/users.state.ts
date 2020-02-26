@@ -151,7 +151,7 @@ export class UsersState {
       tap(
         user => {
           ctx.patchState({
-            userPage: user
+            userPage: user,
           });
         }
       )
@@ -167,8 +167,6 @@ export class UsersState {
   }
   @Action(LoadUserByChangRoleAction)
   loadUserByChangeRole(ctx: StateContext<UsersStateModel>, { roles }: LoadUserByChangRoleAction) {
-    console.log("user.state roles")
-    console.log(roles)
     ctx.dispatch(new UsersPageAction(ctx.getState().page, '', ctx.getState().size, roles));
     ctx.patchState({
       roles

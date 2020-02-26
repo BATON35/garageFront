@@ -32,13 +32,8 @@ import { ClientUpdateComponent } from '../client-update/client-update.component'
 })
 export class ClientListComponent implements OnInit {
 
-  constructor(
-    public store: Store,
-    public matDialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
-    public translateService: TranslateService,
-    public matSnackBar: MatSnackBar) { }
   selectedLanguage = null;
+  expandedElement: any;
   displayedColumns: string[] = [
     'id', 'name', 'email', 'update', 'addVehicle', 'delete'
   ];
@@ -50,12 +45,18 @@ export class ClientListComponent implements OnInit {
   @Select(state => state.client.autocomplete)
   autocomplete$: Observable<string[]>;
 
+  constructor(
+    public store: Store,
+    public matDialog: MatDialog,
+    public breakpointObserver: BreakpointObserver,
+    public translateService: TranslateService,
+    public matSnackBar: MatSnackBar) { }
+
   // isHandset$: Observable<boolean> = this.breakpointObserver
   //   .observe(Breakpoints.Handset)
   //   .pipe(map(result => result.matches));
 
 
-  expandedElement: any;
 
   public isExpansionDetailRow = (i: number, row: ClientDto) => row.vehicles.length > 0;
 
