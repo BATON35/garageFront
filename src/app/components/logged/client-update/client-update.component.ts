@@ -56,7 +56,6 @@ export class ClientUpdateComponent implements OnInit {
           id: this.clientDto !== null ? this.clientDto.id : null,
           name: this.clientForm.value.name,
           email: this.clientForm.value.email,
-          active: this.clientDto.active
         }
       )
     );

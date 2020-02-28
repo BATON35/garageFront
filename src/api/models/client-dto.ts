@@ -1,7 +1,6 @@
 /* tslint:disable */
 import { VehicleDto } from './vehicle-dto';
 export interface ClientDto {
-  active?: number;
   deleted?: boolean;
   email?: string;
   id?: number;
