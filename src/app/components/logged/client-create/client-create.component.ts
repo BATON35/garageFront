@@ -65,8 +65,6 @@ export class ClientCreateComponent implements OnInit {
       },
       validation: {
         messages: {
-          pattern: '',
-          // pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym numerem telefonu`
         }
       },
       expressionProperties: {
@@ -88,7 +86,6 @@ export class ClientCreateComponent implements OnInit {
       },
       validation: {
         messages: {
-          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym adresem email`
         }
       }
     }
@@ -108,10 +105,7 @@ export class ClientCreateComponent implements OnInit {
       new ClientCreateAction(
         {
           name: this.clientForm.value.name,
-          email: this.clientForm.value.email,
-          // surname: this.clientDto.value.surname,
-          // phoneNumber: this.clientDto.value.phoneNumber,
-          // vehicles: this.clientDto.value.vehicles,
+          email: this.clientForm.value.email
         }
       )
     );

@@ -22,22 +22,37 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       key: 'name',
       type: 'input',
       templateOptions: {
-        require: true
       },
       expressionProperties: {
         'templateOptions.label': this.translateService.stream('user.update.name.label'),
-        'templateOptions.placeholder': this.translateService.stream('user.update.name.label')
+        'templateOptions.placeholder': this.translateService.stream('user.update.name.placeholder')
       }
     },
     {
       key: 'surname',
       type: 'input',
       templateOptions: {
-        require: true
       },
       expressionProperties: {
         'templateOptions.label': this.translateService.stream('user.update.surname.label'),
         'templateOptions.placeholder': this.translateService.stream('user.update.surname.placeholder')
+      }
+    },
+    {
+      key: 'password',
+      type: 'input',
+      templateOptions: {
+        validate: true,
+        pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{2,}$'
+      },
+      validation: {
+        messages: {
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.password.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.password.placeholder'),
+        'validation.messages.pattern': this.translateService.stream('user.update.message.pattern')
       }
     },
     {
@@ -46,27 +61,43 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       templateOptions: {
         validate: true,
         pattern: '[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*',
-        type: 'emial',
         required: true
       },
       validation: {
         messages: {
-          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym adresem email`
         }
       },
       expressionProperties: {
         'templateOptions.label': this.translateService.stream('user.update.email.label'),
-        'templateOptions.placeholder': this.translateService.stream('user.update.email.label')
+        'templateOptions.placeholder': this.translateService.stream('user.update.email.placeholder'),
+        'validation.messages.pattern': this.translateService.stream('home.signup.message.email.patter')
+      }
+    },
+    {
+      key: 'phoneNumber',
+      type: 'input',
+      templateOptions: {
+        validate: true,
+        pattern: '^(\\d{3}-{0,1}\\d{3}-{0,1}\\d{3})+$',
+        typt: 'tel',
+      },
+      validation: {
+        messages: {
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.update.phone.number.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.update.phone.number.placeholder'),
+        'validation.messages.pattern': this.translateService.stream('home.login.message.pattern')
       }
     },
     {
       key: 'roles',
       type: 'select',
       templateOptions: {
-        label: 'wybierz role',
-        Placeholder: 'rola urzytkownika',
-        // description: 'urzytkownik powinien posiadac role',
-        require: false,
+        label: 'Wybierz role',
+        Placeholder: 'Rola urzytkownika',
+        required: true,
         multiple: true,
         options: [
           { value: 'ROLE_ADMIN', label: 'Admin' },
@@ -74,13 +105,18 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
           { value: 'ROLE_EMPLOYEE', label: 'Employee' }
         ]
       },
+      validation: {
+        messages: {
+        }
+      },
       expressionProperties: {
         'templateOptions.label': this.translateService.stream('user.update.roles.label'),
         'templateOptions.placeholder': this.translateService.stream('user.update.roles.placeholder'),
+        'validation.messages.required': this.translateService.stream('user.update.roles.message.required'),
         'templateOptions.options[0].label': this.translateService.stream('ROLE_ADMIN'),
         'templateOptions.options[1].label': this.translateService.stream('ROLE_USER'),
         'templateOptions.options[2].label': this.translateService.stream('ROLE_EMPLOYEE'),
-      },
+      }
     }
   ];
 

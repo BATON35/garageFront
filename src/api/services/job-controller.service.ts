@@ -9,7 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { PageJobDto } from '../models/page-job-dto';
 import { JobDto } from '../models/job-dto';
-import { JobResponseDto } from '../models/job-response-dto';
+import { JobHistory } from '../models/job-history';
 import { JobStatisticIncome } from '../models/job-statistic-income';
 
 /**
@@ -157,7 +157,7 @@ class JobControllerService extends __BaseService {
    * @param vehicleId vehicleId
    * @return OK
    */
-  getJobHistoryUsingGETResponse(vehicleId?: number): __Observable<__StrictHttpResponse<Array<JobResponseDto>>> {
+  getJobHistoryUsingGETResponse(vehicleId?: number): __Observable<__StrictHttpResponse<Array<JobHistory>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -175,7 +175,7 @@ class JobControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<JobResponseDto>>;
+        return _r as __StrictHttpResponse<Array<JobHistory>>;
       })
     );
   }
@@ -183,9 +183,9 @@ class JobControllerService extends __BaseService {
    * @param vehicleId vehicleId
    * @return OK
    */
-  getJobHistoryUsingGET(vehicleId?: number): __Observable<Array<JobResponseDto>> {
+  getJobHistoryUsingGET(vehicleId?: number): __Observable<Array<JobHistory>> {
     return this.getJobHistoryUsingGETResponse(vehicleId).pipe(
-      __map(_r => _r.body as Array<JobResponseDto>)
+      __map(_r => _r.body as Array<JobHistory>)
     );
   }
 

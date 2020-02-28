@@ -1,7 +1,6 @@
 /* tslint:disable */
 import { Role } from './role';
 export interface UserDto {
-  active?: number;
   deleted?: boolean;
   email?: string;
   id?: number;

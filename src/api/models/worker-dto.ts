@@ -1,12 +1,11 @@
 /* tslint:disable */
 import { Role } from './role';
 export interface WorkerDto {
-  name?: string;
-  active?: number;
+  deleted?: boolean;
   email?: string;
   id?: number;
   login?: string;
-  deleted?: boolean;
+  name?: string;
   password?: string;
   phoneNumber?: string;
   roles?: Array<Role>;

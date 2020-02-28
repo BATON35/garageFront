@@ -4,7 +4,7 @@ import { Store, Select } from '@ngxs/store';
 import { VehicleDetailsComponent } from '../vehicle-details/vehicle-details.component';
 import { LoadHistoryAction } from '../state/job.state';
 import { Observable } from 'rxjs';
-import { JobResponseDto } from 'src/api/models';
+import { JobHistory } from 'src/api/models';
 
 @Component({
   selector: 'app-vehicle-history',
@@ -13,7 +13,7 @@ import { JobResponseDto } from 'src/api/models';
 })
 export class VehicleHistoryComponent implements OnInit {
   @Select(state => state.job.jobHistory)
-  jobHistory$: Observable<JobResponseDto[]>;
+  jobHistory$: Observable<JobHistory[]>;
   displayedColumns: string[] = ['Part', 'CarService', 'Worker', 'Date'];
   constructor(
     public store: Store,

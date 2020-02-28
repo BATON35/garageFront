@@ -11,7 +11,7 @@ import { WorkerDto } from '../models/worker-dto';
 import { Worker } from '../models/worker';
 import { PageWorkerDto } from '../models/page-worker-dto';
 import { WorkerStatisticSell } from '../models/worker-statistic-sell';
-import { StatisticDto } from '../models/statistic-dto';
+import { StatisticScope } from '../models/statistic-scope';
 
 /**
  * Worker Controller Rest
@@ -197,14 +197,14 @@ class WorkerControllerRestService extends __BaseService {
   }
 
   /**
-   * @param statisticDto statisticDto
+   * @param statisticScope statisticScope
    * @return OK
    */
-  getStatisticUsingPOSTResponse(statisticDto: StatisticDto): __Observable<__StrictHttpResponse<Array<WorkerStatisticSell>>> {
+  getStatisticUsingPOSTResponse(statisticScope: StatisticScope): __Observable<__StrictHttpResponse<Array<WorkerStatisticSell>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = statisticDto;
+    __body = statisticScope;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/api/workers/statistic`,
@@ -223,11 +223,11 @@ class WorkerControllerRestService extends __BaseService {
     );
   }
   /**
-   * @param statisticDto statisticDto
+   * @param statisticScope statisticScope
    * @return OK
    */
-  getStatisticUsingPOST(statisticDto: StatisticDto): __Observable<Array<WorkerStatisticSell>> {
-    return this.getStatisticUsingPOSTResponse(statisticDto).pipe(
+  getStatisticUsingPOST(statisticScope: StatisticScope): __Observable<Array<WorkerStatisticSell>> {
+    return this.getStatisticUsingPOSTResponse(statisticScope).pipe(
       __map(_r => _r.body as Array<WorkerStatisticSell>)
     );
   }

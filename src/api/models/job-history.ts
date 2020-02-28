@@ -2,7 +2,7 @@
 import { CarServiceDto } from './car-service-dto';
 import { PartDto } from './part-dto';
 import { WorkerDto } from './worker-dto';
-export interface JobResponseDto {
+export interface JobHistory {
   carServiceDto?: CarServiceDto;
   createdDate?: string;
   partsDto?: Array<PartDto>;
