@@ -1,10 +1,12 @@
 /* tslint:disable */
 import { Role } from './role';
 export interface UserDto {
-  deleted?: boolean;
+  login?: string;
+  createdBy?: string;
   email?: string;
   id?: number;
-  login?: string;
+  lastModifiedBy?: string;
+  deleted?: boolean;
   name?: string;
   password?: string;
   phoneNumber?: string;

@@ -1,13 +1,20 @@
-import { TranslateService } from '@ngx-translate/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { VehicleDto } from './../../../../api/models/vehicle-dto';
-import { VehicleUpdateAction, VehicleCreateAction, VehicleDeleteAction, ClearVehicleAction } from './../vehicle.state';
-import { Store, Select } from '@ngxs/store';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { UserCreateComponent } from '../user-create/user-create.component';
-import { Observable } from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+import {VehicleDto} from './../../../../api/models/vehicle-dto';
+import {
+  VehicleUpdateAction,
+  VehicleCreateAction,
+  VehicleDeleteAction,
+  ClearVehicleAction,
+  GetBrandAction,
+  GetModelAction
+} from './../vehicle.state';
+import {Store, Select} from '@ngxs/store';
+import {FormlyFieldConfig} from '@ngx-formly/core';
+import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserCreateComponent} from '../user-create/user-create.component';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-vehicle-create',
@@ -59,13 +66,19 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
   errorMessage$: Observable<string>;
   @Select(state => state.vehicle.ok)
   ok$: Observable<boolean>;
+  @Select(state => state.vehicle.brands)
+  brands$: Observable<string[]>;
+  @Select(state => state.vehicle.models)
+  models$: Observable<string[]>;
 
   constructor(
     public store: Store,
     public matDialogRef: MatDialogRef<UserCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public vehicle: any,
     public matSnackBar: MatSnackBar,
-    public translateService: TranslateService) { }
+    public translateService: TranslateService,
+    public formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     if (this.vehicle.vehicleDto) {
@@ -81,11 +94,18 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
           this.vehicle.vehicleDto.model = this.vehicleTemp.model;
           this.vehicle.vehicleDto.numberPlate = this.vehicleTemp.numberPlate;
         }
-        this.matSnackBar.open(this.message, this.config, { duration: 2000 });
+        this.matSnackBar.open(this.message, this.config, {duration: 2000});
         this.matDialogRef.close();
       }
     });
+    this.store.dispatch(new GetBrandAction());
+    this.vehicleForm = this.formBuilder.group({
+      brand: [null, Validators.required],
+      model: [null, Validators.required],
+      numberPlate: [null, Validators.required]
+    });
   }
+
   ngOnDestroy() {
     this.store.dispatch(new ClearVehicleAction());
   }
@@ -98,7 +118,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
         model: this.vehicleForm.value.model,
         numberPlate: this.vehicleForm.value.numberPlate
       };
-      if (vehicleForm != this.vehicle.vehicleDto) {
+      if (vehicleForm !== this.vehicle.vehicleDto) {
         this.store.dispatch(
           new VehicleUpdateAction(
             {
@@ -122,12 +142,18 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
       );
     }
   }
+
   deleteVehicle(id) {
     this.store.dispatch(new VehicleDeleteAction(id));
   }
+
   saveFile(file: FileList) {
     Array.from(file).forEach(element => {
       this.file.push(element);
     });
+  }
+
+  selectBrand(brand: string) {
+    this.store.dispatch(new GetModelAction(brand));
   }
 }

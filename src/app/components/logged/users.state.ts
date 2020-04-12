@@ -11,7 +11,7 @@ export class ClearUserAction {
 }
 export class UsersPageAction {
   static readonly type = '[User] UsersPageAction';
-  constructor(public page: number, public searchText: string, public size: number, public roles: string[]) { }
+  constructor(public page: number, public searchText: string, public size: number, public roles: string[], public deleted?: boolean) { }
 }
 export class UsersDeleteAction {
   static readonly type = '[User] UsersDeleteAction';
@@ -27,7 +27,7 @@ export class UserCreateAction {
 }
 export class UserSearchAction {
   static readonly type = '[User] UserSearchAction';
-  constructor(public searchText: string, public roles: string[]) { }
+  constructor(public searchText: string, public roles: string[], public deleted?: boolean) { }
 }
 
 export class BackToDefoultUserAction {
@@ -43,8 +43,14 @@ export class ChangePasswordAction {
   static readonly type = '[User] ChangePasswordAction';
   constructor(public password: string) { }
 }
+export class RestoreUserAction {
+  static readonly type = '[User] RestoreUserAction';
+  constructor(public id: number) { }
+}
+
 export class UsersStateModel {
   userPage: PageUserDto;
+  deletedUserPage: PageUserDto;
   page: number;
   searchText: string;
   size: number;
@@ -58,6 +64,7 @@ export class UsersStateModel {
   name: 'users',
   defaults: {
     userPage: {},
+    deletedUserPage: {},
     page: 0,
     searchText: '',
     size: 5,
@@ -72,17 +79,26 @@ export class UsersState {
     public matSnackBar: MatSnackBar) { }
 
   @Action(UsersPageAction)
-  add(ctx: StateContext<UsersStateModel>, { page, searchText, size, roles }: UsersPageAction) {
+  add(ctx: StateContext<UsersStateModel>, { page, searchText, size, roles, deleted }: UsersPageAction) {
     return this.userService
-      .searchUsersUsingGET({ size, searchText, page, roles })
+      .searchUsersUsingGET({ size, searchText, page, roles, deleted })
       .pipe(
         tap(value => {
-          ctx.patchState({
-            userPage: value,
-            page,
-            searchText,
-            size
-          });
+          if (!deleted) {
+            ctx.patchState({
+              userPage: value,
+              page,
+              searchText,
+              size,
+            });
+          } else {
+            ctx.patchState({
+              deletedUserPage: value,
+              page,
+              searchText,
+              size,
+            });
+          }
         })
 
       );
@@ -146,13 +162,19 @@ export class UsersState {
     }));
   }
   @Action(UserSearchAction)
-  search(ctx: StateContext<UsersStateModel>, { searchText, roles }: UserSearchAction) {
-    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 0, roles }).pipe(
+  search(ctx: StateContext<UsersStateModel>, { searchText, roles, deleted }: UserSearchAction) {
+    return this.userService.searchUsersUsingGET({ size: ctx.getState().size, searchText, page: 0, roles, deleted }).pipe(
       tap(
         user => {
-          ctx.patchState({
-            userPage: user,
-          });
+          if (!deleted) {
+            ctx.patchState({
+              userPage: user,
+            });
+          } else {
+            ctx.patchState({
+              deletedUserPage: user,
+            });
+          }
         }
       )
     );
@@ -183,4 +205,15 @@ export class UsersState {
   changePassword(ctx: StateContext<UsersStateModel>, { password }: ChangePasswordAction) {
     return this.userService.changePasswordUsingPOST({ password });
   }
+
+  @Action(RestoreUserAction)
+  restoreUser(ctx: StateContext<UsersStateModel>, { id }: RestoreUserAction) {
+    return this.userService.restoreUserUsingPUT(id).pipe(tap(user => {
+      const page = ctx.getState().page;
+      const size = ctx.getState().size;
+      ctx.dispatch(new UsersPageAction(page, '', size, null, true));
+      this.matSnackBar.open("przywrócono", "ok", { duration: 2000 });
+    }));
+  }
+
 }

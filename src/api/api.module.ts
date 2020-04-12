@@ -11,6 +11,7 @@ import { MailTemplateControllerRestService } from './services/mail-template-cont
 import { RoleControllerService } from './services/role-controller.service';
 import { UserControllerRestService } from './services/user-controller-rest.service';
 import { VehicleControllerRestService } from './services/vehicle-controller-rest.service';
+import { NotificationControllerService } from './services/notification-controller.service';
 import { WorkerControllerRestService } from './services/worker-controller-rest.service';
 import { PartControllerRestService } from './services/part-controller-rest.service';
 
@@ -35,6 +36,7 @@ import { PartControllerRestService } from './services/part-controller-rest.servi
     RoleControllerService,
     UserControllerRestService,
     VehicleControllerRestService,
+    NotificationControllerService,
     WorkerControllerRestService,
     PartControllerRestService
   ],

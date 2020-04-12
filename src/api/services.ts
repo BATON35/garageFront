@@ -6,5 +6,6 @@ export { MailTemplateControllerRestService } from './services/mail-template-cont
 export { RoleControllerService } from './services/role-controller.service';
 export { UserControllerRestService } from './services/user-controller-rest.service';
 export { VehicleControllerRestService } from './services/vehicle-controller-rest.service';
+export { NotificationControllerService } from './services/notification-controller.service';
 export { WorkerControllerRestService } from './services/worker-controller-rest.service';
 export { PartControllerRestService } from './services/part-controller-rest.service';

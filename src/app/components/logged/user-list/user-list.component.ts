@@ -3,11 +3,12 @@ import { UserCreateComponent } from './../user-create/user-create.component';
 import { UsersPageAction, UsersDeleteAction, UserSearchAction, LoadUserByChangRoleAction } from './../users.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { PageUserDto } from 'src/api/models';
 import { MatDialog } from '@angular/material';
 import { UserUpdateComponent } from '../user-update/user-update.component';
 import { TranslateService } from '@ngx-translate/core';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-list',
@@ -15,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit, AfterViewChecked {
+  subject: Subject<string> = new Subject();
   searchText: string = "";
   selectedRoles: string[];
   checked = false;
@@ -48,12 +50,18 @@ export class UserListComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
+    console.log("user-list onInit")
     this.store.dispatch(new UsersPageAction(0, '', 5, null));
+    this.subject.pipe(debounceTime(1000)).subscribe(text => {
+      this.searchText = text;
+      this.store.dispatch(new UserSearchAction(text, this.selectedRoles));
+    })
   }
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
   }
   changePage(event) {
+    console.log("user-list change page")
     console.log(event)
     this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, this.selectedRoles));
   }
@@ -71,10 +79,10 @@ export class UserListComponent implements OnInit, AfterViewChecked {
       data: user
     });
   }
-  search(searchText) {
-    this.searchText = searchText;
-    this.store.dispatch(new UserSearchAction(searchText, this.selectedRoles));
-  }
+  // search(searchText) {
+  //   this.searchText = searchText;
+  //   this.store.dispatch(new UserSearchAction(searchText, this.selectedRoles));
+  // }
   role(roles) {
     this.selectedRoles = [roles];
     this.store.dispatch(new UserSearchAction(this.searchText, this.selectedRoles));

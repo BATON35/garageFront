@@ -17,10 +17,10 @@ import { PageTemplate } from '../models/page-template';
   providedIn: 'root',
 })
 class MailTemplateControllerRestService extends __BaseService {
-  static readonly saveMailTemplateUsingPOSTPath = '/api/mail-template';
-  static readonly updateMailTemplateUsingPUTPath = '/api/mail-template';
-  static readonly deleteMailTemplateUsingDELETEPath = '/api/mail-template/{id}';
-  static readonly getListUsingGETPath = '/api/mail-template/{page}/[size}';
+  static readonly saveMailTemplateUsingPOSTPath = '/api/mail-body';
+  static readonly updateMailTemplateUsingPUTPath = '/api/mail-body';
+  static readonly deleteMailTemplateUsingDELETEPath = '/api/mail-body/{id}';
+  static readonly getListUsingGETPath = '/api/mail-body/{page}/[size}';
 
   constructor(
     config: __Configuration,
@@ -40,7 +40,7 @@ class MailTemplateControllerRestService extends __BaseService {
     __body = template;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/api/mail-template`,
+      this.rootUrl + `/api/mail-body`,
       __body,
       {
         headers: __headers,
@@ -76,7 +76,7 @@ class MailTemplateControllerRestService extends __BaseService {
     __body = template;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/api/mail-template`,
+      this.rootUrl + `/api/mail-body`,
       __body,
       {
         headers: __headers,
@@ -111,7 +111,7 @@ class MailTemplateControllerRestService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/mail-template/${id}`,
+      this.rootUrl + `/api/mail-body/${id}`,
       __body,
       {
         headers: __headers,
@@ -152,7 +152,7 @@ class MailTemplateControllerRestService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/mail-template/${params.page}/[size}`,
+      this.rootUrl + `/api/mail-body/${params.page}/[size}`,
       __body,
       {
         headers: __headers,

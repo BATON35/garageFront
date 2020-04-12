@@ -20,6 +20,7 @@ class ClientControllerRestService extends __BaseService {
   static readonly saveClientUsingPOSTPath = '/api/clients';
   static readonly updateClientUsingPUTPath = '/api/clients';
   static readonly autocompleteUsingGETPath = '/api/clients/autoComplete';
+  static readonly restoreClientUsingPUTPath = '/api/clients/restore';
   static readonly searchClientsUsingGETPath = '/api/clients/search';
   static readonly getClientByIdUsingGETPath = '/api/clients/{id}';
   static readonly deleteClientUsingDELETEPath = '/api/clients/{id}';
@@ -141,6 +142,40 @@ class ClientControllerRestService extends __BaseService {
   }
 
   /**
+   * @param id id
+   */
+  restoreClientUsingPUTResponse(id?: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (id != null) __params = __params.set('id', id.toString());
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/clients/restore`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  restoreClientUsingPUT(id?: number): __Observable<null> {
+    return this.restoreClientUsingPUTResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
    * @param params The `ClientControllerRestService.SearchClientsUsingGETParams` containing the following parameters:
    *
    * - `size`: size
@@ -148,6 +183,8 @@ class ClientControllerRestService extends __BaseService {
    * - `searchText`: searchText
    *
    * - `page`: page
+   *
+   * - `deleted`: deleted
    *
    * @return OK
    */
@@ -158,6 +195,7 @@ class ClientControllerRestService extends __BaseService {
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.deleted != null) __params = __params.set('deleted', params.deleted.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/clients/search`,
@@ -183,6 +221,8 @@ class ClientControllerRestService extends __BaseService {
    * - `searchText`: searchText
    *
    * - `page`: page
+   *
+   * - `deleted`: deleted
    *
    * @return OK
    */
@@ -336,6 +376,11 @@ module ClientControllerRestService {
      * page
      */
     page: number;
+
+    /**
+     * deleted
+     */
+    deleted?: boolean;
   }
 
   /**
@@ -356,7 +401,7 @@ module ClientControllerRestService {
     /**
      * deleted
      */
-    deleted: boolean;
+    deleted?: boolean;
   }
 }
 

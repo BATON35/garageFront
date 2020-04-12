@@ -61,6 +61,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { JobStatisticComponent } from './job-statistic/job-statistic.component';
 import { JobStatisticState } from './state/job-statistic.state';
 import { ClientUpdateComponent } from './client-update/client-update.component';
+import { ClientRestoreComponent } from './client-restore/client-restore.component';
+import { UserRestoreComponent } from './user-restore/user-restore.component';
+import { WebSocketService } from './web-socket.service';
+import { WebSocketComponent } from './web-socket/web-socket.component';
 
 
 const routs: Routes = [
@@ -118,6 +122,10 @@ const routs: Routes = [
     data: {
       role: ['ROLE_ADMIN']
     }
+  },
+  {
+    path: 'web-socket',
+    component: WebSocketComponent,
   }
 ];
 @NgModule({
@@ -139,8 +147,10 @@ const routs: Routes = [
     UserUpdateComponent,
     ChangePasswordComponent,
     JobStatisticComponent,
-    ClientUpdateComponent
-
+    ClientUpdateComponent,
+    ClientRestoreComponent,
+    UserRestoreComponent,
+    WebSocketComponent
 
   ],
   imports: [
@@ -203,7 +213,8 @@ const routs: Routes = [
     ClientUpdateComponent
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    WebSocketService
   ]
 
 })
