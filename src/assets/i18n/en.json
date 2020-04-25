@@ -1,5 +1,6 @@
 {
   "menu.login": "Login",
+  "menu.password": "Change password",
   "menu.dashboard": "Dashboard",
   "menu.parts": "Create part",
   "menu.logout": "Logout",

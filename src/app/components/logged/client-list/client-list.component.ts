@@ -52,12 +52,6 @@ export class ClientListComponent implements OnInit {
     public translateService: TranslateService,
     public matSnackBar: MatSnackBar) { }
 
-  // isHandset$: Observable<boolean> = this.breakpointObserver
-  //   .observe(Breakpoints.Handset)
-  //   .pipe(map(result => result.matches));
-
-
-
   public isExpansionDetailRow = (i: number, row: ClientDto) => row.vehicles.length > 0;
 
   ngOnInit() {
@@ -65,6 +59,8 @@ export class ClientListComponent implements OnInit {
   }
 
   changePage(event) {
+    console.log('clien event');
+    console.log(event);
     this.store.dispatch(new ClietnPageAction(event.pageIndex, event.pageSize));
   }
 

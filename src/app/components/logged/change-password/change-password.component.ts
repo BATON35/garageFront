@@ -16,8 +16,8 @@ export class ChangePasswordComponent implements OnInit {
       key: 'password',
       type: 'input',
       templateOptions: {
-        label: 'strange behavior',
-        placeholder: 'do not remove',
+        label: 'Zmien hasło',
+        placeholder: 'Zmien hasło',
         type: 'password',
         required: true,
         minLength: 6,
@@ -28,8 +28,8 @@ export class ChangePasswordComponent implements OnInit {
       key: 'confirmPassword',
       type: 'input',
       templateOptions: {
-        label: 'strange behavior',
-        placeholder: 'do not remove',
+        label: 'Powtórz hasło',
+        placeholder: 'Powtórz hasło',
         type: 'password',
         required: true
       },

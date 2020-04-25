@@ -79,6 +79,6 @@ export class ServiceCarState {
     return this.carServiceControllerRestService.deleteCarServiceUsingDELETE(id).pipe(tap(serviceCar => {
       ctx.dispatch(new LoadServiceCarPageAction(ctx.getState().page, ctx.getState().size));
       this.matSnackBar.open("usunieto", "usnieto", { duration: 2000 })
-    }))
+    }));
   }
 }

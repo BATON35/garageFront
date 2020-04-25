@@ -29,8 +29,18 @@
     <mat-form-field>
       <mat-label>Model</mat-label>
       <mat-select formControlName="model">
-        <mat-option *ngFor="let model of models$ | async" [value]="model">
+        <mat-option *ngFor="let model of models$ | async" [value]="model" (click)="selectDate(model)">
           {{model}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Production date</mat-label>
+      <mat-select formControlName="date">
+        <mat-option *ngFor="let date of productionDate$ | async" [value]="date">
+          {{date}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -43,7 +53,7 @@
   </p>
   <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid"
           (click)="submit()">
-    {{"vehicle.add.button" | translate}}
+    Zapisz
   </button>
 </form>
 

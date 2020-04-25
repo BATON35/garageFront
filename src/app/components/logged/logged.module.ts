@@ -63,9 +63,7 @@ import { JobStatisticState } from './state/job-statistic.state';
 import { ClientUpdateComponent } from './client-update/client-update.component';
 import { ClientRestoreComponent } from './client-restore/client-restore.component';
 import { UserRestoreComponent } from './user-restore/user-restore.component';
-import { WebSocketService } from './web-socket.service';
-import { WebSocketComponent } from './web-socket/web-socket.component';
-
+import {CarState} from './state/car.state';
 
 const routs: Routes = [
   {
@@ -122,12 +120,7 @@ const routs: Routes = [
     data: {
       role: ['ROLE_ADMIN']
     }
-  },
-  {
-    path: 'web-socket',
-    component: WebSocketComponent,
-  }
-];
+  }]
 @NgModule({
   declarations: [
     ControlPanelComponent,
@@ -149,9 +142,7 @@ const routs: Routes = [
     JobStatisticComponent,
     ClientUpdateComponent,
     ClientRestoreComponent,
-    UserRestoreComponent,
-    WebSocketComponent
-
+    UserRestoreComponent
   ],
   imports: [
     BrowserModule,
@@ -175,7 +166,8 @@ const routs: Routes = [
       WorkerState,
       FileState,
       WorkerStatisticState,
-      JobStatisticState
+      JobStatisticState,
+      CarState
     ]),
     MatIconModule,
     MatGridListModule,
@@ -213,8 +205,7 @@ const routs: Routes = [
     ClientUpdateComponent
   ],
   providers: [
-    AuthGuard,
-    WebSocketService
+    AuthGuard
   ]
 
 })

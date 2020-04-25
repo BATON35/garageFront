@@ -45,11 +45,6 @@
         </table>
         <div>
             <div style="display:inline">
-                <button (click)="addClient()" type="submit" class="button" mat-raised-button color="primary">
-                    {{"client.add.button" | translate}}
-                </button>
-            </div>
-            <div style="display:inline">
                 <mat-paginator (page)="changePage($event)" [length]="clients.totalElements" [pageSize]="clients.size"
                     [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
             </div>

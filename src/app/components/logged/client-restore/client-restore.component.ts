@@ -29,8 +29,14 @@ export class ClientRestoreComponent implements OnInit {
     });
   }
   restore(id) {
-    console.log("client Restore")
-    this.store.dispatch(new RestoreClientAction(id))
+    console.log('client Restore')
+    this.store.dispatch(new RestoreClientAction(id));
+  }
+
+  changePage(event) {
+    console.log('clien event');
+    console.log(event);
+    this.store.dispatch(new ClietnPageAction(event.pageIndex, event.pageSize, true));
   }
 
 }

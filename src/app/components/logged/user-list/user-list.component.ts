@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit, AfterViewChecked {
   displayedColumns: string[] = ['id', 'userName', 'email', 'update', 'delete'];
   roles = [
     {
-      label: "Pracownik",
+      label: 'Pracownik',
       value: 'ROLE_EMPLOYEE'
     },
     {
@@ -50,19 +50,16 @@ export class UserListComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    console.log("user-list onInit")
     this.store.dispatch(new UsersPageAction(0, '', 5, null));
     this.subject.pipe(debounceTime(1000)).subscribe(text => {
       this.searchText = text;
       this.store.dispatch(new UserSearchAction(text, this.selectedRoles));
-    })
+    });
   }
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
   }
   changePage(event) {
-    console.log("user-list change page")
-    console.log(event)
     this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, this.selectedRoles));
   }
   delete(id) {
@@ -79,13 +76,8 @@ export class UserListComponent implements OnInit, AfterViewChecked {
       data: user
     });
   }
-  // search(searchText) {
-  //   this.searchText = searchText;
-  //   this.store.dispatch(new UserSearchAction(searchText, this.selectedRoles));
-  // }
   role(roles) {
     this.selectedRoles = [roles];
     this.store.dispatch(new UserSearchAction(this.searchText, this.selectedRoles));
-    // this.store.dispatch(new LoadUserByChangRoleAction([roles]));
   }
 }

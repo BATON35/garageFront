@@ -57,21 +57,6 @@ export class BackToDefoultVehicleAction {
   }
 }
 
-export class GetBrandAction {
-  static readonly type = '[Vehicle] GetBrandAction';
-
-  constructor() {
-  }
-}
-
-export class GetModelAction {
-  static readonly type = '[Vehicle] GetModelAction';
-
-  constructor(public model: string) {
-  }
-}
-
-
 export class VehicleStateModel {
   vehiclePage: PageVehicleDto;
   page: number;
@@ -79,8 +64,6 @@ export class VehicleStateModel {
   autocompleteVehicle: VehicleDto[];
   errorMessage: string;
   ok: boolean;
-  brands: string[];
-  models: string[];
 }
 
 @State<VehicleStateModel>({
@@ -91,9 +74,7 @@ export class VehicleStateModel {
     size: 5,
     autocompleteVehicle: [],
     errorMessage: null,
-    ok: false,
-    brands: [],
-    models: []
+    ok: false
   }
 })
 export class VehicleState {
@@ -172,25 +153,6 @@ export class VehicleState {
       ok: false
     });
   }
-
-  @Action(GetBrandAction)
-  getBrand(ctx: StateContext<VehicleStateModel>, {}: GetBrandAction) {
-    return this.vehicleService.getBrandUsingGET().pipe(
-      tap(brands => ctx.patchState({
-        brands
-      }))
-    );
-  }
-
-  @Action(GetModelAction)
-  getModel(ctx: StateContext<VehicleStateModel>, {model}: GetModelAction) {
-    return this.vehicleService.getModelUsingGET(model).pipe(
-      tap(models => ctx.patchState({
-        models
-      }))
-    );
-  }
-
 
 }
 

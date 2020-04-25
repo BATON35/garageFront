@@ -114,24 +114,28 @@ export class HomeComponent implements OnInit, OnDestroy {
       key: 'password',
       type: 'input',
       templateOptions: {
-        label: 'strange behavior',
-        placeholder: 'do not remove',
+        validate: true,
+        label: 'required for expression Properties',
+        placeholder: 'required for expression Properties',
         type: 'password',
-        required: true,
-        minLength: 6,
-        maxLength: 34
+        pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{2,}$'
+      },
+      validation: {
+        messages: {
+        }
       },
       expressionProperties: {
-        'templateOptions.label': this.translateService.stream('home.password.label'),
-        'templateOptions.placeholder': this.translateService.stream('home.password.placeholder')
+        'templateOptions.label': this.translateService.stream('user.password.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.password.placeholder'),
+        'validation.messages.pattern': this.translateService.stream('user.update.message.pattern')
       }
     },
     {
       key: 'confirmPassword',
       type: 'input',
       templateOptions: {
-        label: 'strange behavior',
-        placeholder: 'do not remove',
+        label: 'required for expression Properties',
+        placeholder: 'required for expression Properties',
         type: 'password',
         required: true
       },

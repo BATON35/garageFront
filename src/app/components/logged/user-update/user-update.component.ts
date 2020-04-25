@@ -38,23 +38,23 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
         'templateOptions.placeholder': this.translateService.stream('user.update.surname.placeholder')
       }
     },
-    {
-      key: 'password',
-      type: 'input',
-      templateOptions: {
-        validate: true,
-        pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{2,}$'
-      },
-      validation: {
-        messages: {
-        }
-      },
-      expressionProperties: {
-        'templateOptions.label': this.translateService.stream('user.password.label'),
-        'templateOptions.placeholder': this.translateService.stream('user.password.placeholder'),
-        'validation.messages.pattern': this.translateService.stream('user.update.message.pattern')
-      }
-    },
+    // {
+    //   key: 'password',
+    //   type: 'input',
+    //   templateOptions: {
+    //     validate: true,
+    //     pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{2,}$'
+    //   },
+    //   validation: {
+    //     messages: {
+    //     }
+    //   },
+    //   expressionProperties: {
+    //     'templateOptions.label': this.translateService.stream('user.password.label'),
+    //     'templateOptions.placeholder': this.translateService.stream('user.password.placeholder'),
+    //     'validation.messages.pattern': this.translateService.stream('user.update.message.pattern')
+    //   }
+    // },
     {
       key: 'email',
       type: 'input',
@@ -79,7 +79,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
       templateOptions: {
         validate: true,
         pattern: '^(\\d{3}-{0,1}\\d{3}-{0,1}\\d{3})+$',
-        typt: 'tel',
+        typ: 'tel',
       },
       validation: {
         messages: {
@@ -137,7 +137,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
     if (this.userDto) {
       this.ok$.subscribe(element => {
         if (element === true) {
-          this.matSnackBar.open('zapisano', 'zamknij', { duration: 2000 });
+          this.matSnackBar.open('zapisano', 'zamknij', { duration: 1000 });
           this.matDialogRef.close();
           this.store.dispatch(new ClearUserAction());
         }
@@ -146,7 +146,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
         name: this.userDto.name,
         surname: this.userDto.surname,
         email: this.userDto.email,
-        password: this.userDto.password,
+        phoneNumber: this.userDto.phoneNumber,
         roles: this.userDto.roles.map(role => role.name)
       };
     }
@@ -165,9 +165,10 @@ export class UserUpdateComponent implements OnInit, OnDestroy, AfterViewChecked 
         name: this.userUpdateForm.value.name,
         surname: this.userUpdateForm.value.surname,
         email: this.userUpdateForm.value.email,
+        phoneNumber: this.userUpdateForm.value.phoneNumber,
         roles: this.userUpdateForm.value.roles.map(role => {
           return { name: role };
-        })
+        }),
       }
     ));
   }

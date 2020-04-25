@@ -5,9 +5,7 @@ import {
   VehicleUpdateAction,
   VehicleCreateAction,
   VehicleDeleteAction,
-  ClearVehicleAction,
-  GetBrandAction,
-  GetModelAction
+  ClearVehicleAction
 } from './../vehicle.state';
 import {Store, Select} from '@ngxs/store';
 import {FormlyFieldConfig} from '@ngx-formly/core';
@@ -15,6 +13,7 @@ import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserCreateComponent} from '../user-create/user-create.component';
 import {Observable} from 'rxjs';
+import {GetBrandAction, GetModelAction, GetProductionDateAction} from '../state/car.state';
 
 @Component({
   selector: 'app-vehicle-create',
@@ -27,49 +26,17 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
   vehicleTemp: VehicleDto = {};
   file: File[] = [];
   vehicleForm = new FormGroup({});
-  vehicleFields: FormlyFieldConfig[] = [
-    {
-      key: 'brand',
-      type: 'input',
-      templateOptions: {
-        require: true
-      },
-      expressionProperties: {
-        'templateOptions.label': this.translateService.stream('vehicle.add.brand.label'),
-        'templateOptions.placeholder': this.translateService.stream('vehicle.add.brand.placeholder')
-      }
-    },
-    {
-      key: 'model',
-      type: 'input',
-      templateOptions: {
-        require: true
-      },
-      expressionProperties: {
-        'templateOptions.label': this.translateService.stream('vehicle.add.model.label'),
-        'templateOptions.placeholder': this.translateService.stream('vehicle.add.model.placeholder')
-      }
-    },
-    {
-      key: 'numberPlate',
-      type: 'input',
-      templateOptions: {
-        require: true
-      },
-      expressionProperties: {
-        'templateOptions.label': this.translateService.stream('vehicle.add.numberPlate.label'),
-        'templateOptions.placeholder': this.translateService.stream('vehicle.add.numberPlate.pladeholder')
-      }
-    }
-  ];
+
   @Select(state => state.vehicle.errorMessage)
   errorMessage$: Observable<string>;
   @Select(state => state.vehicle.ok)
   ok$: Observable<boolean>;
-  @Select(state => state.vehicle.brands)
+  @Select(state => state.car.brands)
   brands$: Observable<string[]>;
-  @Select(state => state.vehicle.models)
+  @Select(state => state.car.models)
   models$: Observable<string[]>;
+  @Select(state => state.car.productionDate)
+  productionDate$: Observable<string[]>;
 
   constructor(
     public store: Store,
@@ -98,11 +65,12 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
         this.matDialogRef.close();
       }
     });
-    this.store.dispatch(new GetBrandAction());
+    this.store.dispatch(new GetBrandAction ());
     this.vehicleForm = this.formBuilder.group({
       brand: [null, Validators.required],
       model: [null, Validators.required],
-      numberPlate: [null, Validators.required]
+      numberPlate: [null, Validators.required],
+      date: [null, Validators.required]
     });
   }
 
@@ -116,6 +84,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
         id: this.vehicle.vehicleDto.id,
         brand: this.vehicleForm.value.brand,
         model: this.vehicleForm.value.model,
+        productionDate: this.vehicleForm.value.date,
         numberPlate: this.vehicleForm.value.numberPlate
       };
       if (vehicleForm !== this.vehicle.vehicleDto) {
@@ -125,6 +94,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
               id: this.vehicle.vehicleDto.id,
               brand: this.vehicleForm.value.brand,
               model: this.vehicleForm.value.model,
+              productionDate: this.vehicleForm.value.date,
               numberPlate: this.vehicleForm.value.numberPlate
             }, this.file
           )
@@ -136,6 +106,7 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
           {
             brand: this.vehicleForm.value.brand,
             model: this.vehicleForm.value.model,
+            productionDate: this.vehicleForm.value.date,
             numberPlate: this.vehicleForm.value.numberPlate
           }, this.vehicle.client
         )
@@ -155,5 +126,9 @@ export class VehicleCreateComponent implements OnInit, OnDestroy {
 
   selectBrand(brand: string) {
     this.store.dispatch(new GetModelAction(brand));
+  }
+
+  selectDate(model: string) {
+    this.store.dispatch(new GetProductionDateAction(this.vehicleForm.value.brand, model));
   }
 }

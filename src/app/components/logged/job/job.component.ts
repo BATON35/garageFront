@@ -83,8 +83,6 @@ export class JobComponent implements OnInit {
   }
   save() {
     this.store.dispatch(new SaveJobAction(this.workerId, this.temp.map(e => e.id), this.serviceId, this.vehicleNumberPlate));
-    console.log(this.partAutocomplete$)
-    console.log(this.temp)
   }
   traySelect(event) {
     this.temp.push(event.option.value)
@@ -97,7 +95,7 @@ export class JobComponent implements OnInit {
   // }
   remove(part) {
     const index = this.temp.indexOf(part)
-    this.temp.splice(index, 1)
+    this.temp.splice(index, 1);
   }
 
 }

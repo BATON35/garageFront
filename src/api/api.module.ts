@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
 import { CarServiceControllerRestService } from './services/car-service-controller-rest.service';
+import { CarControllerRestService } from './services/car-controller-rest.service';
 import { ClientControllerRestService } from './services/client-controller-rest.service';
 import { FileControllerService } from './services/file-controller.service';
 import { JobControllerService } from './services/job-controller.service';
@@ -29,6 +30,7 @@ import { PartControllerRestService } from './services/part-controller-rest.servi
   providers: [
     ApiConfiguration,
     CarServiceControllerRestService,
+    CarControllerRestService,
     ClientControllerRestService,
     FileControllerService,
     JobControllerService,

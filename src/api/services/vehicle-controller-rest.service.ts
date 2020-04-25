@@ -20,8 +20,6 @@ class VehicleControllerRestService extends __BaseService {
   static readonly getVehicleListUsingGETPath = '/api/vehicles';
   static readonly updateVehicleUsingPUTPath = '/api/vehicles';
   static readonly autocompleteVehicleUsingGETPath = '/api/vehicles/autoComplete';
-  static readonly getBrandUsingGETPath = '/api/vehicles/brand';
-  static readonly getModelUsingGETPath = '/api/vehicles/model';
   static readonly getPhotosPathsUsingGETPath = '/api/vehicles/photo/{id}';
   static readonly saveVehicleUsingPOSTPath = '/api/vehicles/{clientId}';
   static readonly getVehicleByIdUsingGETPath = '/api/vehicles/{id}';
@@ -176,75 +174,6 @@ class VehicleControllerRestService extends __BaseService {
   autocompleteVehicleUsingGET(text: string): __Observable<Array<VehicleDto>> {
     return this.autocompleteVehicleUsingGETResponse(text).pipe(
       __map(_r => _r.body as Array<VehicleDto>)
-    );
-  }
-
-  /**
-   * @return OK
-   */
-  getBrandUsingGETResponse(): __Observable<__StrictHttpResponse<Array<string>>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/vehicles/brand`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Array<string>>;
-      })
-    );
-  }
-  /**
-   * @return OK
-   */
-  getBrandUsingGET(): __Observable<Array<string>> {
-    return this.getBrandUsingGETResponse().pipe(
-      __map(_r => _r.body as Array<string>)
-    );
-  }
-
-  /**
-   * @param model model
-   * @return OK
-   */
-  getModelUsingGETResponse(model: string): __Observable<__StrictHttpResponse<Array<string>>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    if (model != null) __params = __params.set('model', model.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/vehicles/model`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Array<string>>;
-      })
-    );
-  }
-  /**
-   * @param model model
-   * @return OK
-   */
-  getModelUsingGET(model: string): __Observable<Array<string>> {
-    return this.getModelUsingGETResponse(model).pipe(
-      __map(_r => _r.body as Array<string>)
     );
   }
 

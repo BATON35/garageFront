@@ -20,12 +20,13 @@ export class UserRestoreComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new UsersPageAction(0, "", 5, null, true))
   }
-
   restore(id) {
     this.store.dispatch(new RestoreUserAction(id));
   }
   search(text) {
     this.store.dispatch(new UserSearchAction(text, null, true));
   }
-
+  changePage(event) {
+    this.store.dispatch(new UsersPageAction(event.pageIndex, '', event.pageSize, [], true));
+  }
 }

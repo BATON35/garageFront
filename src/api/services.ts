@@ -1,4 +1,5 @@
 export { CarServiceControllerRestService } from './services/car-service-controller-rest.service';
+export { CarControllerRestService } from './services/car-controller-rest.service';
 export { ClientControllerRestService } from './services/client-controller-rest.service';
 export { FileControllerService } from './services/file-controller.service';
 export { JobControllerService } from './services/job-controller.service';
