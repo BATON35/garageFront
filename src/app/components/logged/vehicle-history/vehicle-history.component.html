@@ -1,18 +1,35 @@
 <div *ngIf=" jobHistory$ | async as  jobHistory">
     <table mat-table [dataSource]="jobHistory" class="mat-elevation-z8">
         <ng-container matColumnDef="Part">
-            <mat-header-cell *matHeaderCellDef> Part </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> {{"vehicle.showhistory.part" | translate}} </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <div *ngFor="let item of element.partsDto"> {{ item.name }} {{item.price}}</div>
+                <div *ngFor="let part of element.partsDto"> {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    {{ part.name }}
+                    <!-- {{part.price}} -->
+                </div>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="CarService">
-            <mat-header-cell *matHeaderCellDef> CarService </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.carServiceDto.name }} {{ element.carServiceDto.price }}
+            <mat-header-cell *matHeaderCellDef> {{"vehicle.showhistory.service" | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.carServiceDto.name }}
+                <!-- {{ element.carServiceDto.price }} -->
             </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="Worker">
+            <mat-header-cell *matHeaderCellDef> {{"vehicle.showhistory.worker" | translate}} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.workerDto.name }} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="Date">
-            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> {{"vehicle.showhistory.date" | translate}} </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{ element.createdDate }} </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

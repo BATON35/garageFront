@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
     if (token) {
       if (route.data.role) {
         const currentUser = this.store.selectSnapshot(AuthState.currentUser);
-        if (currentUser.roles) {
+        if (currentUser && currentUser.roles) {
           return currentUser.roles.some(role => route.data.role.includes(role.name));
         } else {
           return false;

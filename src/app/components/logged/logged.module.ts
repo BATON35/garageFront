@@ -27,7 +27,8 @@ import {
   MatCardModule,
   MatSidenavModule,
   MatSnackBarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatChipsModule
 } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 import { UsersState } from './users.state';
@@ -45,7 +46,7 @@ import { JobState } from './state/job.state';
 import { ServiceCarComponent } from './service-car/service-car.component';
 import { ServiceCarState } from './state/service-car.state';
 import { PartCreateComponent } from './part-create/part-create.component';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { VehicleHistoryComponent } from './vehicle-history/vehicle-history.component';
 import { FileState } from './state/file.state';
 import { ServiceCreateComponent } from './service-create/service-create.component';
@@ -54,6 +55,15 @@ import { ChartsModule } from 'ng2-charts';
 import { WorkerStatisticComponent } from './worker-statistic/worker-statistic.component';
 import { WorkerStatisticState } from './state/worker-statistic.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { UserUpdateComponent } from './user-update/user-update.component';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { JobStatisticComponent } from './job-statistic/job-statistic.component';
+import { JobStatisticState } from './state/job-statistic.state';
+import { ClientUpdateComponent } from './client-update/client-update.component';
+import { ClientRestoreComponent } from './client-restore/client-restore.component';
+import { UserRestoreComponent } from './user-restore/user-restore.component';
+import {CarState} from './state/car.state';
 
 const routs: Routes = [
   {
@@ -61,7 +71,14 @@ const routs: Routes = [
     component: ControlPanelComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER', 'ROLE_ADMIN']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
+    }
+  }, {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -69,7 +86,7 @@ const routs: Routes = [
     component: PartComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -77,7 +94,7 @@ const routs: Routes = [
     component: JobComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -85,7 +102,7 @@ const routs: Routes = [
     component: ServiceCarComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_EMPLOYEE']
     }
   },
   {
@@ -93,10 +110,17 @@ const routs: Routes = [
     component: WorkerStatisticComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_USER']
+      role: ['ROLE_ADMIN']
     }
-  }
-];
+  },
+  {
+    path: 'job-statistic',
+    component: JobStatisticComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_ADMIN']
+    }
+  }]
 @NgModule({
   declarations: [
     ControlPanelComponent,
@@ -112,9 +136,13 @@ const routs: Routes = [
     PartCreateComponent,
     VehicleHistoryComponent,
     ServiceCreateComponent,
-    WorkerStatisticComponent
-
-
+    WorkerStatisticComponent,
+    UserUpdateComponent,
+    ChangePasswordComponent,
+    JobStatisticComponent,
+    ClientUpdateComponent,
+    ClientRestoreComponent,
+    UserRestoreComponent
   ],
   imports: [
     BrowserModule,
@@ -129,7 +157,17 @@ const routs: Routes = [
     MatTableModule,
     MatPaginatorModule,
     NgxsModule.forFeature([
-      UsersState, ClientState, VehicleState, PartState, JobState, ServiceCarState, WorkerState, FileState, WorkerStatisticState
+      UsersState,
+      ClientState,
+      VehicleState,
+      PartState,
+      JobState,
+      ServiceCarState,
+      WorkerState,
+      FileState,
+      WorkerStatisticState,
+      JobStatisticState,
+      CarState
     ]),
     MatIconModule,
     MatGridListModule,
@@ -148,8 +186,9 @@ const routs: Routes = [
     ChartsModule,
     MatSnackBarModule,
     MatSelectModule,
-    NgxsReduxDevtoolsPluginModule.forRoot()
-
+    MatChipsModule,
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsRouterPluginModule.forRoot()
   ],
   entryComponents: [
     ControlPanelComponent,
@@ -161,8 +200,13 @@ const routs: Routes = [
     JobComponent,
     PartCreateComponent,
     VehicleHistoryComponent,
-    ServiceCreateComponent
+    ServiceCreateComponent,
+    UserUpdateComponent,
+    ClientUpdateComponent
   ],
-  providers: [AuthGuard]
+  providers: [
+    AuthGuard
+  ]
+
 })
 export class LoggedModule { }

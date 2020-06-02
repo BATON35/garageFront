@@ -1,10 +1,13 @@
-<form [formGroup]="userForm" (ngSubmit)="submit()">
+<form [formGroup]="userForm" (ngSubmit)="createUser()">
     <formly-form [fields]="userFields" [form]="userForm" [model]="userTemp">
         <div class="group">
             <button id="saveUser" type="submit" class="button" mat-raised-button color="primary"
                 [disabled]="!userForm.valid">
-                Dodaj
+                {{"user.update.button.save" | translate}}
             </button>
         </div>
     </formly-form>
 </form>
+<div *ngIf="errorMessage$ | async as errorMessage">
+    <span translate [translateParams]="{value: model.email}">{{errorMessage}}</span>
+</div>

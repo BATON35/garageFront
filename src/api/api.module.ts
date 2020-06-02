@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
 import { CarServiceControllerRestService } from './services/car-service-controller-rest.service';
+import { CarControllerRestService } from './services/car-controller-rest.service';
 import { ClientControllerRestService } from './services/client-controller-rest.service';
 import { FileControllerService } from './services/file-controller.service';
 import { JobControllerService } from './services/job-controller.service';
@@ -11,6 +12,7 @@ import { MailTemplateControllerRestService } from './services/mail-template-cont
 import { RoleControllerService } from './services/role-controller.service';
 import { UserControllerRestService } from './services/user-controller-rest.service';
 import { VehicleControllerRestService } from './services/vehicle-controller-rest.service';
+import { NotificationControllerService } from './services/notification-controller.service';
 import { WorkerControllerRestService } from './services/worker-controller-rest.service';
 import { PartControllerRestService } from './services/part-controller-rest.service';
 
@@ -28,6 +30,7 @@ import { PartControllerRestService } from './services/part-controller-rest.servi
   providers: [
     ApiConfiguration,
     CarServiceControllerRestService,
+    CarControllerRestService,
     ClientControllerRestService,
     FileControllerService,
     JobControllerService,
@@ -35,6 +38,7 @@ import { PartControllerRestService } from './services/part-controller-rest.servi
     RoleControllerService,
     UserControllerRestService,
     VehicleControllerRestService,
+    NotificationControllerService,
     WorkerControllerRestService,
     PartControllerRestService
   ],

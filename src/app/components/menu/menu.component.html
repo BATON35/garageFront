@@ -3,29 +3,48 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
     <mat-nav-list>
-      <a *ngIf="!(token$ | async)" mat-list-item routerLink="/login">{{'menu.login'|translate}}</a>
-      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+      <a *ngIf="!(token$ | async)" mat-list-item routerLink="/login">{{'menu.login' | translate}}</a>
+      <a *ngIf="(token$ | async)" mat-list-item (click)="logout()">{{"menu.logout" | translate}}</a>
+      <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item routerLink="/change-password">{{'menu.password' | translate}}</a>
+      <hr>
+      <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/panel">{{'menu.dashboard'|translate}}</a>
-      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+      <hr>
+      <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/parts">{{'menu.parts'|translate}}</a>
-      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+      <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/job">{{"menu.addService" | translate}}</a>
-      <a *ngIf="currentUser.roles && currentUser.roles != 0" mat-list-item
+      <a *ngIf="currentUser && currentUser.roles && currentUser.roles != 0" mat-list-item
         routerLink="/service-car">{{"menu.service" | translate}}</a>
-      <a *ngIf="(token$ | async)" mat-list-item (click)="logout()">
-        {{"menu.logout" | translate}}
-      </a>
     </mat-nav-list>
+    <hr>
+    <mat-accordion *ngIf="user$ | async as user">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{user.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <span>Posiadane role: </span>
+        <ul *ngFor="let role of user.roles">
+          <li> {{ role.name | translate }} </li>
+        </ul>
+        <span>{{"menu.information" | translate}} </span>
+        <ul>
+          <li>{{"menu.emial" | translate}} {{user.email}}</li>
+          <li>{{"menu.name" | translate}} {{user.name}}</li>
+          <li>{{"menu.surname" | translate}} {{user.surname}}</li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="!drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      <button type="button" mat-icon-button (click)="!drawer.toggle()">
+        <mat-icon>menu</mat-icon>
       </button>
       <span class="margin"> Menu</span>
-      <span *ngIf="user$ | async as user" style="text-align: right">
-        {{user.name}}
-      </span>
+
       <span class="space">
       </span>
       <div>

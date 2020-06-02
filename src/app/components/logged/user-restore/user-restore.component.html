@@ -1,0 +1,66 @@
+<div *ngIf="users$ | async as users">
+    <div class="flex-p">
+        <mat-form-field style="width: 100%">
+            <input matInput [matAutocomplete]="auto" (keyup)="search($event.target.value)"
+                placeholder="{{ 'panel.client.list.search' | translate }}" />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let text of autocomplete$ | async" [value]="text">
+                    <span>{{ text }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <table mat-table [dataSource]="users.content" class="mat-elevation-z8" multiTemplateDataRows>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>
+                    {{ "panel.client.list.no" | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>
+                    {{ "panel.client.list.name" | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef>
+                    {{ "panel.client.list.email" | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="restore">
+                <mat-header-cell *matHeaderCellDef>
+                    restore
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button (click)="restore(element.id)" mat-icon-button color="warn">
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="modifiedBy">
+                <mat-header-cell *matHeaderCellDef>
+                    ModifiedBy
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{element.lastModifiedBy}}
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </table>
+        <div>
+            <div style="display:inline">
+                <button (click)="addClient()" type="submit" class="button" mat-raised-button color="primary">
+                    {{"client.add.button" | translate}}
+                </button>
+            </div>
+            <div style="display:inline">
+                <mat-paginator (page)="changePage($event)" [length]="users.totalElements" [pageSize]="users.size"
+                    [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

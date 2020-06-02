@@ -1,12 +1,27 @@
 <mat-tab-group (selectedTabChange)="onTabChange($event)">
-  <mat-tab label="Obsluga clienta">
+  <mat-tab label="{{ 'panel.client.tab' | translate }}">
     <app-client-list></app-client-list>
   </mat-tab>
-  <mat-tab label="Obsluga urzytkownika">
+  <mat-tab label="{{ 'panel.user.tab' | translate}}">
     <app-user-list></app-user-list>
   </mat-tab>
-  <mat-tab label="Panel administratora">
-    <a routerLink="/worker-statistic">worker statistic</a>
+  <mat-tab label="{{'panel.admin.tab' | translate}}">
+    <mat-tab-group>
+      <mat-tab label="Deleted clients">
+        <app-client-restore></app-client-restore>
+      </mat-tab>
+      <mat-tab label="Deleted users">
+        <app-user-restore></app-user-restore>
+      </mat-tab>
+    </mat-tab-group>
   </mat-tab>
-  <mat-tab label="Obsluga clienta"> </mat-tab>
+  <div *ngIf="user$ | async as user">
+    <div *ngIf="checkRole(user, 'ROLE_ADMIN')">
+      <mat-tab label="Statisticss">
+        <a routerLink="/worker-statistic">worker statistic</a>
+        <br>
+        <a routerLink="/job-statistic">job statistic</a>
+      </mat-tab>
+    </div>
+  </div>
 </mat-tab-group>

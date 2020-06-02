@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { PartDto, CarServiceDto, WorkerDto } from 'src/api/models';
@@ -8,6 +8,7 @@ import { AutocompleteNamePartAction } from '../state/part.state';
 import { AutocompleteNameServiceCarAction } from '../state/service-car.state';
 import { AutocompleteNameWorkerAction } from '../state/worker.state';
 import { SaveJobAction } from '../state/job.state';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-job',
@@ -17,9 +18,14 @@ import { SaveJobAction } from '../state/job.state';
 export class JobComponent implements OnInit {
   formGroup: FormGroup;
   workerId: number;
-  partId: number;
+  partIds: number[];
   serviceId: number;
   vehicleNumberPlate: string;
+  partCtrl = new FormControl();
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  temp = [];
+  removable = true;
+  selectable = true;
   @Select(state => state.part.partsAutocomplete)
   partAutocomplete$: Observable<PartDto[]>;
 
@@ -36,7 +42,7 @@ export class JobComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      partName: [''],
+      partsName: [''],
       serviceName: [''],
       vehicleNamberPlate: [''],
       workerId: ['']
@@ -64,7 +70,7 @@ export class JobComponent implements OnInit {
   }
   selectPart(id) {
     console.log('part ' + id);
-    this.partId = id;
+    this.partIds = id;
   }
   selectService(id) {
     console.log('service ' + id);
@@ -76,9 +82,20 @@ export class JobComponent implements OnInit {
     this.vehicleNumberPlate = plateNumber;
   }
   save() {
-    this.store.dispatch(new SaveJobAction(this.workerId, this.partId, this.serviceId, this.vehicleNumberPlate));
+    this.store.dispatch(new SaveJobAction(this.workerId, this.temp.map(e => e.id), this.serviceId, this.vehicleNumberPlate));
   }
   traySelect(event) {
+    this.temp.push(event.option.value)
+  }
+  // add(event) {
+  //   this.temp.push(event.value);
+  //   this.partCtrl.setValue(null);
+  //   console.log('add')
+  //   console.log(event);
+  // }
+  remove(part) {
+    const index = this.temp.indexOf(part)
+    this.temp.splice(index, 1);
   }
 
 }

@@ -19,7 +19,9 @@ import { PageUserDto } from '../models/page-user-dto';
 class UserControllerRestService extends __BaseService {
   static readonly saveUserUsingPOSTPath = '/api/users';
   static readonly updateUserUsingPUTPath = '/api/users';
+  static readonly changePasswordUsingPOSTPath = '/api/users/change-password';
   static readonly userInfoUsingGETPath = '/api/users/info';
+  static readonly restoreUserUsingPUTPath = '/api/users/restore';
   static readonly searchUsersUsingGETPath = '/api/users/search';
   static readonly getUserByIdUsingGETPath = '/api/users/{id}';
   static readonly deleteUserUsingDELETEPath = '/api/users/{id}';
@@ -104,6 +106,40 @@ class UserControllerRestService extends __BaseService {
   }
 
   /**
+   * @param userDto userDto
+   */
+  changePasswordUsingPOSTResponse(userDto: UserDto): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = userDto;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/users/change-password`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param userDto userDto
+   */
+  changePasswordUsingPOST(userDto: UserDto): __Observable<null> {
+    return this.changePasswordUsingPOSTResponse(userDto).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
    * @return OK
    */
   userInfoUsingGETResponse(): __Observable<__StrictHttpResponse<UserDto>> {
@@ -137,6 +173,40 @@ class UserControllerRestService extends __BaseService {
   }
 
   /**
+   * @param id id
+   */
+  restoreUserUsingPUTResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (id != null) __params = __params.set('id', id.toString());
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/users/restore`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  restoreUserUsingPUT(id: number): __Observable<null> {
+    return this.restoreUserUsingPUTResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
    * @param params The `UserControllerRestService.SearchUsersUsingGETParams` containing the following parameters:
    *
    * - `size`: size
@@ -146,6 +216,8 @@ class UserControllerRestService extends __BaseService {
    * - `page`: page
    *
    * - `roles`: roles
+   *
+   * - `deleted`: deleted
    *
    * @return OK
    */
@@ -157,6 +229,7 @@ class UserControllerRestService extends __BaseService {
     if (params.searchText != null) __params = __params.set('searchText', params.searchText.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
     (params.roles || []).forEach(val => {if (val != null) __params = __params.append('roles', val.toString())});
+    if (params.deleted != null) __params = __params.set('deleted', params.deleted.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/users/search`,
@@ -184,6 +257,8 @@ class UserControllerRestService extends __BaseService {
    * - `page`: page
    *
    * - `roles`: roles
+   *
+   * - `deleted`: deleted
    *
    * @return OK
    */
@@ -290,6 +365,11 @@ module UserControllerRestService {
      * roles
      */
     roles?: Array<string>;
+
+    /**
+     * deleted
+     */
+    deleted?: boolean;
   }
 }
 

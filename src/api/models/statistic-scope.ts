@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface StatisticDto {
+export interface StatisticScope {
   end?: string;
   start?: string;
 }

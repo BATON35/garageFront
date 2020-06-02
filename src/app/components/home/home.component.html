@@ -2,35 +2,35 @@
   <div class="login-wrap">
     <div class="login-html">
       <mat-tab-group (selectedIndexChange)="clearForm($event)" [(selectedIndex)]="selectedIndex">
-        <mat-tab label="Zaloguj">
+        <mat-tab label="{{'home.login' | translate}}">
           <form [formGroup]="loginForm" (ngSubmit)="submit()">
             <formly-form [fields]="loginFields" [form]="loginForm">
               <div class="group">
                 <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!loginForm.valid">
-                  Zaloguj
+                  {{'home.login.button' | translate}}
                 </button>
                 <div *ngIf="errorLogin$ | async as errorLogin">
                   <div class="flex-p">
                     <br>
-                    <span> Błedne haslo lub login! </span>
+                    <span>{{'home.login.error.credentials' | translate}}</span>
                   </div>
                 </div>
               </div>
             </formly-form>
           </form>
         </mat-tab>
-        <mat-tab label="Zarejestruj">
+        <mat-tab label="{{'home.singup' | translate}}">
           <form [formGroup]="rejestrationForm" (ngSubmit)="register()">
             <formly-form [fields]="registerFields" [form]="rejestrationForm">
               <div class="group">
                 <button type="submit" class="button" mat-raised-button color="primary"
                   [disabled]="!rejestrationForm.valid">
-                  Zarejestruj
+                  {{'home.signup.button' | translate}}
                 </button>
                 <div *ngIf="errorRegister$ | async as errorRegister">
                   <div class="flex-p">
                     <br>
-                    <span> Niestety coś poszło nie tak. </span>
+                    <span> {{'home.login.error.general' | translate}} </span>
                   </div>
                 </div>
               </div>

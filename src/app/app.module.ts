@@ -1,3 +1,4 @@
+import { MatPaginatorCustom } from './components/logged/mat-paginator';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsModule } from '@ngxs/store';
 import { MenuComponent } from './components/menu/menu.component';
@@ -16,12 +17,17 @@ import {
   MatListModule,
   MatIconModule,
   MatToolbarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatPaginatorIntl,
+  MatBadgeModule
 } from '@angular/material';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   imports: [
@@ -34,6 +40,9 @@ import { environment } from '../environments/environment';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
+    MatBadgeModule,
+    MatExpansionModule,
+    NgxsRouterPluginModule.forRoot(),
     NgxsModule.forRoot([]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     TranslateModule.forRoot({
@@ -47,7 +56,9 @@ import { environment } from '../environments/environment';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    { provide: MatPaginatorIntl, useClass: MatPaginatorCustom },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+
   ],
   bootstrap: [AppComponent]
 })

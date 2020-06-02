@@ -9,9 +9,9 @@ import {
   ErrorLoginToFalseAction,
   LoginFromCookieAction
 } from '../state/auth.state';
-import { Router } from '@angular/router';
 import { takeUntil, tap } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -29,56 +29,114 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedIndex = 0;
   loginFields: FormlyFieldConfig[] = [
     {
-      key: 'userNameLogin',
+      key: 'userLogin',
       type: 'input',
       templateOptions: {
-        label: 'nazwa urzytkownika',
-        placeholder: 'nazwa urzytkownika',
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        minLength: 3,
+        maxLength: 32,
         required: true
+      },
+      validation: {
+        messages: {
+          minLength: '',
+          maxLength: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.userlogin.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.userlogin.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
       }
     },
     {
       key: 'passwordLogin',
       type: 'input',
       templateOptions: {
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        minLength: 3,
+        maxLength: 32,
         type: 'password',
-        label: 'haslo',
-        placeholder: 'haslo',
         required: true
+      },
+      validation: {
+        messages: {
+          minLength: '',
+          maxLength: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.password.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.password.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
       }
     }
   ];
 
   registerFields: FormlyFieldConfig[] = [
     {
-      key: 'userName',
+      key: 'userLogin',
       type: 'input',
       templateOptions: {
-        label: 'nazwa urzytkownika',
-        placeholder: 'nazwa urzytkownika',
-        required: true,
-        minLength: 3
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        minLength: 3,
+        maxLength: 32,
+        required: true
+      },
+      validation: {
+        messages: {
+          minLength: '',
+          maxLength: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.userlogin.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.userlogin.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
       }
     },
     {
       key: 'password',
       type: 'input',
       templateOptions: {
+        validate: true,
+        label: 'required for expression Properties',
+        placeholder: 'required for expression Properties',
         type: 'password',
-        label: 'haslo',
-        placeholder: 'haslo',
-        required: true,
-        minLength: 6,
-        maxLength: 34
+        pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{2,}$'
+      },
+      validation: {
+        messages: {
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('user.password.label'),
+        'templateOptions.placeholder': this.translateService.stream('user.password.placeholder'),
+        'validation.messages.pattern': this.translateService.stream('user.update.message.pattern')
       }
     },
     {
       key: 'confirmPassword',
       type: 'input',
       templateOptions: {
+        label: 'required for expression Properties',
+        placeholder: 'required for expression Properties',
         type: 'password',
-        label: 'confirm pasword',
-        placeholder: 'confirmPassword',
         required: true
       },
       validators: {
@@ -89,6 +147,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       },
       expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.signup.password.confirm.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.signup.password.confirm.placeholder'),
         'templateOptions.disabled': () =>
           !this.rejestrationForm.get('password').valid
       },
@@ -107,41 +167,106 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     {
-      key: 'email',
+      key: 'name',
       type: 'input',
       templateOptions: {
+        label: 'strange behavior',
+        placeholder: 'do not remove',
         validate: true,
-        pattern: '[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*',
-        type: 'emial',
-        label: 'email urzytkownika',
-        placeholder: 'email urzytkownika',
+        minLength: 3,
+        maxLength: 32,
         required: true
       },
       validation: {
         messages: {
-          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym adresem email`
+          minLength: '',
+          maxLength: '',
+          required: ''
         }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.username.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.username.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
       }
     },
     {
-      key: 'telNumer',
+      key: 'surname',
+      type: 'input',
+      templateOptions: {
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        minLength: 3,
+        maxLength: 32,
+        required: true
+      },
+      validation: {
+        messages: {
+          minLength: '',
+          maxLength: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.usersurname.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.usersurname.placeholder'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.minlength': this.translateService.stream('home.login.message.minlength'),
+        'validation.messages.maxlength': this.translateService.stream('home.login.message.maxlength')
+      }
+    },
+    {
+      key: 'email',
+      type: 'input',
+      templateOptions: {
+        label: 'strange behavior',
+        placeholder: 'do not remove',
+        validate: true,
+        pattern: '[_a-zA-Z1-9]+(\\.[A-Za-z0-9]*)*@[A-Za-z0-9]+\\.[A-Za-z0-9]+(\\.[A-Za-z0-9]*)*',
+        type: 'emial',
+        required: true
+      },
+      validation: {
+        messages: {
+          pattern: '',
+          required: ''
+        }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.signup.emial.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.signup.emial.placeholcer'),
+        'validation.messages.required': this.translateService.stream('home.message.required'),
+        'validation.messages.pattern': this.translateService.stream('home.signup.message.email.patter')
+      }
+    },
+    {
+      key: 'phoneNumber',
       type: 'input',
       templateOptions: {
         validate: true,
         pattern: '^(\\d{3}-{0,1}\\d{3}-{0,1}\\d{3})+$',
         typt: 'tel',
-        label: 'numer telefonu',
-        placeholder: 'numer telefonu urzytkownika',
+        label: 'strange behavior',
+        placeholder: 'do not remove',
         required: true
       },
       validation: {
         messages: {
-          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym numerem telefonu`
+          pattern: '',
+          // pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" nie jest poprawnym numerem telefonu`
         }
+      },
+      expressionProperties: {
+        'templateOptions.label': this.translateService.stream('home.signup.phone.label'),
+        'templateOptions.placeholder': this.translateService.stream('home.signup.phone.placeholder'),
+        'validation.messages.pattern': this.translateService.stream('home.login.message.pattern')
       }
     }
   ];
-  constructor(public store: Store, public router: Router) { }
+  constructor(public store: Store, public translateService: TranslateService) { }
 
   ngOnInit() {
     this.store.dispatch(new LoginFromCookieAction());
@@ -154,16 +279,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   submit() {
     this.store.dispatch(
       new LoginAction(
-        this.loginForm.value.userNameLogin,
+        this.loginForm.value.userLogin,
         this.loginForm.value.passwordLogin
       )
     );
   }
   register() {
     const userDto = {
-      name: this.rejestrationForm.value.userName,
+      login: this.rejestrationForm.value.userLogin,
       password: this.rejestrationForm.value.password,
-      email: this.rejestrationForm.value.email
+      email: this.rejestrationForm.value.email,
+      phoneNumber: this.rejestrationForm.value.phoneNumber,
+      name: this.rejestrationForm.value.name,
+      surname: this.rejestrationForm.value.surname
     };
     this.store.dispatch(new RegistrationAction(userDto));
     this.selectedIndex = 0;

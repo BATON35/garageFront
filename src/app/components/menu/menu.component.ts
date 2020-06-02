@@ -1,8 +1,8 @@
 import { BackToDefoultVehicleAction } from './../logged/vehicle.state';
 import { BackToDefoultClientAction } from './../logged/client.state';
 import { Router } from '@angular/router';
-import { LogoutAction, BackToDefoultAuthAction, LoginFromCookieAction } from './../state/auth.state';
-import { Component, OnInit } from '@angular/core';
+import { LogoutAction, BackToDefoultAuthAction, AuthState, LoginFromCookieAction } from './../state/auth.state';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -17,7 +17,8 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, AfterViewChecked {
+
   currentUser;
   selectedLanguage = null;
   @Select(state => state.auth.currentUser)
@@ -29,11 +30,13 @@ export class MenuComponent implements OnInit {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
+
   constructor(
     public store: Store,
     public breakpointObserver: BreakpointObserver,
     public router: Router,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    public changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -41,6 +44,9 @@ export class MenuComponent implements OnInit {
     this.translateService.setDefaultLang('pl');
     setTimeout(() => { this.selectedLanguage = 'pl'; }, 0);
     this.store.dispatch(new LoginFromCookieAction());
+  }
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
   logout() {
     this.store.dispatch(new LogoutAction());

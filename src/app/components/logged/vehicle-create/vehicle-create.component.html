@@ -1,13 +1,62 @@
-<form [formGroup]="vehicleForm" (ngSubmit)="submit()">
-    <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="vehicleTemp">
-    </formly-form>
-    <input type="file" multiple="multiple" (change)="saveFile($event.target.files)">
-    <div class="group">
-        <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid">
-            Dodaj
-        </button>
-    </div>
+<!--<form [formGroup]="vehicleForm" (ngSubmit)="submit()">-->
+<!--    <formly-form [fields]="vehicleFields" [form]="vehicleForm" [model]="vehicleTemp">-->
+<!--    </formly-form>-->
+<!--    &lt;!&ndash; <input class="btn-file-upload" value="valid" type="file" multiple="multiple"-->
+<!--        (change)="saveFile($event.target.files)"> &ndash;&gt;-->
+<!--    <label color="primary">-->
+<!--        <mat-icon>cloud_upload</mat-icon> Your text here<input type="file" style="display: none;" name="image"-->
+<!--            multiple="multiple" (change)="saveFile($event.target.files)">-->
+<!--    </label>-->
+<!--    <div class="group">-->
+<!--        <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid">-->
+<!--            {{"vehicle.add.button" | translate}}-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</form>-->
+
+<form [formGroup]="vehicleForm">
+  <p>
+    <mat-form-field>
+      <mat-label>Brand</mat-label>
+      <mat-select formControlName="brand">
+        <mat-option *ngFor="let brand of brands$ | async" [value]="brand" (click)="selectBrand(brand)">
+          {{brand}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Model</mat-label>
+      <mat-select formControlName="model">
+        <mat-option *ngFor="let model of models$ | async" [value]="model" (click)="selectDate(model)">
+          {{model}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Production date</mat-label>
+      <mat-select formControlName="date">
+        <mat-option *ngFor="let date of productionDate$ | async" [value]="date">
+          {{date}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="example-full-width">
+      <mat-label>number Plate</mat-label>
+      <input matInput placeholder="numberPlate" formControlName="numberPlate">
+    </mat-form-field>
+  </p>
+  <button type="submit" class="button" mat-raised-button color="primary" [disabled]="!vehicleForm.valid"
+          (click)="submit()">
+    Zapisz
+  </button>
 </form>
+
 <div *ngIf="errorMessage$ | async as errorMessage">
-    <span translate [translateParams]="{value: vehicleTemp.numberPlate}">{{errorMessage}}</span>
+  <span translate [translateParams]="{value: vehicleTemp.numberPlate}">{{errorMessage}}</span>
 </div>

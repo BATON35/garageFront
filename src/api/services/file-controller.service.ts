@@ -16,6 +16,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 })
 class FileControllerService extends __BaseService {
   static readonly uploadFotoCarUsingPOSTPath = '/api/file';
+  static readonly getGeneratedVehicleHistoryReportUsingGETPath = '/api/file/{numberPlate}/{fileType}';
   static readonly getPDFUsingGETPath = '/api/file/{vehicleId}';
 
   constructor(
@@ -67,6 +68,53 @@ class FileControllerService extends __BaseService {
   uploadFotoCarUsingPOST(params: FileControllerService.UploadFotoCarUsingPOSTParams): __Observable<null> {
     return this.uploadFotoCarUsingPOSTResponse(params).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param params The `FileControllerService.GetGeneratedVehicleHistoryReportUsingGETParams` containing the following parameters:
+   *
+   * - `numberPlate`: numberPlate
+   *
+   * - `fileType`: fileType
+   *
+   * @return OK
+   */
+  getGeneratedVehicleHistoryReportUsingGETResponse(params: FileControllerService.GetGeneratedVehicleHistoryReportUsingGETParams): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/file/${params.numberPlate}/${params.fileType}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @param params The `FileControllerService.GetGeneratedVehicleHistoryReportUsingGETParams` containing the following parameters:
+   *
+   * - `numberPlate`: numberPlate
+   *
+   * - `fileType`: fileType
+   *
+   * @return OK
+   */
+  getGeneratedVehicleHistoryReportUsingGET(params: FileControllerService.GetGeneratedVehicleHistoryReportUsingGETParams): __Observable<string> {
+    return this.getGeneratedVehicleHistoryReportUsingGETResponse(params).pipe(
+      __map(_r => _r.body as string)
     );
   }
 
@@ -123,6 +171,22 @@ module FileControllerService {
      * multipartFile
      */
     multipartFile: Array<Blob>;
+  }
+
+  /**
+   * Parameters for getGeneratedVehicleHistoryReportUsingGET
+   */
+  export interface GetGeneratedVehicleHistoryReportUsingGETParams {
+
+    /**
+     * numberPlate
+     */
+    numberPlate: string;
+
+    /**
+     * fileType
+     */
+    fileType: 'JSON' | 'CSV' | 'PDF' | 'XLS' | 'DOC';
   }
 }
 

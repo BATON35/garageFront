@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserDto } from './../../../api/models/user-dto';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
@@ -7,6 +8,7 @@ import { JwtResponse } from 'src/app/model/jwt-response';
 import { UserControllerRestService } from 'src/api/services';
 import { of } from 'rxjs';
 import Cookies from 'js-cookie';
+import { Navigate } from '@ngxs/router-plugin';
 
 
 export class UpdateTokenAction {
@@ -15,7 +17,7 @@ export class UpdateTokenAction {
 }
 export class LoginAction {
   static readonly type = '[Auth] LoginAction';
-  constructor(public userName: string, public password: string) { }
+  constructor(public userLogin: string, public password: string) { }
 }
 
 export class RegistrationAction {
@@ -62,7 +64,7 @@ export class AuthStateModel {
     errorLogin: false,
     errorRegister: false,
     jwtToken: null,
-    currentUser: {}
+    currentUser: null
   }
 })
 
@@ -70,7 +72,7 @@ export class AuthState {
   constructor(
     public httpClient: HttpClient,
     public userControllerRestService: UserControllerRestService,
-    public router: Router
+    public matSnackBar: MatSnackBar
   ) { }
 
   @Selector()
@@ -86,10 +88,13 @@ export class AuthState {
   @Action(LoginAction)
   login(
     ctx: StateContext<AuthStateModel>,
-    { userName, password }: LoginAction
+    { userLogin, password }: LoginAction
   ) {
+    function delay(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
     const form = new FormData();
-    form.append('userName', userName);
+    form.append('userLogin', userLogin);
     form.append('password', password);
     if (!Cookies.get('jwtToken')) {
       return this.httpClient
@@ -102,7 +107,11 @@ export class AuthState {
             });
             Cookies.set('jwtToken', token);
             ctx.dispatch(new CurrentUserAction());
-            this.router.navigate(['/panel']);
+            (async () => {
+              await delay(30);
+              ctx.dispatch(new Navigate(['/panel']));
+            })();
+
           }),
           catchError((a, b) => {
             ctx.patchState({
@@ -117,7 +126,7 @@ export class AuthState {
         jwtToken: Cookies.get('jwtToken')
       });
       ctx.dispatch(new CurrentUserAction());
-      this.router.navigate(['/panel']);
+      ctx.dispatch(new Navigate(['/panel']));
     }
   }
   @Action(CurrentUserAction)
@@ -136,13 +145,19 @@ export class AuthState {
       .saveUserUsingPOST(userDto.userDto)
       .pipe(
         tap(value => {
-          console.log(value);
           ctx.patchState({ errorRegister: false });
         }),
         catchError((a, b) => {
+          console.log("error b")
+          console.log(b)
+          console.log("error a")
+          console.log(a)
           ctx.patchState({
             errorRegister: true
           });
+          if (a.status === 409) {
+            this.matSnackBar.open('Podany login jest zajety', 'zamkinij', { duration: 3000 });
+          }
           return of();
         }));
   }
@@ -167,9 +182,15 @@ export class AuthState {
   @Action(LoginFromCookieAction)
   loginFromCookie(ctx: StateContext<AuthStateModel>, LoginFromCookieAction) {
     if (Cookies.get('jwtToken')) {
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
       ctx.patchState({ jwtToken: Cookies.get('jwtToken') });
       ctx.dispatch(new CurrentUserAction());
-      this.router.navigate(['/panel']);
+      (async () => {
+        await delay(30);
+        ctx.dispatch(new Navigate(['/panel']));
+      })();
     }
   }
   @Action(BackToDefoultAuthAction)
@@ -178,7 +199,7 @@ export class AuthState {
       errorLogin: false,
       errorRegister: false,
       jwtToken: null,
-      currentUser: {}
+      currentUser: null
     });
   }
   @Action(UpdateTokenAction)

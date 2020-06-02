@@ -2,7 +2,7 @@ import { VehicleDetailsComponent } from './../vehicle-details/vehicle-details.co
 import { VehicleCreateComponent } from './../vehicle-create/vehicle-create.component';
 import { VehicleDto } from './../../../../api/models/vehicle-dto';
 import { ClientCreateComponent } from './../client-create/client-create.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ClietnPageAction, ClientDeleteAction, ClientSearchAction, AutocompleteAction } from './../client.state';
 import { Store, Select } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 import { VehicleHistoryComponent } from '../vehicle-history/vehicle-history.component';
 import { DownloadVehicleHistoryAction } from '../state/file.state';
+import { ClientUpdateComponent } from '../client-update/client-update.component';
 
 
 @Component({
@@ -31,12 +32,8 @@ import { DownloadVehicleHistoryAction } from '../state/file.state';
 })
 export class ClientListComponent implements OnInit {
 
-  constructor(
-    public store: Store,
-    public matDialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
-    public translateService: TranslateService) { }
   selectedLanguage = null;
+  expandedElement: any;
   displayedColumns: string[] = [
     'id', 'name', 'email', 'update', 'addVehicle', 'delete'
   ];
@@ -48,25 +45,26 @@ export class ClientListComponent implements OnInit {
   @Select(state => state.client.autocomplete)
   autocomplete$: Observable<string[]>;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(map(result => result.matches));
-
-  expandedElement: any;
+  constructor(
+    public store: Store,
+    public matDialog: MatDialog,
+    public breakpointObserver: BreakpointObserver,
+    public translateService: TranslateService,
+    public matSnackBar: MatSnackBar) { }
 
   public isExpansionDetailRow = (i: number, row: ClientDto) => row.vehicles.length > 0;
 
   ngOnInit() {
     this.store.dispatch(new ClietnPageAction(0, 5));
-    this.translateService.setDefaultLang('pl');
-    setTimeout(() => { this.selectedLanguage = 'pl'; }, 0);
   }
 
   changePage(event) {
+    console.log('clien event');
+    console.log(event);
     this.store.dispatch(new ClietnPageAction(event.pageIndex, event.pageSize));
   }
 
-  openModal() {
+  addClient() {
     this.matDialog.open(ClientCreateComponent, { width: '500px' });
   }
 
@@ -75,7 +73,7 @@ export class ClientListComponent implements OnInit {
   }
 
   update(client: ClientDto) {
-    this.matDialog.open(ClientCreateComponent, {
+    this.matDialog.open(ClientUpdateComponent, {
       width: '500px',
       data: client
     });
@@ -114,12 +112,28 @@ export class ClientListComponent implements OnInit {
     this.store.dispatch(new AutocompleteAction(searchText));
   }
   showHistory(vehicle) {
-    this.matDialog.open(VehicleHistoryComponent, {
-      width: '100%',
-      data: vehicle
-    });
+    if (vehicle.hasHistory) {
+      this.matDialog.open(VehicleHistoryComponent, {
+        width: '100%',
+        height: '80%',
+        data: vehicle
+      });
+    } else {
+      this.matSnackBar.open('Pojazd nie posiada historii', 'zamknij', { duration: 2000 });
+    }
+
   }
-  downloadVehicleHistory(id) {
-    this.store.dispatch(new DownloadVehicleHistoryAction(id));
+  downloadVehicleHistory(vehicle, fileFormat) {
+    if (fileFormat) {
+      if (vehicle.hasHistory) {
+        this.store.dispatch(new DownloadVehicleHistoryAction(vehicle.numberPlate, fileFormat));
+      } else {
+        this.matSnackBar.open('Pojazd nie posiada historii', 'zamknij', {
+          duration: 2000,
+        });
+      }
+    } else {
+      this.matSnackBar.open('Prosze wybrac format pliku', 'zamknik', { duration: 2000 })
+    }
   }
 }

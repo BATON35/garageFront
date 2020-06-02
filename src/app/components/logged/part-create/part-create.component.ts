@@ -18,7 +18,7 @@ export class PartCreateComponent implements OnInit {
       key: 'name',
       type: 'input',
       templateOptions: {
-        labe: 'nazwa czesci label',
+        labe: 'nazwa czesci',
         placeholder: 'nazwa czesci placeholder',
         required: true
       }
@@ -27,8 +27,8 @@ export class PartCreateComponent implements OnInit {
       key: 'price',
       type: 'input',
       templateOptions: {
-        label: 'cena label',
-        placeholder: 'cena placeholder',
+        label: 'cena',
+        placeholder: 'cena',
         required: true
       }
     }

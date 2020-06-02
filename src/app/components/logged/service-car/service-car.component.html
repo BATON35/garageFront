@@ -18,16 +18,15 @@
             <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="update">
-            <mat-header-cell *matHeaderCellDef> Zmien dane </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button (click)="update(element)" mat-icon-button color="primary">
                     <mat-icon>update</mat-icon>
                 </button>
             </mat-cell>
         </ng-container>
-
         <ng-container matColumnDef="delete">
-            <mat-header-cell *matHeaderCellDef> Usun </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button (click)="deleteElement(element.id)" mat-icon-button color="warn">
                     <mat-icon>delete_forever</mat-icon>
