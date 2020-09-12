@@ -1,9 +1,11 @@
+import { AuthState } from './../../state/auth.state';
+import { WebSocketService } from './../../web-socket.service';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { UserDto } from 'src/api/models';
 import { ClietnPageAction } from '../client.state';
-import { UsersPageAction } from '../users.state';
+import { UsersPageAction, UsersState } from '../users.state';
 
 @Component({
   selector: 'app-control-panel',
@@ -13,9 +15,10 @@ import { UsersPageAction } from '../users.state';
 export class ControlPanelComponent implements OnInit {
   @Select(state => state.auth.currentUser)
   user$: Observable<UserDto>;
-  constructor(public store: Store) { }
+  constructor(public store: Store, public webSocketService: WebSocketService) { }
 
   ngOnInit() {
+    this.webSocketService.connectUser(this.store.selectSnapshot(AuthState.getToken));
   }
 
   onTabChange(event) {

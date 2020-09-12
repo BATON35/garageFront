@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { UserDto } from 'src/api/models';
 import { BackToDefoultUserAction } from '../logged/users.state';
 import { TranslateService } from '@ngx-translate/core';
+import { SwPush } from '@angular/service-worker';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     public breakpointObserver: BreakpointObserver,
     public router: Router,
     public translateService: TranslateService,
-    public changeDetectorRef: ChangeDetectorRef
+    public changeDetectorRef: ChangeDetectorRef,
+    public swPush: SwPush
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,11 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     this.translateService.setDefaultLang('pl');
     setTimeout(() => { this.selectedLanguage = 'pl'; }, 0);
     this.store.dispatch(new LoginFromCookieAction());
+    this.swPush.requestSubscription({
+      serverPublicKey: "BPX3sREwv62YWc9bG-tmfFsXv_Tj4Ixf3Wg2-eCNiXOlAbcrVL8KOox-FAXaFA8ENYnG8Z2y6n_dZ-64no7mlss"
+    }).then(e => {
+      this.swPush.messages.subscribe(e => console.log(e))
+    });
   }
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();

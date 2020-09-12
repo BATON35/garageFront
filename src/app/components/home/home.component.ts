@@ -1,3 +1,4 @@
+import { WebSocketService } from './../web-socket.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -266,10 +267,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }
   ];
-  constructor(public store: Store, public translateService: TranslateService) { }
+  constructor(public store: Store, public translateService: TranslateService, public webSocketService: WebSocketService) { }
 
   ngOnInit() {
     this.store.dispatch(new LoginFromCookieAction());
+    this.webSocketService.connect();
+  }
+
+  send() {
+    this.webSocketService.send();
   }
 
   ngOnDestroy(): void {

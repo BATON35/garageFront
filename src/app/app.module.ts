@@ -53,7 +53,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
       }
     }),
     MatSelectModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginatorCustom },

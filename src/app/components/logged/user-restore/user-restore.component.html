@@ -1,14 +1,14 @@
 <div *ngIf="users$ | async as users">
     <div class="flex-p">
-        <mat-form-field style="width: 100%">
+        <!-- <mat-form-field style="width: 100%">
             <input matInput [matAutocomplete]="auto" (keyup)="search($event.target.value)"
                 placeholder="{{ 'panel.client.list.search' | translate }}" />
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let text of autocomplete$ | async" [value]="text">
                     <span>{{ text }}</span>
                 </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+            </mat-autocomplete> -->
+        <!-- </mat-form-field> -->
         <table mat-table [dataSource]="users.content" class="mat-elevation-z8" multiTemplateDataRows>
             <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef>
@@ -52,11 +52,11 @@
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </table>
         <div>
-            <div style="display:inline">
+            <!-- <div style="display:inline">
                 <button (click)="addClient()" type="submit" class="button" mat-raised-button color="primary">
                     {{"client.add.button" | translate}}
                 </button>
-            </div>
+            </div> -->
             <div style="display:inline">
                 <mat-paginator (page)="changePage($event)" [length]="users.totalElements" [pageSize]="users.size"
                     [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

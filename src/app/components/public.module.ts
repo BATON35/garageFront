@@ -1,3 +1,4 @@
+import { WebSocketService } from './web-socket.service';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -37,6 +38,7 @@ const routs: Routes = [
     NgxsRouterPluginModule,
     TranslateModule
   ],
-  entryComponents: [HomeComponent]
+  entryComponents: [HomeComponent],
+  providers: [WebSocketService]
 })
 export class PublicModule { }

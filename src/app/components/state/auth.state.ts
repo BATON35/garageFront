@@ -2,7 +2,7 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserDto } from './../../../api/models/user-dto';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { JwtResponse } from 'src/app/model/jwt-response';
 import { UserControllerRestService } from 'src/api/services';
@@ -113,10 +113,12 @@ export class AuthState {
             })();
 
           }),
-          catchError((a, b) => {
-            ctx.patchState({
-              errorLogin: true
-            });
+          catchError((a: HttpErrorResponse, b) => {
+            if (a.status === 401) {
+              ctx.patchState({
+                errorLogin: true
+              });
+            }
             return of();
 
           })
